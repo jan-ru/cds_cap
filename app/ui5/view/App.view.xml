@@ -1,0 +1,56 @@
+<mvc:View
+	controllerName="demo.ui5.view.App"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:tnt="sap.tnt"
+	xmlns="sap.m"
+	displayBlock="true"
+	height="100%"
+>
+	<VBox height="100%">
+		<tnt:ToolHeader>
+			<Button
+				icon="sap-icon://menu2"
+				type="Transparent"
+				press=".onSideNavButtonPress"
+				tooltip="Expand/Collapse"
+			/>
+			<Button
+				text="Reports"
+				icon="sap-icon://bar-chart"
+				type="Transparent"
+				press=".onNavToReports"
+				id="btnReports"
+			/>
+			<Button
+				text="Tables"
+				icon="sap-icon://hierarchy"
+				type="Transparent"
+				press=".onNavToHierarchies"
+				id="btnHierarchies"
+				visible="{appView>/showHierarchies}"
+			/>
+			<Button
+				text="Imports"
+				icon="sap-icon://upload"
+				type="Transparent"
+				press=".onNavToImports"
+				id="btnImports"
+				visible="{appView>/showImports}"
+			/>
+			<ToolbarSpacer />
+			<Avatar
+				initials="{versionInfo>/userInitials}"
+				displaySize="XS"
+				tooltip="{versionInfo>/currentUser}"
+				press=".onUserPress"
+			/>
+			<Button
+				icon="sap-icon://action-settings"
+				type="Transparent"
+				press=".onSettingsPress"
+				tooltip="Settings"
+			/>
+		</tnt:ToolHeader>
+		<App id="app" />
+	</VBox>
+</mvc:View>

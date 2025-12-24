@@ -1,0 +1,41 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:t="sap.ui.table"
+>
+    <t:Table
+        id="idRevenueReportTable"
+        visibleRowCountMode="Auto"
+        selectionMode="None"
+        enableColumnReordering="false"
+    >
+        <t:extension>
+            <c:Fragment
+                fragmentName="demo.ui5.view.fragments.PeriodSelectorLTM"
+                type="XML"
+            />
+        </t:extension>
+        <t:columns>
+            <t:Column
+                width="150px"
+                sortProperty="RevenueType"
+                filterProperty="RevenueType"
+            >
+                <Label text="Revenue Type" />
+                <t:template>
+                    <Text text="{RevenueType}" />
+                </t:template>
+            </t:Column>
+            <t:Column
+                width="150px"
+                sortProperty="CostCenterGroup"
+                filterProperty="CostCenterGroup"
+            >
+                <Label text="Cost Center" />
+                <t:template>
+                    <Text text="{CostCenterGroup}" />
+                </t:template>
+            </t:Column>
+        </t:columns>
+    </t:Table>
+</c:FragmentDefinition>

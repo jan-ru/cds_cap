@@ -1,0 +1,228 @@
+<mvc:View
+	controllerName="demo.ui5.view.Table"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:tnt="sap.tnt"
+	displayBlock="true"
+	height="100%"
+>
+	<tnt:ToolPage id="toolPage">
+		<tnt:sideContent>
+			<tnt:SideNavigation
+				expanded="false"
+				itemSelect=".onItemSelect"
+			>
+				<tnt:NavigationList>
+					<tnt:NavigationListItem
+						text="Finance"
+						icon="sap-icon://financial"
+						visible="{appView>/showFinance}"
+					>
+						<tnt:NavigationListItem
+							text="Income Statement"
+							key="income"
+							visible="{appView>/showIncome}"
+						/>
+						<tnt:NavigationListItem
+							text="Balance Sheet"
+							key="balanceSheet"
+							visible="{appView>/showBalanceSheet}"
+						/>
+						<!-- Moved GL to Hierarchies -->
+					</tnt:NavigationListItem>
+					<tnt:NavigationListItem
+						text="Working Capital"
+						icon="sap-icon://money-bills"
+						visible="{appView>/showWorkingCapital}"
+					>
+						<tnt:NavigationListItem
+							text="Creditors"
+							key="creditors"
+							visible="{appView>/showCreditors}"
+						/>
+						<tnt:NavigationListItem
+							text="Debtors"
+							key="debtors"
+							visible="{appView>/showDebtors}"
+						/>
+						<tnt:NavigationListItem
+							text="Inventory"
+							key="inventory"
+							visible="{appView>/showInventory}"
+						/>
+					</tnt:NavigationListItem>
+					<tnt:NavigationListItem
+						text="Period Comparison"
+						icon="sap-icon://compare"
+						key="periodComparison"
+						visible="{appView>/showPeriodComparison}"
+					>
+						<tnt:NavigationListItem
+							text="Financial Statements"
+							key="combined"
+							visible="{appView>/showCombined}"
+						/>
+						<tnt:NavigationListItem
+							text="Revenue by Cost Center"
+							key="sales"
+							visible="{appView>/showSales}"
+						/>
+						<tnt:NavigationListItem
+							text="Charts"
+							key="charts"
+							visible="{appView>/showCharts}"
+						/>
+					</tnt:NavigationListItem>
+					<tnt:NavigationListItem
+						text="LTM"
+						icon="sap-icon://history"
+						key="ltmGroup"
+					>
+						<tnt:NavigationListItem
+							text="Revenue LTM"
+							key="revenueLTM"
+							visible="{appView>/showRevenueLTM}"
+						/>
+						<tnt:NavigationListItem
+							text="Financial Statements LTM"
+							key="pivot"
+							visible="{appView>/showPivot}"
+						/>
+					</tnt:NavigationListItem>
+				</tnt:NavigationList>
+				<tnt:fixedItem>
+					<tnt:NavigationList>
+						<tnt:NavigationListItem
+							text="Controls"
+							key="controls"
+							icon="sap-icon://validate"
+							visible="{appView>/showControls}"
+						/>
+						<tnt:NavigationListItem
+							text="Version {versionInfo>/appVersion}"
+							icon="sap-icon://information"
+							key="version"
+						/>
+					</tnt:NavigationList>
+				</tnt:fixedItem>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+			<m:NavContainer
+				id="pageContainer"
+				initialPage="pageIncome"
+				height="100%"
+				width="100%"
+			>
+				<m:pages>
+					<m:Page
+						id="pageIncome"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.Financials">
+							<mvc:customData>
+								<core:CustomData
+									key="fsType"
+									value="PNL"
+								/>
+							</mvc:customData>
+						</mvc:XMLView>
+					</m:Page>
+					<m:Page
+						id="pageBalanceSheet"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.Financials">
+							<mvc:customData>
+								<core:CustomData
+									key="fsType"
+									value="BAS"
+								/>
+							</mvc:customData>
+						</mvc:XMLView>
+					</m:Page>
+					<m:Page
+						id="pageCashFlow"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.CashFlow" />
+					</m:Page>
+					<m:Page
+						id="pageCombined"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.Financials">
+							<mvc:customData>
+								<core:CustomData
+									key="fsType"
+									value="COMBINED"
+								/>
+							</mvc:customData>
+						</mvc:XMLView>
+					</m:Page>
+					<!-- Moved GL to Hierarchies -->
+					<m:Page
+						id="pagePivot"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.Pivot" />
+					</m:Page>
+					<m:Page
+						id="pageCreditors"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<core:Fragment
+							fragmentName="demo.ui5.view.fragments.CreditorsTab"
+							type="XML"
+						/>
+					</m:Page>
+					<m:Page
+						id="pageDebtors"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<core:Fragment
+							fragmentName="demo.ui5.view.fragments.DebtorsTab"
+							type="XML"
+						/>
+					</m:Page>
+					<m:Page
+						id="pageSales"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.Sales" />
+					</m:Page>
+					<m:Page
+						id="pageRevenueLTM"
+						enableScrolling="false"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.RevenueLTM" />
+					</m:Page>
+					<m:Page
+						id="pageCharts"
+						enableScrolling="true"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.Charts" />
+					</m:Page>
+					<m:Page
+						id="pageControls"
+						enableScrolling="true"
+						showHeader="false"
+					>
+						<mvc:XMLView viewName="demo.ui5.view.Controls" />
+					</m:Page>
+				</m:pages>
+			</m:NavContainer>
+		</tnt:mainContents>
+	</tnt:ToolPage>
+</mvc:View>

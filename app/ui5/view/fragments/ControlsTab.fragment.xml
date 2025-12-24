@@ -1,0 +1,120 @@
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:t="sap.ui.table"
+>
+	<t:Table
+		id="controlsTable"
+		rows="{controls>/rows}"
+		visibleRowCountMode="Auto"
+		selectionMode="None"
+		enableColumnReordering="false"
+		class="sapUiSizeCompact"
+	>
+		<t:footer>
+			<m:VBox>
+				<core:Fragment
+					fragmentName="demo.ui5.view.fragments.TechnicalInfo"
+					type="XML"
+				/>
+			</m:VBox>
+		</t:footer>
+		<t:columns>
+			<t:Column
+				width="6rem"
+				sortProperty="PeriodYear"
+				filterProperty="PeriodYear"
+			>
+				<m:Label text="Year" />
+				<t:template>
+					<m:Text text="{controls>PeriodYear}" />
+				</t:template>
+			</t:Column>
+			<t:Column
+				width="6rem"
+				sortProperty="PeriodMonth"
+				filterProperty="PeriodMonth"
+			>
+				<m:Label text="Month" />
+				<t:template>
+					<m:Text text="{controls>PeriodMonth}" />
+				</t:template>
+			</t:Column>
+			<t:Column
+				width="10rem"
+				hAlign="End"
+			>
+				<m:Label text="BAS Debit" />
+				<t:template>
+					<m:Text text="{
+						path: 'controls>BasTotalDebit',
+						formatter: '.formatter.formatCurrency'
+					}" />
+				</t:template>
+			</t:Column>
+			<t:Column
+				width="10rem"
+				hAlign="End"
+			>
+				<m:Label text="BAS Credit" />
+				<t:template>
+					<m:Text text="{
+						path: 'controls>BasTotalCredit',
+						formatter: '.formatter.formatCurrency'
+					}" />
+				</t:template>
+			</t:Column>
+			<t:Column
+				width="10rem"
+				hAlign="End"
+			>
+				<m:Label text="BAS Balance" />
+				<t:template>
+					<m:ObjectStatus
+						text="{
+							path: 'controls>BasTotalBalance',
+							formatter: '.formatter.formatCurrency'
+						}"
+						state="{= ${controls>BasTotalBalance} !== 0 ? 'Error' : 'Success' }"
+					/>
+				</t:template>
+			</t:Column>
+			<t:Column
+				width="10rem"
+				hAlign="End"
+			>
+				<m:Label text="PNL Debit" />
+				<t:template>
+					<m:Text text="{
+						path: 'controls>PnlTotalDebit',
+						formatter: '.formatter.formatCurrency'
+					}" />
+				</t:template>
+			</t:Column>
+			<t:Column
+				width="10rem"
+				hAlign="End"
+			>
+				<m:Label text="PNL Credit" />
+				<t:template>
+					<m:Text text="{
+						path: 'controls>PnlTotalCredit',
+						formatter: '.formatter.formatCurrency'
+					}" />
+				</t:template>
+			</t:Column>
+			<t:Column
+				width="10rem"
+				hAlign="End"
+			>
+				<m:Label text="PNL Balance" />
+				<t:template>
+					<m:Text text="{
+						path: 'controls>PnlTotalBalance',
+						formatter: '.formatter.formatCurrency'
+					}" />
+				</t:template>
+			</t:Column>
+		</t:columns>
+	</t:Table>
+</core:FragmentDefinition>

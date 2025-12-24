@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Analytics App</title>
+    <script
+        id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-libs="sap.m"
+        data-sap-ui-compatVersion="edge"
+    ></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #login-container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="sapUiBody" id="content">
+    <script>
+        sap.ui.require([
+            "sap/m/Dialog",
+            "sap/m/VBox",
+            "sap/m/Label",
+            "sap/m/Input",
+            "sap/m/Button",
+            "sap/m/MessageToast",
+            "sap/m/Text",
+            "sap/ui/core/Icon",
+            "sap/m/HBox"
+        ], function(Dialog, VBox, Label, Input, Button, MessageToast, Text, Icon, HBox) {
+
+            var oUsernameInput = new Input({
+                placeholder: "Username",
+                value: "",
+                width: "100%"
+            });
+
+            var oPasswordInput = new Input({
+                type: "Password",
+                placeholder: "Password",
+                width: "100%",
+                submit: function() {
+                    handleLogin();
+                }
+            });
+
+            // Available users info
+            var oUserInfoText = new Text({
+                text: "Demo Users: alice/alice, bob/bob, charlie/charlie"
+            }).addStyleClass("sapUiTinyMarginTop");
+
+            function handleLogin() {
+                var sUsername = oUsernameInput.getValue();
+                var sPassword = oPasswordInput.getValue();
+
+                if (!sUsername || !sPassword) {
+                    MessageToast.show("Please enter both username and password");
+                    return;
+                }
+
+                // Create base64 encoded credentials
+                var credentials = btoa(sUsername + ":" + sPassword);
+
+                // Try to authenticate by making a request to the service
+                fetch("/analytics/", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Basic " + credentials
+                    }
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        // Store credentials for this session
+                        sessionStorage.setItem("auth", credentials);
+
+                        // Redirect to main app
+                        window.location.href = "/ui5/index.html";
+                    } else {
+                        MessageToast.show("Invalid username or password");
+                        oPasswordInput.setValue("");
+                    }
+                })
+                .catch(function(error) {
+                    MessageToast.show("Login failed: " + error.message);
+                });
+            }
+
+            var oLoginDialog = new Dialog({
+                title: "Analytics App Login",
+                contentWidth: "400px",
+                content: [
+                    new VBox({
+                        alignItems: "Center",
+                        items: [
+                            new Icon({
+                                src: "sap-icon://locked",
+                                size: "3rem",
+                                color: "#0854a0"
+                            }).addStyleClass("sapUiMediumMarginBottom"),
+                            new Text({
+                                text: "Please sign in to continue"
+                            }).addStyleClass("sapUiSmallMarginBottom"),
+                            new VBox({
+                                width: "100%",
+                                items: [
+                                    new Label({ text: "Username", required: true }),
+                                    oUsernameInput,
+                                    new Label({
+                                        text: "Password",
+                                        required: true
+                                    }).addStyleClass("sapUiSmallMarginTop"),
+                                    oPasswordInput,
+                                    oUserInfoText
+                                ]
+                            })
+                        ]
+                    }).addStyleClass("sapUiSmallMargin")
+                ],
+                beginButton: new Button({
+                    text: "Login",
+                    type: "Emphasized",
+                    press: handleLogin
+                }),
+                endButton: new Button({
+                    text: "Cancel",
+                    press: function() {
+                        oUsernameInput.setValue("");
+                        oPasswordInput.setValue("");
+                    }
+                }),
+                afterClose: function() {
+                    oLoginDialog.destroy();
+                }
+            });
+
+            // Create background container
+            var oContainer = document.createElement("div");
+            oContainer.id = "login-container";
+            document.body.appendChild(oContainer);
+
+            // Open the dialog
+            oLoginDialog.open();
+
+            // Focus on username field
+            setTimeout(function() {
+                oUsernameInput.focus();
+            }, 300);
+        });
+    </script>
+</body>
+</html>

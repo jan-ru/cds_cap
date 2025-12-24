@@ -1,0 +1,100 @@
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:l="sap.ui.layout"
+>
+	<m:OverflowToolbar
+		design="Transparent"
+		class="sapUiSmallMarginBottom"
+	>
+		<m:content>
+			<!-- Period A -->
+			<m:Title
+				text="Period A:"
+				class="sapUiTinyMarginEnd"
+			/>
+			<m:Select
+				selectedKey="{viewSettings>/periodA/year}"
+				items="{viewSettings>/years}"
+				width="6rem"
+			>
+				<core:Item
+					key="{viewSettings>key}"
+					text="{viewSettings>text}"
+				/>
+			</m:Select>
+			<m:Select
+				selectedKey="{viewSettings>/periodA/monthFrom}"
+				items="{viewSettings>/months}"
+				width="5rem"
+				class="sapUiTinyMarginBegin"
+			>
+				<core:Item
+					key="{viewSettings>key}"
+					text="{viewSettings>text}"
+				/>
+			</m:Select>
+			<m:Text
+				text="-"
+				class="sapUiTinyMarginBeginEnd"
+			/>
+			<m:Select
+				selectedKey="{viewSettings>/periodA/monthTo}"
+				items="{viewSettings>/months}"
+				width="5rem"
+			>
+				<core:Item
+					key="{viewSettings>key}"
+					text="{viewSettings>text}"
+				/>
+			</m:Select>
+			<m:ToolbarSeparator />
+			<!-- Period B -->
+			<m:Title
+				text="Period B:"
+				class="sapUiTinyMarginEnd"
+			/>
+			<m:Select
+				selectedKey="{viewSettings>/periodB/year}"
+				items="{viewSettings>/years}"
+				width="6rem"
+			>
+				<core:Item
+					key="{viewSettings>key}"
+					text="{viewSettings>text}"
+				/>
+			</m:Select>
+			<m:Select
+				selectedKey="{viewSettings>/periodB/monthFrom}"
+				items="{viewSettings>/months}"
+				width="5rem"
+				class="sapUiTinyMarginBegin"
+			>
+				<core:Item
+					key="{viewSettings>key}"
+					text="{viewSettings>text}"
+				/>
+			</m:Select>
+			<m:Text
+				text="-"
+				class="sapUiTinyMarginBeginEnd"
+			/>
+			<m:Select
+				selectedKey="{viewSettings>/periodB/monthTo}"
+				items="{viewSettings>/months}"
+				width="5rem"
+			>
+				<core:Item
+					key="{viewSettings>key}"
+					text="{viewSettings>text}"
+				/>
+			</m:Select>
+			<m:ToolbarSpacer />
+			<m:Button
+				text="Go"
+				type="Emphasized"
+				press=".onPeriodUpdate"
+			/>
+		</m:content>
+	</m:OverflowToolbar>
+</core:FragmentDefinition>

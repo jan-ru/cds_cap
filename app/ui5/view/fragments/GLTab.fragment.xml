@@ -1,0 +1,287 @@
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:t="sap.ui.table"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
+>
+	<f:DynamicPage
+		id="dynamicPageGL"
+		headerExpanded="true"
+		preserveHeaderStateOnScroll="false"
+		showFooter="false"
+		fitContent="true"
+	>
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<m:Title text="General Ledger Entries" />
+				</f:heading>
+				<f:expandedContent>
+					<m:Label text="Rows: {view>/glRowCount}, Columns: {view>/glColCount}" />
+				</f:expandedContent>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
+					<!-- Placeholder for future filters or header info -->
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<t:Table
+				id="tableGL"
+				rows="{odata>/Dump}"
+				visibleRowCountMode="Auto"
+				selectionMode="None"
+			>
+				<t:extension>
+					<m:OverflowToolbar>
+						<m:ToolbarSpacer />
+						<m:Button
+							icon="sap-icon://excel-attachment"
+							text="Export"
+							press="onExportGL"
+						/>
+						<m:Button
+							text="Source Data"
+							press="onPressGLDetails"
+						/>
+						<m:Button
+							text="By GL Account"
+							press="onPressGLByAccount"
+						/>
+						<m:Button
+							text="By Journal"
+							press="onPressGLByJournal"
+						/>
+						<m:Button
+							text="By Cost Center"
+							press="onPressGLByCostCenter"
+						/>
+						<m:Button
+							text="By Period"
+							press="onPressGLByPeriod"
+						/>
+					</m:OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column
+						id="colGLAccount"
+						width="8rem"
+						filterProperty="CodeGrootboekrekening"
+					>
+						<m:Label text="GL Account" />
+						<t:template>
+							<m:Text text="{
+								path: 'odata>CodeGrootboekrekening',
+								type: 'sap.ui.model.type.String'
+							}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colGLName"
+						width="20rem"
+						filterProperty="NaamGrootboekrekening"
+					>
+						<m:Label text="GL Name" />
+						<t:template>
+							<m:Text text="{odata>NaamGrootboekrekening}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colJournal"
+						width="8rem"
+						filterProperty="Code"
+					>
+						<m:Label text="Journal" />
+						<t:template>
+							<m:Text text="{odata>Code}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colDocNr"
+						width="8rem"
+						filterProperty="Boekingsnummer"
+					>
+						<m:Label text="Document Nr" />
+						<t:template>
+							<m:Text text="{
+								path: 'odata>Boekingsnummer',
+								type: 'sap.ui.model.type.Integer',
+								formatOptions: {
+									groupingEnabled: false
+								}
+							}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colPostingDate"
+						width="8rem"
+						filterProperty="Boekdatum"
+					>
+						<m:Label text="Posting Date" />
+						<t:template>
+							<m:Text text="{
+								path: 'odata>Boekdatum',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {
+									style: 'medium',
+									source: {
+										pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+									}
+								}
+							}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colDesc"
+						width="20rem"
+						filterProperty="Omschrijving"
+					>
+						<m:Label text="Description" />
+						<t:template>
+							<m:Text text="{odata>Omschrijving}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colCostCenter"
+						width="8rem"
+						filterProperty="Code1"
+					>
+						<m:Label text="Cost Center" />
+						<t:template>
+							<m:Text text="{odata>Code1}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colPeriodYear"
+						width="6rem"
+						filterProperty="PeriodYear"
+						filterType="sap.ui.model.type.Integer"
+					>
+						<m:Label text="Year" />
+						<t:template>
+							<m:Text text="{
+								path: 'odata>PeriodYear',
+								type: 'sap.ui.model.type.Integer',
+								formatOptions: {
+									groupingEnabled: false
+								}
+							}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colPeriodSortKey"
+						width="6rem"
+						filterProperty="PeriodSortKey"
+						filterType="sap.ui.model.type.Integer"
+					>
+						<m:Label text="Sort Key" />
+						<t:template>
+							<m:Text text="{
+								path: 'odata>PeriodSortKey',
+								type: 'sap.ui.model.type.Integer',
+								formatOptions: {
+									groupingEnabled: false
+								}
+							}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colPeriod"
+						width="8rem"
+					>
+						<m:Label text="Period" />
+						<t:template>
+							<m:Text text="{odata>Periode}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colDebit"
+						width="8rem"
+						hAlign="End"
+					>
+						<m:Label text="Debit" />
+						<t:template>
+							<m:Text text="{
+								path: 'odata>Debet',
+								formatter: '.formatter.formatCurrency'
+							}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colCredit"
+						width="8rem"
+						hAlign="End"
+					>
+						<m:Label text="Credit" />
+						<t:template>
+							<m:Text text="{
+								path: 'odata>Credit',
+								formatter: '.formatter.formatCurrency'
+							}" />
+						</t:template>
+					</t:Column>
+					<t:Column
+						id="colSaldo"
+						width="8rem"
+						hAlign="End"
+					>
+						<m:Label text="Balance" />
+						<t:template>
+							<m:Text text="{
+								path: 'odata>Saldo',
+								formatter: '.formatter.formatCurrency'
+							}" />
+						</t:template>
+					</t:Column>
+				</t:columns>
+				<t:footer>
+					<m:VBox>
+						<m:OverflowToolbar>
+							<m:ToolbarSpacer />
+							<m:Label text="Total Debit:" />
+							<m:Text text="{
+								path: 'view>/glTotalDebit',
+								type: 'sap.ui.model.type.Float',
+								formatOptions: {
+									minFractionDigits: 2,
+									maxFractionDigits: 2,
+									groupingEnabled: true
+								}
+							}" />
+							<m:ToolbarSeparator />
+							<m:Label text="Total Credit:" />
+							<m:Text text="{
+								path: 'view>/glTotalCredit',
+								type: 'sap.ui.model.type.Float',
+								formatOptions: {
+									minFractionDigits: 2,
+									maxFractionDigits: 2,
+									groupingEnabled: true
+								}
+							}" />
+							<m:ToolbarSeparator />
+							<m:Label text="Total Balance:" />
+							<m:Text text="{
+								path: 'view>/glTotalBalance',
+								type: 'sap.ui.model.type.Float',
+								formatOptions: {
+									minFractionDigits: 2,
+									maxFractionDigits: 2,
+									groupingEnabled: true
+								}
+							}" />
+						</m:OverflowToolbar>
+						<core:Fragment
+							fragmentName="demo.ui5.view.fragments.TechnicalInfo"
+							type="XML"
+						/>
+					</m:VBox>
+				</t:footer>
+			</t:Table>
+		</f:content>
+	</f:DynamicPage>
+</core:FragmentDefinition>

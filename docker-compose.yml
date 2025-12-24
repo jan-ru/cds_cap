@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "4004:4004"
+    volumes:
+      # Mount the local SQLite file to persist data
+      # Ensure db.sqlite exists on host or is created by the app on first run
+      - ./db.sqlite:/app/db.sqlite
+    environment: {}
+      # Force production profile if needed
+      #- NODE_ENV=production
