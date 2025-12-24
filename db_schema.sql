@@ -16,10 +16,15 @@ CREATE TABLE SCA_ServiceAgreement (
 
 DROP TABLE IF EXISTS VFA_SalesInvoice;
 CREATE TABLE VFA_SalesInvoice (
-  volg_nr          INTEGER,
+  volg_nr          TEXT,
   debtor_nr        TEXT,
   debtor_name      TEXT,
+  project          TEXT,
+  reference       TEXT,
+  account_manager  TEXT,
   invoice_date     DATE,
+  period_start     TEXT,
+  total_ex_vat     REAL,
   total_incl_vat   REAL,
   paid_amount      REAL,
   open_amount      REAL,
@@ -28,10 +33,15 @@ CREATE TABLE VFA_SalesInvoice (
 
 DROP TABLE IF EXISTS VOA_SalesOrder;
 CREATE TABLE VOA_SalesOrder (
-  volg_nr          INTEGER,
+  volg_nr          TEXT,
   organisation     TEXT,
   relation_name    TEXT,
   order_date       DATE,
+  sca_description   TEXT,
+  reference        TEXT,
+  sca_type         TEXT,
+  phase           TEXT,
+  delivery_date     DATE,
   account_manager  TEXT,
   total_ex_vat     REAL,
   source           TEXT,

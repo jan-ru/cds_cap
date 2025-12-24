@@ -82,6 +82,7 @@ entity UserSettings : managed {
 }
 
 // Import tables from SQLite
+@cds.persistence.table
 entity SCA_ServiceAgreement {
   key volg_nr           : String;
       project_name      : String;
@@ -96,6 +97,7 @@ entity SCA_ServiceAgreement {
       contact_name      : String;
 }
 
+@cds.persistence.table
 entity VFA_SalesInvoice {
   key volg_nr         : Integer;
       debtor_nr       : String;
@@ -106,6 +108,7 @@ entity VFA_SalesInvoice {
       open_amount     : Double;
 }
 
+@cds.persistence.table
 entity VOA_SalesOrder {
   key volg_nr         : Integer;
       organisation    : String;
