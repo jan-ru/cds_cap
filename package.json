@@ -23,11 +23,11 @@
             "db": {
                 "kind": "sqlite",
                 "credentials": {
-                    "url": "test.db"
+                    "url": "db.sqlite"
                 },
                 "[production]": {
                     "credentials": {
-                        "url": "test.db"
+                        "url": "db.sqlite"
                     }
                 }
             },

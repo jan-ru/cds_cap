@@ -105,10 +105,15 @@ entity SCA_ServiceAgreement {
 
 @cds.persistence.table
 entity VFA_SalesInvoice {
-  key volg_nr         : Integer;
+  key volg_nr         : String;
       debtor_nr       : String;
       debtor_name     : String;
+      project         : String;
+      reference       : String;
+      account_manager : String;
       invoice_date    : Date;
+      period_start    : String;
+      total_ex_vat    : Double;
       total_incl_vat  : Double;
       paid_amount     : Double;
       open_amount     : Double;
@@ -116,10 +121,15 @@ entity VFA_SalesInvoice {
 
 @cds.persistence.table
 entity VOA_SalesOrder {
-  key volg_nr         : Integer;
+  key volg_nr         : String;
       organisation    : String;
       relation_name   : String;
       order_date      : Date;
+      sca_description : String;
+      reference       : String;
+      sca_type        : String;
+      phase           : String;
+      delivery_date   : Date;
       account_manager : String;
       total_ex_vat    : Double;
       source          : String;
