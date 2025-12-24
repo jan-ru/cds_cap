@@ -21,6 +21,15 @@ service AnalyticsService @(path: '/analytics', requires: 'authenticated-user') {
   entity UserSettings        as projection on demo.UserSettings;
 
   @readonly
+  entity SCA_ServiceAgreement as projection on demo.SCA_ServiceAgreement;
+
+  @readonly
+  entity VFA_SalesInvoice     as projection on demo.VFA_SalesInvoice;
+
+  @readonly
+  entity VOA_SalesOrder       as projection on demo.VOA_SalesOrder;
+
+  @readonly
   entity SalesAnalytics      as
     select from FinancialStatements {
       key ID,

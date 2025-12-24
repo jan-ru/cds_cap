@@ -86,6 +86,13 @@ module.exports = cds.service.impl(async function() {
             dbFiles = ['Error reading directory'];
         }
 
+        // List of database tables/entities
+        const databaseTables = [
+            'SCA_ServiceAgreement',
+            'VFA_SalesInvoice',
+            'VOA_SalesOrder'
+        ];
+
         // Read Staging Model Files
         let stgFiles = [];
         try {
@@ -127,6 +134,7 @@ module.exports = cds.service.impl(async function() {
             dockerVersion: dockerVersion,
             inputFiles: excelFiles,
             databaseFiles: dbFiles,
+            databaseTables: databaseTables,
             stagingFiles: stgFiles,
             metricsFiles: metricFiles
         };

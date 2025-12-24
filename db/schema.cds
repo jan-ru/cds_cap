@@ -80,3 +80,38 @@ entity UserSettings : managed {
   key user     : String;
       settings : LargeString;
 }
+
+// Import tables from SQLite
+entity SCA_ServiceAgreement {
+  key volg_nr           : String;
+      project_name      : String;
+      debtor_name       : String;
+      relatie_nr        : String;
+      financial_status  : String;
+      start_date        : Date;
+      extention_datate  : Date;
+      end_date          : Date;
+      sales_order       : String;
+      sla_type          : String;
+      contact_name      : String;
+}
+
+entity VFA_SalesInvoice {
+  key volg_nr         : Integer;
+      debtor_nr       : String;
+      debtor_name     : String;
+      invoice_date    : Date;
+      total_incl_vat  : Double;
+      paid_amount     : Double;
+      open_amount     : Double;
+}
+
+entity VOA_SalesOrder {
+  key volg_nr         : Integer;
+      organisation    : String;
+      relation_name   : String;
+      order_date      : Date;
+      account_manager : String;
+      total_ex_vat    : Double;
+      source          : String;
+}

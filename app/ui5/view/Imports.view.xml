@@ -116,14 +116,14 @@
 					>
 						<List
 							headerText="Database Tables"
-							items="{versionInfo>/databaseFiles}"
+							items="{versionInfo>/databaseTables}"
 						>
 							<StandardListItem
 								title="{versionInfo>}"
 								type="Active"
-								press=".onFilePress"
+								press=".onTablePress"
 								icon="sap-icon://table-view"
-								app:fileType="table"
+								app:tableName="{versionInfo>}"
 							/>
 						</List>
 					</Page>
@@ -166,6 +166,31 @@
 							editable="false"
 							height="100%"
 						/>
+					</Page>
+					<Page
+						id="pageTableViewer"
+						enableScrolling="true"
+						showNavButton="true"
+						navButtonPress=".onNavBackToTableList"
+						title="{tableViewer>/tableName}"
+					>
+						<Table
+							id="dataTable"
+							items="{tableViewer>/items}"
+							growing="true"
+							growingThreshold="50"
+						>
+							<columns>
+								<!-- Dynamic columns will be added via controller -->
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<!-- Dynamic cells will be added via controller -->
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
 					</Page>
 				</pages>
 			</NavContainer>
