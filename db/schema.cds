@@ -3,6 +3,7 @@ using {managed} from '@sap/cds/common';
 namespace demo;
 
 
+@cds.persistence.table
 entity Dump {
   key ID                    : UUID;
       CodeGrootboekrekening : String;
@@ -23,6 +24,7 @@ entity Dump {
       PeriodSortKey         : Integer;
 }
 
+@cds.persistence.table
 entity Pivot {
   key ID                    : String(32); // MD5 hash
       CodeGrootboekrekening : String;
@@ -31,6 +33,7 @@ entity Pivot {
       Saldo                 : Double;
 }
 
+@cds.persistence.table
 entity Controls {
   key PeriodSortKey   : Integer;
       PeriodYear      : Integer;
@@ -43,6 +46,7 @@ entity Controls {
       PnlTotalBalance : Double;
 }
 
+@cds.persistence.table
 entity FinancialStatements {
   key ID                    : UUID;
       CodeGrootboekrekening : String(100);
@@ -66,6 +70,7 @@ entity FinancialStatements {
   ],
   AggregatableProperties: [{Property: 'Amount'}]
 }
+@cds.persistence.table
 entity RevenueReport {
   key ID              : UUID;
       RevenueType     : String(20);
@@ -76,6 +81,7 @@ entity RevenueReport {
       Amount          : Double;
 }
 
+@cds.persistence.table
 entity UserSettings : managed {
   key user     : String;
       settings : LargeString;
