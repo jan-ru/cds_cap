@@ -1,0 +1,6 @@
+{
+  "name": "sales-invoices",
+  "_version": "1.0.0",
+  "sapux": true,
+  "description": "Sales Invoices Fiori App"
+}

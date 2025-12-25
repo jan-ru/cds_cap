@@ -1,0 +1,123 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "workingcapital",
+    "type": "application",
+    "title": "Working Capital",
+    "description": "Sales Invoices, Orders, and Service Agreements",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.1.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.fe.templates": {},
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "workingcapital.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router"
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "SalesInvoiceList",
+          "target": "SalesInvoiceList"
+        },
+        {
+          "pattern": "VFA_SalesInvoice({key}):?query:",
+          "name": "SalesInvoiceObjectPage",
+          "target": "SalesInvoiceObjectPage"
+        }
+      ],
+      "targets": {
+        "SalesInvoiceList": {
+          "type": "Component",
+          "id": "SalesInvoiceList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/VFA_SalesInvoice",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "VFA_SalesInvoice": {
+                  "detail": {
+                    "route": "SalesInvoiceObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SalesInvoiceObjectPage": {
+          "type": "Component",
+          "id": "SalesInvoiceObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/VFA_SalesInvoice",
+              "navigation": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "analytics-cap"
+  }
+}

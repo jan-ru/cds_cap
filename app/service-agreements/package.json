@@ -1,0 +1,6 @@
+{
+  "name": "service-agreements",
+  "_version": "1.0.0",
+  "sapux": true,
+  "description": "Service Agreements Fiori App"
+}

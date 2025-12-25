@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Analytics Launchpad</title>
+    
+    <script>
+        window["sap-ushell-config"] = {
+            defaultRenderer: "fiori2",
+            bootstrapPlugins: {
+                "RuntimeAuthoringPlugin": {
+                    component: "sap.ushell.plugins.rta",
+                    config: {
+                        validateAppVersion: false
+                    }
+                }
+            },
+            renderers: {
+                fiori2: {
+                    componentData: {
+                        config: {
+                            enableSearch: false,
+                            rootIntent: "Shell-home"
+                        }
+                    }
+                }
+            },
+            services: {
+                LaunchPage: {
+                    adapter: {
+                        config: {
+                            groups: [
+                                {
+                                    id: "finance",
+                                    title: "Financial Analytics",
+                                    isPreset: true,
+                                    isVisible: true,
+                                    isGroupLocked: false,
+                                    tiles: [
+                                        {
+                                            id: "financialStatements",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Financial Statements",
+                                                subtitle: "Income Statement & Balance Sheet",
+                                                icon: "sap-icon://business-objects-experience",
+                                                targetURL: "#financialstatements-display"
+                                            }
+                                        },
+                                        {
+                                            id: "revenueAnalysis",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Revenue Analysis",
+                                                subtitle: "LTM & Period Comparison",
+                                                icon: "sap-icon://line-chart",
+                                                targetURL: "#revenueanalysis-display"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "operations",
+                                    title: "Operations",
+                                    isPreset: true,
+                                    isVisible: true,
+                                    isGroupLocked: false,
+                                    tiles: [
+                                        {
+                                            id: "workingCapital",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Working Capital",
+                                                subtitle: "Invoices & Orders",
+                                                icon: "sap-icon://sales-order",
+                                                targetURL: "#workingcapital-display"
+                                            }
+                                        },
+                                        {
+                                            id: "serviceAgreements",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Service Agreements",
+                                                subtitle: "Active SLAs",
+                                                icon: "sap-icon://sales-quote",
+                                                targetURL: "#serviceagreements-display"
+                                            }
+                                        },
+                                        {
+                                            id: "salesOrders",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Sales Orders",
+                                                subtitle: "Order Management",
+                                                icon: "sap-icon://cart",
+                                                targetURL: "#salesorders-display"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                ClientSideTargetResolution: {
+                    adapter: {
+                        config: {
+                            inbounds: {
+                                "financialstatements-display": {
+                                    semanticObject: "financialstatements",
+                                    action: "display",
+                                    title: "Financial Statements",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=financialstatements",
+                                        url: "/financial-statements/webapp"
+                                    }
+                                },
+                                "revenueanalysis-display": {
+                                    semanticObject: "revenueanalysis",
+                                    action: "display",
+                                    title: "Revenue Analysis",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=revenueanalysis",
+                                        url: "/revenue-analysis/webapp"
+                                    }
+                                },
+                                "workingcapital-display": {
+                                    semanticObject: "workingcapital",
+                                    action: "display",
+                                    title: "Working Capital",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=workingcapital",
+                                        url: "/working-capital/webapp"
+                                    }
+                                },
+                                "serviceagreements-display": {
+                                    semanticObject: "serviceagreements",
+                                    action: "display",
+                                    title: "Service Agreements",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=serviceagreements",
+                                        url: "/service-agreements/webapp"
+                                    }
+                                },
+                                "salesorders-display": {
+                                    semanticObject: "salesorders",
+                                    action: "display",
+                                    title: "Sales Orders",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=salesorders",
+                                        url: "/sales-orders/webapp"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                NavTargetResolution: {
+                    config: {
+                        enableClientSideTargetResolution: true
+                    }
+                }
+            }
+        };
+    </script>
+
+    <script src="https://ui5.sap.com/1.120.0/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+    <script src="https://ui5.sap.com/1.120.0/resources/sap-ui-core.js"
+        data-sap-ui-libs="sap.m,sap.ushell,sap.fe.templates,sap.f"
+        data-sap-ui-async="true"
+        data-sap-ui-preload="async"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-language="en"
+        data-sap-ui-xx-componentPreload="off"
+        data-sap-ui-resourceroots='{
+            "financialstatements": "/financial-statements/webapp",
+            "revenueanalysis": "/revenue-analysis/webapp",
+            "workingcapital": "/working-capital/webapp",
+            "serviceagreements": "/service-agreements/webapp",
+            "salesorders": "/sales-orders/webapp",
+            "salesinvoices": "/sales-invoices/webapp"
+        }'
+        data-sap-ui-frameOptions="trusted"
+        data-sap-ui-bindingSyntax="complex"
+        data-sap-ui-xx-waitForTheme="true">
+    </script>
+
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            sap.ushell.Container.createRenderer().placeAt("content");
+        });
+    </script>
+</head>
+<body class="sapUiBody" id="content">
+</body>
+</html>

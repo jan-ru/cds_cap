@@ -1,0 +1,6 @@
+{
+  "name": "financials",
+  "_version": "1.0.0",
+  "sapux": true,
+  "description": "Financial Statements Fiori App"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "financial-statements",
+  "version": "0.1.0",
+  "description": "Financial Statements Analysis - Income Statement & Balance Sheet",
+  "scripts": {
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#financialstatements-display\""
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.108.28"
+  }
+}

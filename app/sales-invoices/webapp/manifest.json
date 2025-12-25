@@ -1,0 +1,81 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "salesinvoices",
+    "type": "application",
+    "title": "Sales Invoices",
+    "description": "Sales Invoice Management",
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "libs": {
+        "sap.fe.templates": {}
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.f.routing.Router",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "VFA_SalesInvoiceList",
+          "target": "VFA_SalesInvoiceList"
+        },
+        {
+          "pattern": "VFA_SalesInvoice({key}):?query:",
+          "name": "VFA_SalesInvoiceObjectPage",
+          "target": "VFA_SalesInvoiceObjectPage"
+        }
+      ],
+      "targets": {
+        "VFA_SalesInvoiceList": {
+          "type": "Component",
+          "id": "VFA_SalesInvoiceList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/VFA_SalesInvoice",
+              "entitySet": "VFA_SalesInvoice"
+            }
+          }
+        },
+        "VFA_SalesInvoiceObjectPage": {
+          "type": "Component",
+          "id": "VFA_SalesInvoiceObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/VFA_SalesInvoice",
+              "entitySet": "VFA_SalesInvoice"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

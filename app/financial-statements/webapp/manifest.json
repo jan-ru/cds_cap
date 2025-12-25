@@ -1,0 +1,132 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "financialstatements",
+    "type": "application",
+    "title": "Financial Statements",
+    "description": "Analytical view of Income Statement and Balance Sheet",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.1.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.fe.templates": {},
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "financialstatements.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router"
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "FinancialStatementsList",
+          "target": "FinancialStatementsList"
+        },
+        {
+          "pattern": "FinancialStatements({key}):?query:",
+          "name": "FinancialStatementsObjectPage",
+          "target": "FinancialStatementsObjectPage"
+        }
+      ],
+      "targets": {
+        "FinancialStatementsList": {
+          "type": "Component",
+          "id": "FinancialStatementsList",
+          "name": "sap.fe.templates.AnalyticalListPage",
+          "options": {
+            "settings": {
+              "contextPath": "/FinancialStatements",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "FinancialStatements": {
+                  "detail": {
+                    "route": "FinancialStatementsObjectPage"
+                  }
+                }
+              },
+              "views": {
+                "paths": [{
+                  "primary": [{
+                    "annotationPath": "@UI.Chart"
+                  }, {
+                    "annotationPath": "@UI.LineItem"
+                  }]
+                }]
+              }
+            }
+          }
+        },
+        "FinancialStatementsObjectPage": {
+          "type": "Component",
+          "id": "FinancialStatementsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/FinancialStatements",
+              "navigation": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "analytical"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "analytics-cap"
+  }
+}

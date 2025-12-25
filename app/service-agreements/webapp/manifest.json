@@ -1,0 +1,81 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "serviceagreements",
+    "type": "application",
+    "title": "Service Agreements",
+    "description": "Service Agreement Management",
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "libs": {
+        "sap.fe.templates": {}
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.f.routing.Router",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "SCA_ServiceAgreementList",
+          "target": "SCA_ServiceAgreementList"
+        },
+        {
+          "pattern": "SCA_ServiceAgreement({key}):?query:",
+          "name": "SCA_ServiceAgreementObjectPage",
+          "target": "SCA_ServiceAgreementObjectPage"
+        }
+      ],
+      "targets": {
+        "SCA_ServiceAgreementList": {
+          "type": "Component",
+          "id": "SCA_ServiceAgreementList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/SCA_ServiceAgreement",
+              "entitySet": "SCA_ServiceAgreement"
+            }
+          }
+        },
+        "SCA_ServiceAgreementObjectPage": {
+          "type": "Component",
+          "id": "SCA_ServiceAgreementObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/SCA_ServiceAgreement",
+              "entitySet": "SCA_ServiceAgreement"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

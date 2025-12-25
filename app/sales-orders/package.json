@@ -1,0 +1,6 @@
+{
+  "name": "sales-orders",
+  "_version": "1.0.0",
+  "sapux": true,
+  "description": "Sales Orders Fiori App"
+}

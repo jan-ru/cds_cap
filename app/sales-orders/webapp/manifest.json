@@ -1,0 +1,81 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "salesorders",
+    "type": "application",
+    "title": "Sales Orders",
+    "description": "Sales Order Management",
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "libs": {
+        "sap.fe.templates": {}
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.f.routing.Router",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "VOA_SalesOrderList",
+          "target": "VOA_SalesOrderList"
+        },
+        {
+          "pattern": "VOA_SalesOrder({key}):?query:",
+          "name": "VOA_SalesOrderObjectPage",
+          "target": "VOA_SalesOrderObjectPage"
+        }
+      ],
+      "targets": {
+        "VOA_SalesOrderList": {
+          "type": "Component",
+          "id": "VOA_SalesOrderList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/VOA_SalesOrder",
+              "entitySet": "VOA_SalesOrder"
+            }
+          }
+        },
+        "VOA_SalesOrderObjectPage": {
+          "type": "Component",
+          "id": "VOA_SalesOrderObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/VOA_SalesOrder",
+              "entitySet": "VOA_SalesOrder"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

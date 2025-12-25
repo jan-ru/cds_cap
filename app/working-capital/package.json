@@ -1,0 +1,11 @@
+{
+  "name": "working-capital",
+  "version": "0.1.0",
+  "description": "Working Capital Management - Invoices, Orders, Service Agreements",
+  "scripts": {
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#workingcapital-display\""
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.108.28"
+  }
+}

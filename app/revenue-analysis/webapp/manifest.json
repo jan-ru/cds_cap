@@ -1,0 +1,130 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "revenueanalysis",
+    "type": "application",
+    "title": "Revenue Analysis",
+    "description": "Revenue trends, LTM analysis, and cost center breakdown",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.1.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.fe.templates": {},
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "revenueanalysis.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router"
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "RevenueReportList",
+          "target": "RevenueReportList"
+        },
+        {
+          "pattern": "RevenueReport({key}):?query:",
+          "name": "RevenueReportObjectPage",
+          "target": "RevenueReportObjectPage"
+        }
+      ],
+      "targets": {
+        "RevenueReportList": {
+          "type": "Component",
+          "id": "RevenueReportList",
+          "name": "sap.fe.templates.AnalyticalListPage",
+          "options": {
+            "settings": {
+              "contextPath": "/RevenueReport",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "RevenueReport": {
+                  "detail": {
+                    "route": "RevenueReportObjectPage"
+                  }
+                }
+              },
+              "views": {
+                "paths": [{
+                  "primary": [{
+                    "annotationPath": "@UI.Chart"
+                  }, {
+                    "annotationPath": "@UI.LineItem"
+                  }]
+                }]
+              }
+            }
+          }
+        },
+        "RevenueReportObjectPage": {
+          "type": "Component",
+          "id": "RevenueReportObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/RevenueReport"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "analytical"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "analytics-cap"
+  }
+}

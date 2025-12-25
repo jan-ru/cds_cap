@@ -1,0 +1,11 @@
+{
+  "name": "revenue-analysis",
+  "version": "0.1.0",
+  "description": "Revenue Analysis - LTM and Period Comparison",
+  "scripts": {
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#revenueanalysis-display\""
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.108.28"
+  }
+}
