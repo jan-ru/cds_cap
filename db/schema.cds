@@ -151,15 +151,17 @@ entity GUA_DeliveryNote {
 
 @cds.persistence.table
 entity ESL_Product {
-  key product_code   : String;
-      product_name   : String;
-      description    : String;
-      product_group  : String;
-      unit_price     : Double;
+  key prd_code_sku   : String;
+      company        : String;
+      name_internal  : String;
+      vendor         : String;
+      productgroup   : String;
+      werksoort      : String;
+      costcenter     : String;
+      uursoort       : String;
+      discountgroup  : String;
       currency       : String;
-      supplier       : String;
-      cost_center    : String;
-      status         : String;
+      salesprice     : Double;
 }
 
 @cds.persistence.table

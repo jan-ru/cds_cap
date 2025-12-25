@@ -481,21 +481,21 @@ annotate AnalyticsService.GUA_DeliveryNote with @(
 annotate AnalyticsService.ESL_Product with @(
   UI: {
     LineItem: [
-      {Value: product_code, Label: 'Product Code'},
-      {Value: product_name, Label: 'Product Name'},
-      {Value: product_group, Label: 'Product Group'},
-      {Value: unit_price, Label: 'Unit Price'},
+      {Value: prd_code_sku, Label: 'Product Code (SKU)'},
+      {Value: name_internal, Label: 'Product Name'},
+      {Value: productgroup, Label: 'Product Group'},
+      {Value: salesprice, Label: 'Sales Price'},
       {Value: currency, Label: 'Currency'},
-      {Value: supplier, Label: 'Supplier'},
-      {Value: status, Label: 'Status'}
+      {Value: vendor, Label: 'Vendor'},
+      {Value: company, Label: 'Company'}
     ],
     HeaderInfo: {
       TypeName: 'Product',
       TypeNamePlural: 'Products',
-      Title: {Value: product_name},
-      Description: {Value: product_code}
+      Title: {Value: name_internal},
+      Description: {Value: prd_code_sku}
     },
-    SelectionFields: [product_group, supplier, status],
+    SelectionFields: [productgroup, vendor, company],
     Facets: [
       {
         $Type: 'UI.ReferenceFacet',
@@ -515,27 +515,29 @@ annotate AnalyticsService.ESL_Product with @(
     ],
     FieldGroup#ProductInfo: {
       Data: [
-        {Value: product_code, Label: 'Product Code'},
-        {Value: product_name, Label: 'Product Name'},
-        {Value: description, Label: 'Description'},
-        {Value: status, Label: 'Status'}
+        {Value: prd_code_sku, Label: 'Product Code (SKU)'},
+        {Value: name_internal, Label: 'Product Name'},
+        {Value: company, Label: 'Company'},
+        {Value: werksoort, Label: 'Work Type'}
       ]
     },
     FieldGroup#Pricing: {
       Data: [
-        {Value: unit_price, Label: 'Unit Price'},
-        {Value: currency, Label: 'Currency'}
+        {Value: salesprice, Label: 'Sales Price'},
+        {Value: currency, Label: 'Currency'},
+        {Value: discountgroup, Label: 'Discount Group'}
       ]
     },
     FieldGroup#Classification: {
       Data: [
-        {Value: product_group, Label: 'Product Group'},
-        {Value: supplier, Label: 'Supplier'},
-        {Value: cost_center, Label: 'Cost Center'}
+        {Value: productgroup, Label: 'Product Group'},
+        {Value: vendor, Label: 'Vendor'},
+        {Value: costcenter, Label: 'Cost Center'},
+        {Value: uursoort, Label: 'Hour Type'}
       ]
     },
     Identification: [
-      {Value: product_code}
+      {Value: prd_code_sku}
     ]
   }
 );
