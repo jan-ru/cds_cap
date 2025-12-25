@@ -1,0 +1,124 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "productgroups",
+    "type": "application",
+    "title": "Product Groups",
+    "description": "Product Group Management",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.3.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.fe.templates": {},
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "productgroups.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "PGA_ProductGroupList",
+          "target": "PGA_ProductGroupList"
+        },
+        {
+          "pattern": "PGA_ProductGroup({key}):?query:",
+          "name": "PGA_ProductGroupObjectPage",
+          "target": "PGA_ProductGroupObjectPage"
+        }
+      ],
+      "targets": {
+        "PGA_ProductGroupList": {
+          "type": "Component",
+          "id": "PGA_ProductGroupList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/PGA_ProductGroup",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "PGA_ProductGroup": {
+                  "detail": {
+                    "route": "PGA_ProductGroupObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "PGA_ProductGroupObjectPage": {
+          "type": "Component",
+          "id": "PGA_ProductGroupObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/PGA_ProductGroup",
+              "navigation": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "analytics-cap"
+  }
+}

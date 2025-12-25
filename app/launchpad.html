@@ -109,6 +109,45 @@
                                             }
                                         }
                                     ]
+                                },
+                                {
+                                    id: "fulfillment",
+                                    title: "Fulfillment",
+                                    isPreset: true,
+                                    isVisible: true,
+                                    isGroupLocked: false,
+                                    tiles: [
+                                        {
+                                            id: "deliveryNotes",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Delivery Notes",
+                                                subtitle: "Track Deliveries",
+                                                icon: "sap-icon://shipping-status",
+                                                targetURL: "#deliverynotes-display"
+                                            }
+                                        },
+                                        {
+                                            id: "products",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Products",
+                                                subtitle: "Product Catalog",
+                                                icon: "sap-icon://product",
+                                                targetURL: "#products-display"
+                                            }
+                                        },
+                                        {
+                                            id: "productGroups",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Product Groups",
+                                                subtitle: "Product Categories",
+                                                icon: "sap-icon://group",
+                                                targetURL: "#productgroups-display"
+                                            }
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -201,6 +240,48 @@
                                         additionalInformation: "SAPUI5.Component=salesinvoices",
                                         url: "/sales-invoices/webapp"
                                     }
+                                },
+                                "deliverynotes-display": {
+                                    semanticObject: "deliverynotes",
+                                    action: "display",
+                                    title: "Delivery Notes",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=deliverynotes",
+                                        url: "/delivery-notes/webapp"
+                                    }
+                                },
+                                "products-display": {
+                                    semanticObject: "products",
+                                    action: "display",
+                                    title: "Products",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=products",
+                                        url: "/products/webapp"
+                                    }
+                                },
+                                "productgroups-display": {
+                                    semanticObject: "productgroups",
+                                    action: "display",
+                                    title: "Product Groups",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=productgroups",
+                                        url: "/product-groups/webapp"
+                                    }
                                 }
                             }
                         }
@@ -230,7 +311,10 @@
             "workingcapital": "/working-capital/webapp",
             "serviceagreements": "/service-agreements/webapp",
             "salesorders": "/sales-orders/webapp",
-            "salesinvoices": "/sales-invoices/webapp"
+            "salesinvoices": "/sales-invoices/webapp",
+            "deliverynotes": "/delivery-notes/webapp",
+            "products": "/products/webapp",
+            "productgroups": "/product-groups/webapp"
         }'
         data-sap-ui-frameOptions="trusted"
         data-sap-ui-bindingSyntax="complex"

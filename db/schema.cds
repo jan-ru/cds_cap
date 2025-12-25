@@ -134,3 +134,40 @@ entity VOA_SalesOrder {
       total_ex_vat    : Double;
       source          : String;
 }
+
+@cds.persistence.table
+entity GUA_DeliveryNote {
+  key volg_nr        : String;
+      order_number   : String;
+      customer_name  : String;
+      delivery_date  : Date;
+      status         : String;
+      address        : String;
+      contact_person : String;
+      notes          : String;
+      total_items    : Integer;
+      carrier        : String;
+}
+
+@cds.persistence.table
+entity ESL_Product {
+  key product_code   : String;
+      product_name   : String;
+      description    : String;
+      product_group  : String;
+      unit_price     : Double;
+      currency       : String;
+      supplier       : String;
+      cost_center    : String;
+      status         : String;
+}
+
+@cds.persistence.table
+entity PGA_ProductGroup {
+  key group_code : String;
+      group_name : String;
+      description : String;
+      category   : String;
+      manager    : String;
+      status     : String;
+}

@@ -1,0 +1,124 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "deliverynotes",
+    "type": "application",
+    "title": "Delivery Notes",
+    "description": "Delivery Note Management",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.3.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.fe.templates": {},
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "deliverynotes.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "GUA_DeliveryNoteList",
+          "target": "GUA_DeliveryNoteList"
+        },
+        {
+          "pattern": "GUA_DeliveryNote({key}):?query:",
+          "name": "GUA_DeliveryNoteObjectPage",
+          "target": "GUA_DeliveryNoteObjectPage"
+        }
+      ],
+      "targets": {
+        "GUA_DeliveryNoteList": {
+          "type": "Component",
+          "id": "GUA_DeliveryNoteList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/GUA_DeliveryNote",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "GUA_DeliveryNote": {
+                  "detail": {
+                    "route": "GUA_DeliveryNoteObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "GUA_DeliveryNoteObjectPage": {
+          "type": "Component",
+          "id": "GUA_DeliveryNoteObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/GUA_DeliveryNote",
+              "navigation": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "analytics-cap"
+  }
+}

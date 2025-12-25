@@ -412,3 +412,179 @@ annotate AnalyticsService.SalesAnalytics with @(
     }
   }
 );
+
+// Fiori preview for GUA Delivery Notes
+annotate AnalyticsService.GUA_DeliveryNote with @(
+  UI: {
+    LineItem: [
+      {Value: volg_nr, Label: 'Delivery Note Number'},
+      {Value: order_number, Label: 'Order Number'},
+      {Value: customer_name, Label: 'Customer'},
+      {Value: delivery_date, Label: 'Delivery Date'},
+      {Value: status, Label: 'Status'},
+      {Value: total_items, Label: 'Total Items'},
+      {Value: carrier, Label: 'Carrier'}
+    ],
+    HeaderInfo: {
+      TypeName: 'Delivery Note',
+      TypeNamePlural: 'Delivery Notes',
+      Title: {Value: volg_nr},
+      Description: {Value: customer_name}
+    },
+    SelectionFields: [customer_name, status, delivery_date],
+    Facets: [
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Delivery Information',
+        Target: '@UI.FieldGroup#DeliveryInfo'
+      },
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Customer Details',
+        Target: '@UI.FieldGroup#CustomerDetails'
+      },
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Logistics',
+        Target: '@UI.FieldGroup#Logistics'
+      }
+    ],
+    FieldGroup#DeliveryInfo: {
+      Data: [
+        {Value: volg_nr, Label: 'Delivery Note Number'},
+        {Value: order_number, Label: 'Order Number'},
+        {Value: delivery_date, Label: 'Delivery Date'},
+        {Value: status, Label: 'Status'},
+        {Value: total_items, Label: 'Total Items'}
+      ]
+    },
+    FieldGroup#CustomerDetails: {
+      Data: [
+        {Value: customer_name, Label: 'Customer Name'},
+        {Value: address, Label: 'Delivery Address'},
+        {Value: contact_person, Label: 'Contact Person'}
+      ]
+    },
+    FieldGroup#Logistics: {
+      Data: [
+        {Value: carrier, Label: 'Carrier'},
+        {Value: notes, Label: 'Notes'}
+      ]
+    },
+    Identification: [
+      {Value: volg_nr}
+    ]
+  }
+);
+
+// Fiori preview for ESL Products
+annotate AnalyticsService.ESL_Product with @(
+  UI: {
+    LineItem: [
+      {Value: product_code, Label: 'Product Code'},
+      {Value: product_name, Label: 'Product Name'},
+      {Value: product_group, Label: 'Product Group'},
+      {Value: unit_price, Label: 'Unit Price'},
+      {Value: currency, Label: 'Currency'},
+      {Value: supplier, Label: 'Supplier'},
+      {Value: status, Label: 'Status'}
+    ],
+    HeaderInfo: {
+      TypeName: 'Product',
+      TypeNamePlural: 'Products',
+      Title: {Value: product_name},
+      Description: {Value: product_code}
+    },
+    SelectionFields: [product_group, supplier, status],
+    Facets: [
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Product Information',
+        Target: '@UI.FieldGroup#ProductInfo'
+      },
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Pricing',
+        Target: '@UI.FieldGroup#Pricing'
+      },
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Classification',
+        Target: '@UI.FieldGroup#Classification'
+      }
+    ],
+    FieldGroup#ProductInfo: {
+      Data: [
+        {Value: product_code, Label: 'Product Code'},
+        {Value: product_name, Label: 'Product Name'},
+        {Value: description, Label: 'Description'},
+        {Value: status, Label: 'Status'}
+      ]
+    },
+    FieldGroup#Pricing: {
+      Data: [
+        {Value: unit_price, Label: 'Unit Price'},
+        {Value: currency, Label: 'Currency'}
+      ]
+    },
+    FieldGroup#Classification: {
+      Data: [
+        {Value: product_group, Label: 'Product Group'},
+        {Value: supplier, Label: 'Supplier'},
+        {Value: cost_center, Label: 'Cost Center'}
+      ]
+    },
+    Identification: [
+      {Value: product_code}
+    ]
+  }
+);
+
+// Fiori preview for PGA Product Groups
+annotate AnalyticsService.PGA_ProductGroup with @(
+  UI: {
+    LineItem: [
+      {Value: group_code, Label: 'Group Code'},
+      {Value: group_name, Label: 'Group Name'},
+      {Value: category, Label: 'Category'},
+      {Value: manager, Label: 'Manager'},
+      {Value: status, Label: 'Status'}
+    ],
+    HeaderInfo: {
+      TypeName: 'Product Group',
+      TypeNamePlural: 'Product Groups',
+      Title: {Value: group_name},
+      Description: {Value: group_code}
+    },
+    SelectionFields: [category, manager, status],
+    Facets: [
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Group Information',
+        Target: '@UI.FieldGroup#GroupInfo'
+      },
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Management',
+        Target: '@UI.FieldGroup#Management'
+      }
+    ],
+    FieldGroup#GroupInfo: {
+      Data: [
+        {Value: group_code, Label: 'Group Code'},
+        {Value: group_name, Label: 'Group Name'},
+        {Value: description, Label: 'Description'},
+        {Value: category, Label: 'Category'},
+        {Value: status, Label: 'Status'}
+      ]
+    },
+    FieldGroup#Management: {
+      Data: [
+        {Value: manager, Label: 'Manager'}
+      ]
+    },
+    Identification: [
+      {Value: group_code}
+    ]
+  }
+);

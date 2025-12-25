@@ -1,0 +1,124 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "products",
+    "type": "application",
+    "title": "Products",
+    "description": "Product Catalog Management",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.3.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.fe.templates": {},
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "products.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "ESL_ProductList",
+          "target": "ESL_ProductList"
+        },
+        {
+          "pattern": "ESL_Product({key}):?query:",
+          "name": "ESL_ProductObjectPage",
+          "target": "ESL_ProductObjectPage"
+        }
+      ],
+      "targets": {
+        "ESL_ProductList": {
+          "type": "Component",
+          "id": "ESL_ProductList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/ESL_Product",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "ESL_Product": {
+                  "detail": {
+                    "route": "ESL_ProductObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ESL_ProductObjectPage": {
+          "type": "Component",
+          "id": "ESL_ProductObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/ESL_Product",
+              "navigation": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "analytics-cap"
+  }
+}
