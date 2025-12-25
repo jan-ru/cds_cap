@@ -97,6 +97,16 @@
                                                 icon: "sap-icon://cart",
                                                 targetURL: "#salesorders-display"
                                             }
+                                        },
+                                        {
+                                            id: "salesInvoices",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Sales Invoices",
+                                                subtitle: "Invoice Management",
+                                                icon: "sap-icon://receipt",
+                                                targetURL: "#salesinvoices-display"
+                                            }
                                         }
                                     ]
                                 }
@@ -176,6 +186,20 @@
                                         applicationType: "SAPUI5",
                                         additionalInformation: "SAPUI5.Component=salesorders",
                                         url: "/sales-orders/webapp"
+                                    }
+                                },
+                                "salesinvoices-display": {
+                                    semanticObject: "salesinvoices",
+                                    action: "display",
+                                    title: "Sales Invoices",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=salesinvoices",
+                                        url: "/sales-invoices/webapp"
                                     }
                                 }
                             }

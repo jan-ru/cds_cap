@@ -5,6 +5,10 @@
     "type": "application",
     "title": "Service Agreements",
     "description": "Service Agreement Management",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.3.0"
+    },
     "dataSources": {
       "mainService": {
         "uri": "/analytics/",
@@ -15,15 +19,38 @@
       }
     }
   },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
   "sap.ui5": {
     "dependencies": {
+      "minUI5Version": "1.120.0",
       "libs": {
-        "sap.fe.templates": {}
+        "sap.fe.templates": {},
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {}
       }
     },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
     "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "serviceagreements.i18n.i18n"
+        }
+      },
       "": {
         "dataSource": "mainService",
+        "preload": true,
         "settings": {
           "operationMode": "Server",
           "autoExpandSelect": true,
@@ -33,6 +60,10 @@
     },
     "routing": {
       "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
         "routerClass": "sap.f.routing.Router",
         "async": true
       },
@@ -56,7 +87,15 @@
           "options": {
             "settings": {
               "contextPath": "/SCA_ServiceAgreement",
-              "entitySet": "SCA_ServiceAgreement"
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "SCA_ServiceAgreement": {
+                  "detail": {
+                    "route": "SCA_ServiceAgreementObjectPage"
+                  }
+                }
+              }
             }
           }
         },
@@ -67,7 +106,7 @@
           "options": {
             "settings": {
               "contextPath": "/SCA_ServiceAgreement",
-              "entitySet": "SCA_ServiceAgreement"
+              "navigation": {}
             }
           }
         }
@@ -77,5 +116,9 @@
   "sap.fiori": {
     "registrationIds": [],
     "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "analytics-cap"
   }
 }
