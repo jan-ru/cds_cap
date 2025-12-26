@@ -1,0 +1,8 @@
+{
+  "name": "log-custom",
+  "version": "1.0.0",
+  "description": "Log viewer custom UI5 application",
+  "scripts": {
+    "start": "ui5 serve --port 8082"
+  }
+}

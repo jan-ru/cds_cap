@@ -1,0 +1,75 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:m="sap.m"
+>
+    <m:OverflowToolbar
+        design="Transparent"
+        class="sapUiSmallMarginBottom"
+    >
+        <m:content>
+            <m:Title
+                text="Period Start:"
+                class="sapUiTinyMarginEnd"
+            />
+            <m:Select
+                selectedKey="{viewSettings>/ltm/start/year}"
+                items="{viewSettings>/years}"
+                width="6rem"
+            >
+                <core:Item
+                    key="{viewSettings>key}"
+                    text="{viewSettings>text}"
+                />
+            </m:Select>
+            <m:Select
+                selectedKey="{viewSettings>/ltm/start/month}"
+                items="{viewSettings>/months}"
+                width="5rem"
+                class="sapUiTinyMarginBegin"
+            >
+                <core:Item
+                    key="{viewSettings>key}"
+                    text="{viewSettings>text}"
+                />
+            </m:Select>
+            <m:ToolbarSeparator />
+            <m:Title
+                text="Period End:"
+                class="sapUiTinyMarginEnd"
+            />
+            <m:Select
+                selectedKey="{viewSettings>/ltm/end/year}"
+                items="{viewSettings>/years}"
+                width="6rem"
+            >
+                <core:Item
+                    key="{viewSettings>key}"
+                    text="{viewSettings>text}"
+                />
+            </m:Select>
+            <m:Select
+                selectedKey="{viewSettings>/ltm/end/month}"
+                items="{viewSettings>/months}"
+                width="5rem"
+                class="sapUiTinyMarginBegin"
+            >
+                <core:Item
+                    key="{viewSettings>key}"
+                    text="{viewSettings>text}"
+                />
+            </m:Select>
+            <m:ToolbarSpacer />
+            <m:Button
+                text="Go"
+                type="Emphasized"
+                press=".onPeriodUpdate"
+            />
+            <m:ToolbarSeparator />
+            <m:Button
+                icon="sap-icon://excel-attachment"
+                text="Export"
+                press="onExportRevenue"
+            />
+        </m:content>
+    </m:OverflowToolbar>
+</core:FragmentDefinition>

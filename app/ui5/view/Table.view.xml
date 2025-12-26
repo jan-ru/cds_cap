@@ -32,27 +32,6 @@
 						<!-- Moved GL to Hierarchies -->
 					</tnt:NavigationListItem>
 					<tnt:NavigationListItem
-						text="Working Capital"
-						icon="sap-icon://money-bills"
-						visible="{appView>/showWorkingCapital}"
-					>
-						<tnt:NavigationListItem
-							text="Creditors"
-							key="creditors"
-							visible="{appView>/showCreditors}"
-						/>
-						<tnt:NavigationListItem
-							text="Debtors"
-							key="debtors"
-							visible="{appView>/showDebtors}"
-						/>
-						<tnt:NavigationListItem
-							text="Inventory"
-							key="inventory"
-							visible="{appView>/showInventory}"
-						/>
-					</tnt:NavigationListItem>
-					<tnt:NavigationListItem
 						text="Period Comparison"
 						icon="sap-icon://compare"
 						key="periodComparison"

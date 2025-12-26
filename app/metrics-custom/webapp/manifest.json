@@ -1,0 +1,47 @@
+{
+  "sap.app": {
+    "id": "metricscustom",
+    "type": "application",
+    "title": "Metrics",
+    "description": "Metrics Models",
+    "applicationVersion": { "version": "0.1.0" },
+    "dataSources": {
+      "mainService": {
+        "uri": "/analytics/",
+        "type": "OData",
+        "settings": { "odataVersion": "4.0" }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": false }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "metricscustom.view.Main",
+      "type": "XML",
+      "async": true
+    },
+    "dependencies": {
+      "minUI5Version": "1.100.0",
+      "libs": { "sap.m": {}, "sap.ui.core": {}, "sap.ui.codeeditor": {} }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": { "bundleName": "metricscustom.i18n.i18n" }
+      },
+      "odata": {
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "serviceUrl": "/analytics/"
+        },
+        "dataSource": "mainService"
+      }
+    }
+  }
+}

@@ -21,35 +21,7 @@
 				press=".onNavToReports"
 				id="btnReports"
 			/>
-			<Button
-				text="Tables"
-				icon="sap-icon://hierarchy"
-				type="Transparent"
-				press=".onNavToHierarchies"
-				id="btnHierarchies"
-				visible="{appView>/showHierarchies}"
-			/>
-			<Button
-				text="Imports"
-				icon="sap-icon://upload"
-				type="Transparent"
-				press=".onNavToImports"
-				id="btnImports"
-				visible="{appView>/showImports}"
-			/>
 			<ToolbarSpacer />
-			<Avatar
-				initials="{versionInfo>/userInitials}"
-				displaySize="XS"
-				tooltip="{versionInfo>/currentUser}"
-				press=".onUserPress"
-			/>
-			<Button
-				icon="sap-icon://action-settings"
-				type="Transparent"
-				press=".onSettingsPress"
-				tooltip="Settings"
-			/>
 		</tnt:ToolHeader>
 		<App id="app" />
 	</VBox>

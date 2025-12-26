@@ -1,0 +1,7 @@
+<mvc:View controllerName="datamodelcustom.controller.Main" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" height="100%">
+    <Page title="Data Model" enableScrolling="true">
+        <content>
+            <Text text="Data Model Visualization" class="sapUiMediumMargin"/>
+        </content>
+    </Page>
+</mvc:View>

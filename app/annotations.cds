@@ -1,5 +1,78 @@
 using AnalyticsService from '../srv/analytics-service';
 
+// General Ledger (Dump entity)
+annotate AnalyticsService.Dump with @(
+  UI: {
+    LineItem: [
+      {Value: CodeGrootboekrekening, Label: 'GL Account'},
+      {Value: NaamGrootboekrekening, Label: 'GL Name'},
+      {Value: Code, Label: 'Journal'},
+      {Value: Boekingsnummer, Label: 'Document Nr'},
+      {Value: Boekdatum, Label: 'Posting Date'},
+      {Value: Omschrijving, Label: 'Description'},
+      {Value: Code1, Label: 'Cost Center'},
+      {Value: PeriodYear, Label: 'Year'},
+      {Value: Periode, Label: 'Period'},
+      {Value: Debet, Label: 'Debit'},
+      {Value: Credit, Label: 'Credit'},
+      {Value: Saldo, Label: 'Balance'}
+    ],
+    HeaderInfo: {
+      TypeName: 'General Ledger Entry',
+      TypeNamePlural: 'General Ledger Entries',
+      Title: {Value: CodeGrootboekrekening},
+      Description: {Value: NaamGrootboekrekening}
+    },
+    SelectionFields: [CodeGrootboekrekening, Code, Code1, PeriodYear, Periode],
+    Facets: [
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Account Information',
+        Target: '@UI.FieldGroup#Account'
+      },
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Posting Details',
+        Target: '@UI.FieldGroup#Posting'
+      },
+      {
+        $Type: 'UI.ReferenceFacet',
+        Label: 'Amounts',
+        Target: '@UI.FieldGroup#Amounts'
+      }
+    ],
+    FieldGroup#Account: {
+      Data: [
+        {Value: CodeGrootboekrekening, Label: 'GL Account'},
+        {Value: NaamGrootboekrekening, Label: 'GL Name'},
+        {Value: Code1, Label: 'Cost Center'}
+      ]
+    },
+    FieldGroup#Posting: {
+      Data: [
+        {Value: Code, Label: 'Journal'},
+        {Value: Boekingsnummer, Label: 'Document Number'},
+        {Value: Boekdatum, Label: 'Posting Date'},
+        {Value: Omschrijving, Label: 'Description'},
+        {Value: PeriodYear, Label: 'Year'},
+        {Value: PeriodMonth, Label: 'Month'},
+        {Value: Periode, Label: 'Period'},
+        {Value: PeriodSortKey, Label: 'Sort Key'}
+      ]
+    },
+    FieldGroup#Amounts: {
+      Data: [
+        {Value: Debet, Label: 'Debit'},
+        {Value: Credit, Label: 'Credit'},
+        {Value: Saldo, Label: 'Balance'}
+      ]
+    },
+    Identification: [
+      {Value: ID}
+    ]
+  }
+);
+
 // Fiori preview for SCA Service Agreement
 annotate AnalyticsService.SCA_ServiceAgreement with @(
   UI: {
@@ -418,20 +491,20 @@ annotate AnalyticsService.GUA_DeliveryNote with @(
   UI: {
     LineItem: [
       {Value: volg_nr, Label: 'Delivery Note Number'},
-      {Value: order_number, Label: 'Order Number'},
-      {Value: customer_name, Label: 'Customer'},
-      {Value: delivery_date, Label: 'Delivery Date'},
-      {Value: status, Label: 'Status'},
-      {Value: total_items, Label: 'Total Items'},
-      {Value: carrier, Label: 'Carrier'}
+      {Value: organisatie, Label: 'Organization'},
+      {Value: debiteur, Label: 'Customer'},
+      {Value: datum_verzending, Label: 'Delivery Date'},
+      {Value: relatie, Label: 'Contact'},
+      {Value: project, Label: 'Project'},
+      {Value: vervoer_per, Label: 'Carrier'}
     ],
     HeaderInfo: {
       TypeName: 'Delivery Note',
       TypeNamePlural: 'Delivery Notes',
       Title: {Value: volg_nr},
-      Description: {Value: customer_name}
+      Description: {Value: organisatie}
     },
-    SelectionFields: [customer_name, status, delivery_date],
+    SelectionFields: [debiteur, organisatie, datum_verzending],
     Facets: [
       {
         $Type: 'UI.ReferenceFacet',
@@ -452,23 +525,25 @@ annotate AnalyticsService.GUA_DeliveryNote with @(
     FieldGroup#DeliveryInfo: {
       Data: [
         {Value: volg_nr, Label: 'Delivery Note Number'},
-        {Value: order_number, Label: 'Order Number'},
-        {Value: delivery_date, Label: 'Delivery Date'},
-        {Value: status, Label: 'Status'},
-        {Value: total_items, Label: 'Total Items'}
+        {Value: volg_nr_oorsprong, Label: 'Origin Number'},
+        {Value: datum_verzending, Label: 'Delivery Date'},
+        {Value: print_datum, Label: 'Print Date'},
+        {Value: periode, Label: 'Period'}
       ]
     },
     FieldGroup#CustomerDetails: {
       Data: [
-        {Value: customer_name, Label: 'Customer Name'},
-        {Value: address, Label: 'Delivery Address'},
-        {Value: contact_person, Label: 'Contact Person'}
+        {Value: debiteur, Label: 'Customer'},
+        {Value: organisatie, Label: 'Organization'},
+        {Value: relatie, Label: 'Contact Person'},
+        {Value: project, Label: 'Project'}
       ]
     },
     FieldGroup#Logistics: {
       Data: [
-        {Value: carrier, Label: 'Carrier'},
-        {Value: notes, Label: 'Notes'}
+        {Value: vervoer_per, Label: 'Carrier'},
+        {Value: track_en_tracenr, Label: 'Tracking Number'},
+        {Value: referenties_document, Label: 'References'}
       ]
     },
     Identification: [

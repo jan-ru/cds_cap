@@ -90,7 +90,8 @@ entity UserSettings : managed {
 // Import tables from SQLite
 @cds.persistence.table
 entity SCA_ServiceAgreement {
-  key volg_nr           : String;
+  key ID                : UUID;
+      volg_nr           : String;
       project_name      : String;
       debtor_name       : String;
       relatie_nr        : String;
@@ -105,7 +106,8 @@ entity SCA_ServiceAgreement {
 
 @cds.persistence.table
 entity VFA_SalesInvoice {
-  key volg_nr         : String;
+  key ID              : UUID;
+      volg_nr         : String;
       debtor_nr       : String;
       debtor_name     : String;
       project         : String;
@@ -121,7 +123,8 @@ entity VFA_SalesInvoice {
 
 @cds.persistence.table
 entity VOA_SalesOrder {
-  key volg_nr         : String;
+  key ID              : UUID;
+      volg_nr         : String;
       organisation    : String;
       relation_name   : String;
       order_date      : Date;
@@ -137,21 +140,25 @@ entity VOA_SalesOrder {
 
 @cds.persistence.table
 entity GUA_DeliveryNote {
-  key volg_nr        : String;
-      order_number   : String;
-      customer_name  : String;
-      delivery_date  : Date;
-      status         : String;
-      address        : String;
-      contact_person : String;
-      notes          : String;
-      total_items    : Integer;
-      carrier        : String;
+  key ID                    : UUID;
+      volg_nr               : String(100);
+      print_datum           : Date;
+      periode               : String;
+      datum_verzending      : Date;
+      debiteur              : String;
+      organisatie           : String;
+      relatie               : String;
+      project               : String;
+      volg_nr_oorsprong     : String;
+      referenties_document  : String(500);
+      vervoer_per           : String;
+      track_en_tracenr      : String;
 }
 
 @cds.persistence.table
 entity ESL_Product {
-  key prd_code_sku   : String;
+  key ID             : UUID;
+      prd_code_sku   : String;
       company        : String;
       name_internal  : String;
       vendor         : String;

@@ -1,0 +1,7 @@
+<mvc:View controllerName="logcustom.controller.Main" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:code="sap.ui.codeeditor" height="100%">
+    <Page title="dbt Log" enableScrolling="false">
+        <content>
+            <code:CodeEditor id="logEditor" value="{log>/content}" type="text" editable="false" height="100%"/>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,6 +1,6 @@
 {
     "name": "my-analytics-cap",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "A CAP project with OData V4 analytical service",
     "repository": "<repository>",
     "license": "UNLICENSED",

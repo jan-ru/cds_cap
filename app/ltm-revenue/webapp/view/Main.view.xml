@@ -1,0 +1,91 @@
+<mvc:View
+    controllerName="ltmrevenue.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+>
+    <Page
+        id="page"
+        title="{i18n>appTitle}"
+        showNavButton="false"
+    >
+        <content>
+            <t:Table
+                id="revenueTable"
+                visibleRowCountMode="Auto"
+                selectionMode="None"
+                enableColumnReordering="false"
+                busy="{view>/busy}"
+            >
+                <t:extension>
+                    <OverflowToolbar design="Transparent" class="sapUiSmallMarginBottom">
+                        <Title text="Period Start:" class="sapUiTinyMarginEnd" />
+                        <Select
+                            selectedKey="{viewSettings>/ltm/start/year}"
+                            items="{viewSettings>/years}"
+                            width="6rem"
+                            change=".onPeriodUpdate"
+                        >
+                            <core:Item key="{viewSettings>key}" text="{viewSettings>text}" />
+                        </Select>
+                        <Select
+                            selectedKey="{viewSettings>/ltm/start/month}"
+                            items="{viewSettings>/months}"
+                            width="5rem"
+                            class="sapUiTinyMarginBegin"
+                            change=".onPeriodUpdate"
+                        >
+                            <core:Item key="{viewSettings>key}" text="{viewSettings>text}" />
+                        </Select>
+                        <ToolbarSeparator />
+                        <Title text="Period End:" class="sapUiTinyMarginEnd" />
+                        <Select
+                            selectedKey="{viewSettings>/ltm/end/year}"
+                            items="{viewSettings>/years}"
+                            width="6rem"
+                            change=".onPeriodUpdate"
+                        >
+                            <core:Item key="{viewSettings>key}" text="{viewSettings>text}" />
+                        </Select>
+                        <Select
+                            selectedKey="{viewSettings>/ltm/end/month}"
+                            items="{viewSettings>/months}"
+                            width="5rem"
+                            class="sapUiTinyMarginBegin"
+                            change=".onPeriodUpdate"
+                        >
+                            <core:Item key="{viewSettings>key}" text="{viewSettings>text}" />
+                        </Select>
+                        <ToolbarSpacer />
+                        <Button
+                            text="Refresh"
+                            icon="sap-icon://refresh"
+                            press=".onRefresh"
+                        />
+                        <Button
+                            text="Export"
+                            icon="sap-icon://excel-attachment"
+                            press=".onExport"
+                        />
+                    </OverflowToolbar>
+                </t:extension>
+                <t:columns>
+                    <t:Column width="10rem">
+                        <Label text="Revenue Type" />
+                        <t:template>
+                            <Text text="{revenue>RevenueType}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="8rem">
+                        <Label text="Cost Center" />
+                        <t:template>
+                            <Text text="{revenue>CostCenterGroup}" />
+                        </t:template>
+                    </t:Column>
+                </t:columns>
+            </t:Table>
+        </content>
+    </Page>
+</mvc:View>

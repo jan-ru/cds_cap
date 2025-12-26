@@ -1,0 +1,20 @@
+<mvc:View controllerName="tablescustom.controller.Main" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" height="100%">
+    <Page title="Tables" enableScrolling="false">
+        <content>
+            <NavContainer id="navContainer" initialPage="listPage">
+                <pages>
+                    <Page id="listPage" enableScrolling="true">
+                        <List headerText="Database Tables" items="{versionInfo>/databaseTables}">
+                            <StandardListItem title="{versionInfo>}" type="Active" press=".onTablePress" icon="sap-icon://table-view"/>
+                        </List>
+                    </Page>
+                    <Page id="tablePage" enableScrolling="true" showNavButton="true" navButtonPress=".onNavBack" title="{tableViewer>/tableName}">
+                        <Table id="dataTable" growing="true" growingThreshold="50">
+                            <columns/>
+                        </Table>
+                    </Page>
+                </pages>
+            </NavContainer>
+        </content>
+    </Page>
+</mvc:View>

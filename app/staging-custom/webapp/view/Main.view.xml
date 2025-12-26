@@ -1,0 +1,18 @@
+<mvc:View controllerName="stagingcustom.controller.Main" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:code="sap.ui.codeeditor" height="100%">
+    <Page title="Staging" enableScrolling="false">
+        <content>
+            <NavContainer id="navContainer" initialPage="listPage">
+                <pages>
+                    <Page id="listPage" enableScrolling="true">
+                        <List headerText="Staging Files" items="{versionInfo>/stagingFiles}">
+                            <StandardListItem title="{versionInfo>}" type="Active" press=".onFilePress" icon="sap-icon://header"/>
+                        </List>
+                    </Page>
+                    <Page id="detailPage" enableScrolling="false" showNavButton="true" navButtonPress=".onNavBack" title="{viewer>/fileName}">
+                        <code:CodeEditor id="codeEditor" value="{viewer>/content}" type="{viewer>/type}" editable="false" height="100%"/>
+                    </Page>
+                </pages>
+            </NavContainer>
+        </content>
+    </Page>
+</mvc:View>

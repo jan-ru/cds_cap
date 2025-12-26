@@ -42,30 +42,12 @@
           "pattern": "",
           "name": "RouteReports",
           "target": "TargetReports"
-        },
-        {
-          "pattern": "hierarchies",
-          "name": "RouteHierarchies",
-          "target": "TargetHierarchies"
-        },
-        {
-          "pattern": "imports",
-          "name": "RouteImports",
-          "target": "TargetImports"
         }
       ],
       "targets": {
         "TargetReports": {
           "viewName": "Table",
           "viewId": "table"
-        },
-        "TargetHierarchies": {
-          "viewName": "Hierarchies",
-          "viewId": "hierarchies"
-        },
-        "TargetImports": {
-          "viewName": "Imports",
-          "viewId": "imports"
         }
       }
     }

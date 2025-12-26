@@ -1,0 +1,8 @@
+{
+  "name": "revenue-ltm-custom",
+  "version": "0.1.0",
+  "description": "Revenue LTM - Custom UI5 App",
+  "scripts": {
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#revenueltmcustom-display\""
+  }
+}

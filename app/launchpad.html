@@ -33,8 +33,8 @@
                         config: {
                             groups: [
                                 {
-                                    id: "finance",
-                                    title: "Financial Analytics",
+                                    id: "twinfield",
+                                    title: "Twinfield",
                                     isPreset: true,
                                     isVisible: true,
                                     isGroupLocked: false,
@@ -50,6 +50,16 @@
                                             }
                                         },
                                         {
+                                            id: "generalLedgerCustom",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "General Ledger",
+                                                subtitle: "Twinfield Dump",
+                                                icon: "sap-icon://general-ledger-document",
+                                                targetURL: "#glcustom-display"
+                                            }
+                                        },
+                                        {
                                             id: "financialStatements",
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
@@ -57,6 +67,16 @@
                                                 subtitle: "Income Statement & Balance Sheet",
                                                 icon: "sap-icon://business-objects-experience",
                                                 targetURL: "#financialstatements-display"
+                                            }
+                                        },
+                                        {
+                                            id: "revenueLtmCustom",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Revenue LTM",
+                                                subtitle: "Last 12 Months Revenue",
+                                                icon: "sap-icon://line-chart",
+                                                targetURL: "#revenueltmcustom-display"
                                             }
                                         },
                                         {
@@ -68,16 +88,7 @@
                                                 icon: "sap-icon://line-chart",
                                                 targetURL: "#revenueanalysis-display"
                                             }
-                                        }
-                                    ]
-                                },
-                                {
-                                    id: "operations",
-                                    title: "Operations",
-                                    isPreset: true,
-                                    isVisible: true,
-                                    isGroupLocked: false,
-                                    tiles: [
+                                        },
                                         {
                                             id: "workingCapital",
                                             tileType: "sap.ushell.ui.tile.StaticTile",
@@ -87,42 +98,11 @@
                                                 icon: "sap-icon://sales-order",
                                                 targetURL: "#workingcapital-display"
                                             }
-                                        },
-                                        {
-                                            id: "serviceAgreements",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Service Agreements",
-                                                subtitle: "Active SLAs",
-                                                icon: "sap-icon://sales-quote",
-                                                targetURL: "#serviceagreements-display"
-                                            }
-                                        },
-                                        {
-                                            id: "salesOrders",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Sales Orders",
-                                                subtitle: "Order Management",
-                                                icon: "sap-icon://cart",
-                                                targetURL: "#salesorders-display"
-                                            }
-                                        },
-                                        {
-                                            id: "salesInvoices",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Sales Invoices",
-                                                subtitle: "Invoice Management",
-                                                icon: "sap-icon://receipt",
-                                                targetURL: "#salesinvoices-display"
-                                            }
                                         }
-                                    ]
-                                },
+                                    ]                                },
                                 {
-                                    id: "fulfillment",
-                                    title: "Fulfillment",
+                                    id: "newbase",
+                                    title: "Newbase",
                                     isPreset: true,
                                     isVisible: true,
                                     isGroupLocked: false,
@@ -132,7 +112,7 @@
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
                                                 title: "Delivery Notes",
-                                                subtitle: "Track Deliveries",
+                                                subtitle: "Newbase GUA",
                                                 icon: "sap-icon://shipping-status",
                                                 targetURL: "#deliverynotes-display"
                                             }
@@ -142,7 +122,7 @@
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
                                                 title: "Products",
-                                                subtitle: "Product Catalog",
+                                                subtitle: "Newbase ESL",
                                                 icon: "sap-icon://product",
                                                 targetURL: "#products-display"
                                             }
@@ -152,12 +132,119 @@
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
                                                 title: "Product Groups",
-                                                subtitle: "Product Categories",
+                                                subtitle: "Newbase PGA",
                                                 icon: "sap-icon://group",
                                                 targetURL: "#productgroups-display"
                                             }
+                                        },
+                                        {
+                                            id: "serviceAgreements",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Service Agreements",
+                                                subtitle: "Newbase SCA",
+                                                icon: "sap-icon://sales-quote",
+                                                targetURL: "#serviceagreements-display"
+                                            }
+                                        },
+                                        {
+                                            id: "salesOrders",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Sales Orders",
+                                                subtitle: "Newbase VOA",
+                                                icon: "sap-icon://cart",
+                                                targetURL: "#salesorders-display"
+                                            }
+                                        },
+                                        {
+                                            id: "salesInvoices",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Sales Invoices",
+                                                subtitle: "Newbase VFA",
+                                                icon: "sap-icon://receipt",
+                                                targetURL: "#salesinvoices-display"
+                                            }
                                         }
                                     ]
+                                },
+                                {
+                                    id: "data",
+                                    title: "Data",
+                                    isPreset: true,
+                                    isVisible: true,
+                                    isGroupLocked: false,
+                                    tiles: [
+                                        {
+                                            id: "dataSourcesTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Data Sources",
+                                                subtitle: "dbt Input Files",
+                                                icon: "sap-icon://database",
+                                                targetURL: "#datasourcescustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "stagingTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Staging",
+                                                subtitle: "dbt Staging Models",
+                                                icon: "sap-icon://header",
+                                                targetURL: "#stagingcustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "tablesTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Tables",
+                                                subtitle: "dbt Database Tables",
+                                                icon: "sap-icon://table-view",
+                                                targetURL: "#tablescustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "dataModelTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Data Model",
+                                                subtitle: "dbt Model Visualization",
+                                                icon: "sap-icon://tree",
+                                                targetURL: "#datamodelcustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "metricsTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Metrics",
+                                                subtitle: "dbt Metrics Models",
+                                                icon: "sap-icon://bar-chart",
+                                                targetURL: "#metricscustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "logTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Log",
+                                                subtitle: "dbt Log File",
+                                                icon: "sap-icon://log",
+                                                targetURL: "#logcustom-display"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "inventree",
+                                    title: "Inventree",
+                                    isPreset: true,
+                                    isVisible: true,
+                                    isGroupLocked: false,
+                                    tiles: []
                                 }
                             ]
                         }
@@ -179,6 +266,132 @@
                                         applicationType: "SAPUI5",
                                         additionalInformation: "SAPUI5.Component=demo.ui5",
                                         url: "/ui5"
+                                    }
+                                },
+                                "revenueltmcustom-display": {
+                                    semanticObject: "revenueltmcustom",
+                                    action: "display",
+                                    title: "Revenue LTM",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=revenueltmcustom",
+                                        url: "/revenue-ltm-custom/webapp"
+                                    }
+                                },
+                                "glcustom-display": {
+                                    semanticObject: "glcustom",
+                                    action: "display",
+                                    title: "General Ledger",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=glcustom",
+                                        url: "/gl-custom/webapp"
+                                    }
+                                },
+                                "logcustom-display": {
+                                    semanticObject: "logcustom",
+                                    action: "display",
+                                    title: "Log",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=logcustom",
+                                        url: "/log-custom/webapp"
+                                    }
+                                },
+                                "datasourcescustom-display": {
+                                    semanticObject: "datasourcescustom",
+                                    action: "display",
+                                    title: "Data Sources",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=datasourcescustom",
+                                        url: "/data-sources-custom/webapp"
+                                    }
+                                },
+                                "stagingcustom-display": {
+                                    semanticObject: "stagingcustom",
+                                    action: "display",
+                                    title: "Staging",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=stagingcustom",
+                                        url: "/staging-custom/webapp"
+                                    }
+                                },
+                                "tablescustom-display": {
+                                    semanticObject: "tablescustom",
+                                    action: "display",
+                                    title: "Tables",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=tablescustom",
+                                        url: "/tables-custom/webapp"
+                                    }
+                                },
+                                "datamodelcustom-display": {
+                                    semanticObject: "datamodelcustom",
+                                    action: "display",
+                                    title: "Data Model",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=datamodelcustom",
+                                        url: "/data-model-custom/webapp"
+                                    }
+                                },
+                                "metricscustom-display": {
+                                    semanticObject: "metricscustom",
+                                    action: "display",
+                                    title: "Metrics",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=metricscustom",
+                                        url: "/metrics-custom/webapp"
+                                    }
+                                },
+                                "generalledger-display": {
+                                    semanticObject: "generalledger",
+                                    action: "display",
+                                    title: "General Ledger",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=generalledger",
+                                        url: "/general-ledger/webapp"
                                     }
                                 },
                                 "financialstatements-display": {
@@ -331,6 +544,15 @@
         data-sap-ui-xx-componentPreload="off"
         data-sap-ui-resourceroots='{
             "demo.ui5": "/ui5",
+            "revenueltmcustom": "/revenue-ltm-custom/webapp",
+            "glcustom": "/gl-custom/webapp",
+            "logcustom": "/log-custom/webapp",
+            "datasourcescustom": "/data-sources-custom/webapp",
+            "stagingcustom": "/staging-custom/webapp",
+            "tablescustom": "/tables-custom/webapp",
+            "datamodelcustom": "/data-model-custom/webapp",
+            "metricscustom": "/metrics-custom/webapp",
+            "generalledger": "/general-ledger/webapp",
             "financialstatements": "/financial-statements/webapp",
             "revenueanalysis": "/revenue-analysis/webapp",
             "workingcapital": "/working-capital/webapp",
@@ -345,6 +567,8 @@
         data-sap-ui-bindingSyntax="complex"
         data-sap-ui-xx-waitForTheme="true">
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         sap.ui.getCore().attachInit(function () {
