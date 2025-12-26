@@ -1,4 +1,4 @@
-sap.ui.define(["tablescustom/controller/BaseController","sap/ui/model/json/JSONModel","sap/m/Column","sap/m/Text","sap/m/ColumnListItem"], function (BaseController, JSONModel, Column, Text, ColumnListItem) {
+sap.ui.define(["shared/controller/BaseController","sap/ui/model/json/JSONModel","sap/m/Column","sap/m/Text","sap/m/ColumnListItem"], function (BaseController, JSONModel, Column, Text, ColumnListItem) {
     "use strict";
     return BaseController.extend("tablescustom.controller.Main", {
         onInit: function () {

@@ -1,4 +1,4 @@
-sap.ui.define(["metricscustom/controller/BaseController","sap/ui/model/json/JSONModel"], function (BaseController, JSONModel) {
+sap.ui.define(["shared/controller/BaseController","sap/ui/model/json/JSONModel"], function (BaseController, JSONModel) {
     "use strict";
     return BaseController.extend("metricscustom.controller.Main", {
         onInit: function () { this._fetchVersionInfo(); },

@@ -6,6 +6,12 @@ sap.ui.define(
         return Component.extend("generalledger.Component", {
             metadata: {
                 manifest: "json"
+            },
+
+            exit: function() {
+                if (Component.prototype.exit) {
+                    Component.prototype.exit.apply(this, arguments);
+                }
             }
         });
     }

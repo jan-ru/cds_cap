@@ -32,6 +32,7 @@
       "minUI5Version": "1.120.0",
       "libs": {
         "sap.fe.templates": {},
+        "sap.f": {},
         "sap.m": {},
         "sap.ui.core": {},
         "sap.ushell": {}
@@ -82,7 +83,7 @@
       "targets": {
         "VOA_SalesOrderList": {
           "type": "Component",
-          "id": "VOA_SalesOrderList",
+          "id": "VOA_SalesOrderListComponent",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
@@ -101,7 +102,7 @@
         },
         "VOA_SalesOrderObjectPage": {
           "type": "Component",
-          "id": "VOA_SalesOrderObjectPage",
+          "id": "VOA_SalesOrderObjectPageComponent",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
@@ -112,10 +113,6 @@
         }
       }
     }
-  },
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
   },
   "sap.cloud": {
     "public": true,

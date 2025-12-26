@@ -1,0 +1,8 @@
+{
+  "name": "balance-sheet-custom",
+  "version": "1.0.0",
+  "description": "Balance Sheet Analysis",
+  "scripts": {
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#balancesheetcustom-display\""
+  }
+}

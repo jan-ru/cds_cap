@@ -4,10 +4,11 @@ sap.ui.define([
     "sap/ui/export/Spreadsheet",
     "shared/model/formatter",
     "shared/model/ExportHelper",
+    "shared/utils/ExportHelper",
     "shared/model/Constants",
     "shared/model/FinancialService",
     "sap/m/MessageBox"
-], function (Controller, JSONModel, Spreadsheet, formatter, ExportHelper, Constants, FinancialService, MessageBox) {
+], function (Controller, JSONModel, Spreadsheet, formatter, ExportHelper, ExportUtils, Constants, FinancialService, MessageBox) {
     "use strict";
 
     return Controller.extend("financialstatementsltmcustom.controller.Main", {
@@ -25,20 +26,7 @@ sap.ui.define([
             // Initialize period selection model
             var oSettingsModel = new JSONModel({
                 years: [],
-                months: [
-                    { key: "1", text: "1" },
-                    { key: "2", text: "2" },
-                    { key: "3", text: "3" },
-                    { key: "4", text: "4" },
-                    { key: "5", text: "5" },
-                    { key: "6", text: "6" },
-                    { key: "7", text: "7" },
-                    { key: "8", text: "8" },
-                    { key: "9", text: "9" },
-                    { key: "10", text: "10" },
-                    { key: "11", text: "11" },
-                    { key: "12", text: "12" }
-                ],
+                months: Constants.Months,
                 startYear: "2024",
                 startMonth: "1",
                 endYear: "2025",
@@ -187,22 +175,10 @@ sap.ui.define([
                     return;
                 }
 
-                var aCols = [];
-                aCols.push({ label: "Account", property: "name", type: "String" });
-                 
-                if (oRoot && oRoot.columns) {
-                    oRoot.columns.forEach(function(col) {
-                        aCols.push({ 
-                            label: col.label, 
-                            property: col.property, 
-                            type: "Number",
-                            scale: 0,
-                            delimiter: true
-                        });
-                    });
-                }
-
-                if (aCols.length <= 1) {
+                // Use ExportUtils to extract columns from the table
+                var aCols = ExportUtils.createExportColumns(oTable);
+                
+                if (aCols.length === 0) {
                     MessageBox.error("No columns available to export.");
                     return;
                 }
@@ -210,13 +186,16 @@ sap.ui.define([
                 oTable.setBusy(true);
 
                 var oSettings = {
-                    workbook: { 
+                    workbook: {
                         columns: aCols,
-                        hierarchyLevel: "Level" 
+                        hierarchyLevel: "Level"
                     },
                     dataSource: oRoot.root.nodes,
                     fileName: "FinancialStatementsLTM.xlsx",
-                    worker: false
+                    worker: false,
+                    format: {
+                        locale: "de-DE"
+                    }
                 };
 
                 ExportHelper.export(oSettings, oTable).catch(function(oError) {

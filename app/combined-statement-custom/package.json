@@ -1,0 +1,8 @@
+{
+  "name": "combined-statement-custom",
+  "version": "1.0.0",
+  "description": "Combined Financial Statements",
+  "scripts": {
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#combinedstatementcustom-display\""
+  }
+}

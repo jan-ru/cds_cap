@@ -1,6 +1,6 @@
 {
     "name": "my-analytics-cap",
-    "version": "0.3.2",
+    "version": "0.3.4",
     "description": "A CAP project with OData V4 analytical service",
     "repository": "<repository>",
     "license": "UNLICENSED",
@@ -13,13 +13,18 @@
     "devDependencies": {
         "@sap/cds-dk": "^9.5.0",
         "@sap/ux-specification": "^1.108.28",
-        "eslint": "^9.39.2"
+        "eslint": "^9.39.2",
+        "jest": "^30.2.0"
     },
     "scripts": {
         "start": "cds-serve",
         "deploy": "cds deploy --to sqlite",
         "watch": "cds watch",
-        "build": "cds build --production"
+        "build": "cds build --production",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage",
+        "test:verbose": "jest --verbose"
     },
     "cds": {
         "requires": {

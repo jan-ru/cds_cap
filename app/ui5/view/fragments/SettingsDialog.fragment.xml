@@ -27,15 +27,6 @@
 								<Text text="Show Reports" />
 								<Switch state="{appView>/showReports}" />
 							</HBox>
-							<!-- Finance Group -->
-							<HBox
-								alignItems="Center"
-								justifyContent="SpaceBetween"
-								width="100%"
-							>
-								<Text text="Finance (Group)" />
-								<Switch state="{appView>/showFinance}" />
-							</HBox>
 							<HBox
 								alignItems="Center"
 								justifyContent="SpaceBetween"
@@ -43,22 +34,10 @@
 								class="sapUiSmallMarginTop"
 							>
 								<Text
-									text="Income Statement"
+									text="Financial Statements"
 									class="sapUiMediumMarginBegin"
 								/>
-								<Switch state="{appView>/showIncome}" />
-							</HBox>
-							<HBox
-								alignItems="Center"
-								justifyContent="SpaceBetween"
-								width="100%"
-								class="sapUiSmallMarginTop"
-							>
-								<Text
-									text="Balance Sheet"
-									class="sapUiMediumMarginBegin"
-								/>
-								<Switch state="{appView>/showBalanceSheet}" />
+								<Switch state="{appView>/showCombined}" />
 							</HBox>
 							<HBox
 								alignItems="Center"
@@ -117,28 +96,6 @@
 									class="sapUiMediumMarginBegin"
 								/>
 								<Switch state="{appView>/showInventory}" />
-							</HBox>
-							<!-- Period Comparison Group -->
-							<HBox
-								alignItems="Center"
-								justifyContent="SpaceBetween"
-								width="100%"
-								class="sapUiSmallMarginTop"
-							>
-								<Text text="Period Comparison (Group)" />
-								<Switch state="{appView>/showPeriodComparison}" />
-							</HBox>
-							<HBox
-								alignItems="Center"
-								justifyContent="SpaceBetween"
-								width="100%"
-								class="sapUiSmallMarginTop"
-							>
-								<Text
-									text="Financial Statements"
-									class="sapUiMediumMarginBegin"
-								/>
-								<Switch state="{appView>/showCombined}" />
 							</HBox>
 							<HBox
 								alignItems="Center"

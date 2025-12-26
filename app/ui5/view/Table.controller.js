@@ -227,12 +227,10 @@ sap.ui.define([
                 return;
             }
 
-            var oNavContainer = this.byId("pageContainer");
+            var oNavContainer = this.byId("pageContainerTable");
             
             // Map keys to Page IDs
             var mPages = {
-                "income": "pageIncome",
-                "balanceSheet": "pageBalanceSheet",
                 "combined": "pageCombined",
                 "cashFlow": "pageCashFlow",
                 "pivot": "pagePivot",

@@ -82,7 +82,7 @@
       "targets": {
         "FinancialStatementsList": {
           "type": "Component",
-          "id": "FinancialStatementsList",
+          "id": "FinancialStatementsListComponent",
           "name": "sap.fe.templates.AnalyticalListPage",
           "options": {
             "settings": {
@@ -110,7 +110,7 @@
         },
         "FinancialStatementsObjectPage": {
           "type": "Component",
-          "id": "FinancialStatementsObjectPage",
+          "id": "FinancialStatementsObjectPageComponent",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
@@ -124,7 +124,7 @@
   },
   "sap.fiori": {
     "registrationIds": [],
-    "archeType": "analytical"
+    "archetype": "analytical"
   },
   "sap.cloud": {
     "public": true,

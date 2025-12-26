@@ -3,12 +3,23 @@ const fs = require('fs').promises;
 const path = require('path');
 const { execSync } = require('child_process');
 const FinancialTreeBuilder = require('./utils/financial-tree-builder');
+const { createLogger } = require('./utils/logger');
+const { trackPerformance, getMetrics, resetMetrics, startPeriodicLogging } = require('./middleware/monitoring');
+
+const logger = createLogger('analytics-service');
 const PivotTreeBuilder = require('./utils/pivot-tree-builder');
 const RevenueTreeBuilder = require('./utils/revenue-tree-builder');
 // Package JSON might be cached, which is fine for version info that doesn't change at runtime
 const packageJson = require('../package.json');
 
 module.exports = cds.service.impl(async function() {
+
+    // Start periodic metrics logging (every 60 seconds)
+    startPeriodicLogging(60000);
+
+    // Add performance monitoring to all requests
+    this.before('*', trackPerformance);
+
     this.on('getAppInfo', async (req) => {
         let sqliteVersion = 'Unknown';
         try {
@@ -18,7 +29,7 @@ module.exports = cds.service.impl(async function() {
                 sqliteVersion = result[0].v;
             }
         } catch (e) {
-            console.error('Failed to get SQLite version', e);
+            logger.error('Failed to get SQLite version', e);
         }
 
         // Read Input Files
@@ -35,7 +46,7 @@ module.exports = cds.service.impl(async function() {
                  if (err.code !== 'ENOENT') throw err;
             }
         } catch (e) {
-            console.error('Failed to read excel files', e);
+            logger.error('Failed to read excel files', e);
             excelFiles = ['Error reading directory'];
         }
 
@@ -56,7 +67,7 @@ module.exports = cds.service.impl(async function() {
             const duckdbMatch = output.match(/duckdb:\s+([\d.]+)/);
             if (duckdbMatch) duckdbVersion = duckdbMatch[1];
         } catch (e) {
-            console.error('Failed to get dbt version', e);
+            logger.error('Failed to get dbt version', e);
         }
 
         // Read Docker Version
@@ -68,7 +79,7 @@ module.exports = cds.service.impl(async function() {
             const match = output.match(/Docker version\s+([\d.]+)/);
             if (match) dockerVersion = match[1];
         } catch (e) {
-            console.error('Failed to get Docker version', e);
+            logger.error('Failed to get Docker version', e);
         }
 
         // Read Database CSV Files
@@ -82,7 +93,7 @@ module.exports = cds.service.impl(async function() {
                  if (err.code !== 'ENOENT') throw err;
             }
         } catch (e) {
-            console.error('Failed to read db data directory', e);
+            logger.error('Failed to read db data directory', e);
             dbFiles = ['Error reading directory'];
         }
 
@@ -103,7 +114,7 @@ module.exports = cds.service.impl(async function() {
                  if (err.code !== 'ENOENT') throw err;
             }
         } catch (e) {
-            console.error('Failed to read staging directory', e);
+            logger.error('Failed to read staging directory', e);
             stgFiles = ['Error reading directory'];
         }
         
@@ -117,7 +128,7 @@ module.exports = cds.service.impl(async function() {
                  if (err.code !== 'ENOENT') throw err;
             }
         } catch (e) {
-            console.error('Failed to read metrics directory', e);
+            logger.error('Failed to read metrics directory', e);
             metricFiles = ['Error reading directory'];
         }
 
@@ -145,9 +156,9 @@ module.exports = cds.service.impl(async function() {
         const { FStype, PeriodAYear, PeriodAMonthFrom, PeriodAMonthTo, PeriodBYear, PeriodBMonthFrom, PeriodBMonthTo } = req.data;
         
         // Fetch data based on FStype
-        console.log("DEBUG: getFinancialStatementsTree called with FStype:", FStype);
+        logger.debug('getFinancialStatementsTree called', { FStype });
         const aData = await cds.read('AnalyticsService.FinancialStatements').where({ FStype: FStype });
-        console.log("DEBUG: Fetched rows:", aData.length);
+        logger.debug('Fetched financial statement rows', { count: aData.length, FStype });
 
         const oPeriodA = { year: PeriodAYear, monthFrom: PeriodAMonthFrom, monthTo: PeriodAMonthTo };
         const oPeriodB = { year: PeriodBYear, monthFrom: PeriodBMonthFrom, monthTo: PeriodBMonthTo };
@@ -274,6 +285,26 @@ module.exports = cds.service.impl(async function() {
         return "Saved";
     });
 
+    /**
+     * Get performance metrics
+     * Returns current performance statistics including response times,
+     * request counts, endpoint metrics, and memory usage
+     */
+    this.on('getMetrics', async (req) => {
+        const metrics = getMetrics();
+        return JSON.stringify(metrics, null, 2);
+    });
+
+    /**
+     * Reset performance metrics
+     * Clears all tracked metrics and starts fresh
+     * Useful for testing or after deployment
+     */
+    this.on('resetMetrics', async (req) => {
+        resetMetrics();
+        return JSON.stringify({ success: true, message: 'Metrics reset successfully' });
+    });
+
     this.on('getFileContent', async (req) => {
         const { fileType, fileName } = req.data;
         let basePath;
@@ -317,7 +348,7 @@ module.exports = cds.service.impl(async function() {
             if (e.code === 'ENOENT') {
                  return JSON.stringify({ error: 'File not found' });
             }
-            console.error('Failed to read file', e);
+            logger.error('Failed to read file', e);
             return JSON.stringify({ error: 'Failed to read file' });
         }
     });

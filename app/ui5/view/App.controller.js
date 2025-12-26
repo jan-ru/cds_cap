@@ -13,9 +13,6 @@ sap.ui.define([
                 showHierarchies: true,
                 
                 // Reports
-                showFinance: true,
-                showIncome: true,
-                showBalanceSheet: true,
                 showPivot: true,
                 showWorkingCapital: true,
                 showCreditors: true,

@@ -1,0 +1,8 @@
+{
+  "name": "income-statement-custom",
+  "version": "1.0.0",
+  "description": "Income Statement (P&L) Analysis",
+  "scripts": {
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#incomestatementcustom-display\""
+  }
+}

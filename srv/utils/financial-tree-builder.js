@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Financial Tree Builder - Constructs hierarchical tree structures for financial statements
+ * Handles Profit & Loss (PNL), Balance Sheet (BAS), Sales, and Combined statements
+ * with specialized revenue classification logic for recurring vs one-off revenue.
+ *
+ * @module srv/utils/financial-tree-builder
+ */
+
+/**
+ * Configuration constants for tree building
+ * @const {Object}
+ */
 const Constants = {
 
     SortConfig: {
@@ -9,6 +21,10 @@ const Constants = {
     Spacers: {
         PNL: ["7"],
         COMBINED: ["9"]
+    },
+    RevenueAccounts: {
+        ONE_OFF: ["84", "85"],      // One-off Revenue accounts (8400, 8500 series)
+        RECURRING: ["80", "86", "87", "88"]  // Recurring Revenue accounts (8000, 8600, 8700, 8800 series)
     },
     Headers: {
         NetIncome: "Net Income",
@@ -48,7 +64,28 @@ const Constants = {
     }
 };
 
-// Helper to create a new node
+/**
+ * Creates a new tree node with initialized financial values
+ *
+ * @private
+ * @param {string} name - Display name for the node
+ * @param {number} level - Hierarchy level (1=top level, 2=mid level, 3=leaf level)
+ * @returns {Object} Tree node with financial metrics initialized to zero
+ *
+ * @property {string} name - Node display name
+ * @property {number} level - Hierarchy level in the tree
+ * @property {number} watA - "Winst At Tussenstanden" (Work in Progress) for Period A
+ * @property {number} noiA - "Nettowinst OpbrengstInkoop" (Net Income) for Period A
+ * @property {number} watB - Work in Progress for Period B
+ * @property {number} noiB - Net Income for Period B
+ * @property {number} wnA - Combined (watA + noiA) for Period A
+ * @property {number} wnB - Combined (watB + noiB) for Period B
+ * @property {number} diffAbs - Absolute difference between periods
+ * @property {number} diffPct - Percentage difference between periods
+ * @property {boolean} isBold - Whether to display node in bold
+ * @property {Array} nodes - Child nodes array
+ * @property {Array} nodesList - Flat list of all descendant nodes
+ */
 var createNode = function(name, level) {
     return {
         name: name,
@@ -63,7 +100,7 @@ var createNode = function(name, level) {
         wnA: 0,
         wnB: 0,
         diffAbs: 0,
-        diffPrc: 0,
+        diffPct: 0,
         isBold: false
     };
 };
@@ -80,7 +117,7 @@ var createSpacer = function() {
     oSpacer.wnA = null;
     oSpacer.wnB = null;
     oSpacer.diffAbs = null;
-    oSpacer.diffPrc = null;
+    oSpacer.diffPct = null;
     return oSpacer;
 };
 
@@ -119,9 +156,9 @@ var calcDiffs = function(node) {
 
     node.diffAbs = node.amountB - node.amountA;
     if (node.amountA !== 0) {
-        node.diffPrc = (node.diffAbs / Math.abs(node.amountA)) * 100;
+        node.diffPct = (node.diffAbs / Math.abs(node.amountA)) * 100;
     } else {
-        node.diffPrc = 0; 
+        node.diffPct = 0; 
     }
     
     node.diffAbs = parseFloat(node.diffAbs.toFixed(2));
@@ -267,7 +304,46 @@ var addCashFlow = function(aL1Nodes) {
 
 module.exports = {
     /**
-     * Builds a hierarchical tree from flat data.
+     * Builds a hierarchical financial statement tree from flat transaction data
+     *
+     * This is the main entry point for tree construction. It processes financial data
+     * and creates a three-level hierarchical structure (L1 → L2 → L3) with aggregated
+     * amounts for two comparison periods.
+     *
+     * Revenue Classification Logic (for 8xxx accounts):
+     * - Recurring Revenue: 80xx, 86xx, 87xx, 88xx
+     * - One-Off Revenue: 84xx, 85xx
+     *
+     * @param {Array<Object>} aData - Flat array of financial transactions
+     * @param {string} aData[].CodeGrootboekrekening - General ledger account code (e.g., "8400", "7010")
+     * @param {string} aData[].NaamGrootboekrekening - Account name
+     * @param {number} aData[].DisplayAmount - Transaction amount
+     * @param {number} aData[].PeriodYear - Transaction year
+     * @param {number} aData[].PeriodMonth - Transaction month (1-12)
+     * @param {number} aData[].Code1 - Cost center or additional classification code
+     * @param {string} sFStype - Financial statement type: 'PNL'|'BAS'|'SALES'|'COMBINED'
+     * @param {Object} oPeriodA - First comparison period
+     * @param {number} oPeriodA.year - Year for period A
+     * @param {number} oPeriodA.monthFrom - Starting month for period A (1-12)
+     * @param {number} oPeriodA.monthTo - Ending month for period A (1-12)
+     * @param {Object} oPeriodB - Second comparison period (same structure as oPeriodA)
+     * @param {Object} [mOptions={}] - Additional options
+     * @param {boolean} [mOptions.showNetIncome=false] - Whether to show net income row
+     * @param {boolean} [mOptions.showCashFlow=false] - Whether to show cash flow section
+     * @param {boolean} [mOptions.showGrandTotal=false] - Whether to show grand total row
+     *
+     * @returns {Object} Hierarchical tree structure
+     * @returns {Array} .L1 - Top-level nodes (account series: 8xxx, 7xxx, etc.)
+     * @returns {Array} .all - Flattened list of all nodes for table rendering
+     *
+     * @example
+     * const tree = FinancialTreeBuilder.build(
+     *   transactionData,
+     *   'PNL',
+     *   { year: 2024, monthFrom: 1, monthTo: 12 },
+     *   { year: 2023, monthFrom: 1, monthTo: 12 },
+     *   { showNetIncome: true }
+     * );
      */
     build: function(aData, sFStype, oPeriodA, oPeriodB, mOptions) {
         // Determine Config based on Type
@@ -297,9 +373,8 @@ module.exports = {
 
             // Revenue Split Logic (8xxx)
             if (sL1Key === "8") {
-                 // One-offs: 84, 85
-                 // Recurring: 80, 86, 87, 88 (and others)
-                 if (["84", "85"].includes(sL2Key)) {
+                 // Classify revenue accounts as One-Off or Recurring based on account code
+                 if (Constants.RevenueAccounts.ONE_OFF.includes(sL2Key)) {
                      sL1Key = "8-OneOff";
                  } else {
                      sL1Key = "8-Recurring";

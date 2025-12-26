@@ -1,5 +1,7 @@
 {
   "sap.ui5": {
+    "flexEnabled": false,
+    "componentUsages": {},
     "rootView": {
       "viewName": "demo.ui5.view.App",
       "type": "XML",

@@ -14,36 +14,6 @@
 				itemSelect=".onItemSelect"
 			>
 				<tnt:NavigationList>
-					<tnt:NavigationListItem
-						text="Finance"
-						icon="sap-icon://financial"
-						visible="{appView>/showFinance}"
-					>
-						<tnt:NavigationListItem
-							text="Income Statement"
-							key="income"
-							visible="{appView>/showIncome}"
-						/>
-						<tnt:NavigationListItem
-							text="Balance Sheet"
-							key="balanceSheet"
-							visible="{appView>/showBalanceSheet}"
-						/>
-						<!-- Moved GL to Hierarchies -->
-					</tnt:NavigationListItem>
-					<tnt:NavigationListItem
-						text="Period Comparison"
-						icon="sap-icon://compare"
-						key="periodComparison"
-						visible="{appView>/showPeriodComparison}"
-					>
-						<tnt:NavigationListItem
-							text="Financial Statements"
-							key="combined"
-							visible="{appView>/showCombined}"
-						/>
-					</tnt:NavigationListItem>
-
 				</tnt:NavigationList>
 				<tnt:fixedItem>
 					<tnt:NavigationList>
@@ -65,46 +35,18 @@
 			>
 				<m:pages>
 					<m:Page
-						id="pageIncome"
-						enableScrolling="false"
-						showHeader="false"
-					>
-						<mvc:XMLView viewName="demo.ui5.view.Financials">
-							<mvc:customData>
-								<core:CustomData
-									key="fsType"
-									value="PNL"
-								/>
-							</mvc:customData>
-						</mvc:XMLView>
-					</m:Page>
-					<m:Page
-						id="pageBalanceSheet"
-						enableScrolling="false"
-						showHeader="false"
-					>
-						<mvc:XMLView viewName="demo.ui5.view.Financials">
-							<mvc:customData>
-								<core:CustomData
-									key="fsType"
-									value="BAS"
-								/>
-							</mvc:customData>
-						</mvc:XMLView>
-					</m:Page>
-					<m:Page
 						id="pageCashFlow"
 						enableScrolling="false"
 						showHeader="false"
 					>
-						<mvc:XMLView viewName="demo.ui5.view.CashFlow" />
+						<mvc:XMLView viewName="demo.ui5.view.CashFlow" async="true" />
 					</m:Page>
 					<m:Page
 						id="pageCombined"
 						enableScrolling="false"
 						showHeader="false"
 					>
-						<mvc:XMLView viewName="demo.ui5.view.Financials">
+						<mvc:XMLView viewName="demo.ui5.view.Financials" async="true">
 							<mvc:customData>
 								<core:CustomData
 									key="fsType"
@@ -119,7 +61,7 @@
 						enableScrolling="false"
 						showHeader="false"
 					>
-						<mvc:XMLView viewName="demo.ui5.view.Pivot" />
+						<mvc:XMLView viewName="demo.ui5.view.Pivot" async="true" />
 					</m:Page>
 					<m:Page
 						id="pageCreditors"
@@ -146,28 +88,28 @@
 						enableScrolling="false"
 						showHeader="false"
 					>
-						<mvc:XMLView viewName="demo.ui5.view.Sales" />
+						<mvc:XMLView viewName="demo.ui5.view.Sales" async="true" />
 					</m:Page>
 					<m:Page
 						id="pageRevenueLTM"
 						enableScrolling="false"
 						showHeader="false"
 					>
-						<mvc:XMLView viewName="demo.ui5.view.RevenueLTM" />
+						<mvc:XMLView viewName="demo.ui5.view.RevenueLTM" async="true" />
 					</m:Page>
 					<m:Page
 						id="pageCharts"
 						enableScrolling="true"
 						showHeader="false"
 					>
-						<mvc:XMLView viewName="demo.ui5.view.Charts" />
+						<mvc:XMLView viewName="demo.ui5.view.Charts" async="true" />
 					</m:Page>
 					<m:Page
 						id="pageControls"
 						enableScrolling="true"
 						showHeader="false"
 					>
-						<mvc:XMLView viewName="demo.ui5.view.Controls" />
+						<mvc:XMLView viewName="demo.ui5.view.Controls" async="true" />
 					</m:Page>
 				</m:pages>
 			</m:NavContainer>

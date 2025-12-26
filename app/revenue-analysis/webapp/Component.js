@@ -6,6 +6,12 @@ sap.ui.define(
         return Component.extend("revenueanalysis.Component", {
             metadata: {
                 manifest: "json"
+            },
+
+            exit: function() {
+                if (Component.prototype.exit) {
+                    Component.prototype.exit.apply(this, arguments);
+                }
             }
         });
     }

@@ -83,12 +83,11 @@
       "targets": {
         "ESL_ProductList": {
           "type": "Component",
-          "id": "ESL_ProductList",
+          "id": "ESL_ProductListComponent",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
               "contextPath": "/ESL_Product",
-              "entitySet": "ESL_Product",
               "variantManagement": "Page",
               "initialLoad": true,
               "navigation": {
@@ -103,7 +102,7 @@
         },
         "ESL_ProductObjectPage": {
           "type": "Component",
-          "id": "ESL_ProductObjectPage",
+          "id": "ESL_ProductObjectPageComponent",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
@@ -114,10 +113,6 @@
         }
       }
     }
-  },
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
   },
   "sap.cloud": {
     "public": true,

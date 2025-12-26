@@ -1,0 +1,38 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:toolbar="sap.m.toolbar"
+>
+	<OverflowToolbar
+		visible="{viewSettings>/showTechnicalInfo}"
+		design="Info"
+	>
+		<ToolbarSpacer />
+		<Text
+			text="DB Table: "
+			class="sapUiTinyMarginEnd"
+		/>
+		<Text
+			text="{tech>/dbTable}"
+			class="sapMTextBold sapUiSmallMarginEnd"
+		/>
+		<Text
+			text="OData Entity: "
+			class="sapUiTinyMarginEnd"
+		/>
+		<Text
+			text="{tech>/odataEntity}"
+			class="sapMTextBold sapUiSmallMarginEnd"
+		/>
+		<ToolbarSeparator />
+		<Text
+			text="Filters: "
+			class="sapUiTinyMarginEnd"
+		/>
+		<Text
+			text="{tech>/filters}"
+			class="sapMTextBold"
+		/>
+		<ToolbarSpacer />
+	</OverflowToolbar>
+</core:FragmentDefinition>

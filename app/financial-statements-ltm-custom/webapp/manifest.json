@@ -55,6 +55,15 @@
           "autoExpandSelect": true,
           "earlyRequests": false
         }
+      },
+      "odata": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": false
+        }
       }
     },
     "rootView": {

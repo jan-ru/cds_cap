@@ -7,6 +7,32 @@ sap.ui.define([], function() {
             SIZE_LIMIT: 100000 // Maximum number of items in JSON models to prevent browser performance issues
         },
 
+        // Common UI Data
+        Months: [
+            { key: "1", text: "1" },
+            { key: "2", text: "2" },
+            { key: "3", text: "3" },
+            { key: "4", text: "4" },
+            { key: "5", text: "5" },
+            { key: "6", text: "6" },
+            { key: "7", text: "7" },
+            { key: "8", text: "8" },
+            { key: "9", text: "9" },
+            { key: "10", text: "10" },
+            { key: "11", text: "11" },
+            { key: "12", text: "12" }
+        ],
+
+        // Revenue Classification Account Codes
+        RevenueAccounts: {
+            RECURRING_8400: "84", // Recurring Revenue (8400 series)
+            RECURRING_8500: "85", // Recurring Revenue (8500 series)
+            ONE_OFF_8000: "80",   // One-off Revenue (8000 series)
+            ONE_OFF_8600: "86",   // One-off Revenue (8600 series)
+            ONE_OFF_8700: "87",   // One-off Revenue (8700 series)
+            ONE_OFF_8800: "88"    // One-off Revenue (8800 series)
+        },
+
         // Financial Statement Types
         FSType: {
             PNL: "PNL",

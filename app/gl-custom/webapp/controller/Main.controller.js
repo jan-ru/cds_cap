@@ -170,7 +170,10 @@ sap.ui.define([
                 workbook: { columns: aCols, context: { sheetName: "General Ledger" } },
                 dataSource: oRowBinding,
                 fileName: "General_Ledger.xlsx",
-                worker: false
+                worker: false,
+                format: {
+                    locale: "de-DE"
+                }
             };
 
             new Spreadsheet(oSettings).build().finally(function() {

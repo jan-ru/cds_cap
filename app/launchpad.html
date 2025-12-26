@@ -138,6 +138,36 @@
                                                 icon: "sap-icon://table-chart",
                                                 targetURL: "#financialstatementsltmcustom-display"
                                             }
+                                        },
+                                        {
+                                            id: "incomeStatementCustomTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Income Statement",
+                                                subtitle: "P&L Analysis",
+                                                icon: "sap-icon://business-objects-experience",
+                                                targetURL: "#incomestatementcustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "balanceSheetCustomTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Balance Sheet",
+                                                subtitle: "Assets & Liabilities",
+                                                icon: "sap-icon://accounting-document-verification",
+                                                targetURL: "#balancesheetcustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "combinedStatementCustomTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Combined Statement",
+                                                subtitle: "P&L + Balance Sheet",
+                                                icon: "sap-icon://combine",
+                                                targetURL: "#combinedstatementcustom-display"
+                                            }
                                         }
                                     ]                                },
                                 {
@@ -361,6 +391,48 @@
                                         applicationType: "SAPUI5",
                                         additionalInformation: "SAPUI5.Component=financialstatementsltmcustom",
                                         url: "/financial-statements-ltm-custom/webapp"
+                                    }
+                                },
+                                "incomestatementcustom-display": {
+                                    semanticObject: "incomestatementcustom",
+                                    action: "display",
+                                    title: "Income Statement",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=incomestatementcustom",
+                                        url: "/income-statement-custom/webapp"
+                                    }
+                                },
+                                "balancesheetcustom-display": {
+                                    semanticObject: "balancesheetcustom",
+                                    action: "display",
+                                    title: "Balance Sheet",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=balancesheetcustom",
+                                        url: "/balance-sheet-custom/webapp"
+                                    }
+                                },
+                                "combinedstatementcustom-display": {
+                                    semanticObject: "combinedstatementcustom",
+                                    action: "display",
+                                    title: "Combined Statement",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=combinedstatementcustom",
+                                        url: "/combined-statement-custom/webapp"
                                     }
                                 },                                "chartscustom-display": {
                                     semanticObject: "chartscustom",
@@ -651,6 +723,9 @@
             "datamodelcustom": "/data-model-custom/webapp",
             "metricscustom": "/metrics-custom/webapp",
             "financialstatementsltmcustom": "/financial-statements-ltm-custom/webapp",
+            "incomestatementcustom": "/income-statement-custom/webapp",
+            "balancesheetcustom": "/balance-sheet-custom/webapp",
+            "combinedstatementcustom": "/combined-statement-custom/webapp",
             "generalledger": "/general-ledger/webapp",
             "financialstatements": "/financial-statements/webapp",
             "revenueanalysis": "/revenue-analysis/webapp",
@@ -672,6 +747,59 @@
     <script>
         sap.ui.getCore().attachInit(function () {
             sap.ushell.Container.createRenderer().placeAt("content");
+            
+            // Add About menu item to user actions menu
+            var oRenderer = sap.ushell.Container.getRenderer("fiori2");
+            oRenderer.addUserAction({
+                controlType: "sap.m.Button",
+                oControlProperties: {
+                    text: "About",
+                    icon: "sap-icon://information",
+                    press: function() {
+                        // Fetch version information
+                        fetch('/analytics/getAppInfo')
+                            .then(function(response) { return response.json(); })
+                            .then(function(data) {
+                                // Create About dialog
+                                if (!window._aboutDialog) {
+                                    window._aboutDialog = new sap.m.Dialog({
+                                        title: "About Analytics Platform",
+                                        content: new sap.m.List({
+                                            items: [
+                                                new sap.m.DisplayListItem({ label: "Application", value: "Analytics Platform" }),
+                                                new sap.m.DisplayListItem({ label: "App Version", value: data.appVersion }),
+                                                new sap.m.DisplayListItem({ label: "SAPUI5 Version", value: data.ui5Version }),
+                                                new sap.m.DisplayListItem({ label: "CAP/CDS Version", value: data.cdsVersion }),
+                                                new sap.m.DisplayListItem({ label: "Node.js Version", value: data.nodeVersion }),
+                                                new sap.m.DisplayListItem({ label: "SQLite Version", value: data.sqliteVersion })
+                                            ]
+                                        }),
+                                        beginButton: new sap.m.Button({
+                                            text: "Close",
+                                            press: function() {
+                                                window._aboutDialog.close();
+                                            }
+                                        })
+                                    });
+                                } else {
+                                    // Update existing dialog with latest data
+                                    var oList = window._aboutDialog.getContent()[0];
+                                    oList.getItems()[1].setValue(data.appVersion);
+                                    oList.getItems()[2].setValue(data.ui5Version);
+                                    oList.getItems()[3].setValue(data.cdsVersion);
+                                    oList.getItems()[4].setValue(data.nodeVersion);
+                                    oList.getItems()[5].setValue(data.sqliteVersion);
+                                }
+                                window._aboutDialog.open();
+                            })
+                            .catch(function(error) {
+                                sap.m.MessageBox.error("Failed to fetch version information");
+                            });
+                    }
+                },
+                bCurrentState: true,
+                aStates: ["app", "home"]
+            });
         });
     </script>
 </head>

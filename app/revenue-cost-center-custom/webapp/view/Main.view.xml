@@ -1,7 +1,7 @@
 <mvc:View controllerName="revenuecostcentercustom.controller.Main" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table" height="100%">
     <Page title="Revenue by Cost Center" enableScrolling="true">
         <content>
-            <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin sapUiSmallMarginEnd">
+            <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin sapUiSmallMarginEnd">
                 <Label text="Period A:" class="sapUiTinyMarginEnd"/>
                 <Select id="yearA" selectedKey="{viewSettings>/periodA/year}" change=".onPeriodChange" width="6rem">
                     <items>
@@ -108,13 +108,13 @@
                     <t:Column width="8rem" hAlign="End">
                         <Label text="Diff amount" />
                         <t:template>
-                            <ObjectStatus text="{path: 'sales>diffAbs', formatter: '.formatter.formatCurrency'}" state="{= ${sales>diffAbs} >= 0 ? 'Success' : 'Error' }" />
+                            <Text text="{path: 'sales>diffAbs', formatter: '.formatter.formatCurrency'}" class="{= ${sales>diffAbs} >= 0 ? 'sapUiPositive' : 'sapUiNegative' }"/>
                         </t:template>
                     </t:Column>
                     <t:Column width="6rem" hAlign="End">
                         <Label text="Diff %" />
                         <t:template>
-                            <ObjectStatus text="{path: 'sales>diffPct', formatter: '.formatter.formatPercentage'}" state="{= ${sales>diffPct} >= 0 ? 'Success' : 'Error' }" />
+                            <Text text="{path: 'sales>diffPct', formatter: '.formatter.formatPercentage'}" class="{= ${sales>diffPct} >= 0 ? 'sapUiPositive' : 'sapUiNegative' }"/>
                         </t:template>
                     </t:Column>
                 </t:columns>

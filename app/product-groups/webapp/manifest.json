@@ -83,12 +83,11 @@
       "targets": {
         "PGA_ProductGroupList": {
           "type": "Component",
-          "id": "PGA_ProductGroupList",
+          "id": "PGA_ProductGroupListComponent",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
               "contextPath": "/PGA_ProductGroup",
-              "entitySet": "PGA_ProductGroup",
               "variantManagement": "Page",
               "initialLoad": true,
               "navigation": {
@@ -103,7 +102,7 @@
         },
         "PGA_ProductGroupObjectPage": {
           "type": "Component",
-          "id": "PGA_ProductGroupObjectPage",
+          "id": "PGA_ProductGroupObjectPageComponent",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
@@ -114,10 +113,6 @@
         }
       }
     }
-  },
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
   },
   "sap.cloud": {
     "public": true,

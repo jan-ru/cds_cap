@@ -1,0 +1,18 @@
+<mvc:View
+    controllerName="combinedstatementcustom.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    height="100%"
+>
+    <Page
+        id="page"
+        title="Combined Financial Statement"
+        enableScrolling="false"
+    >
+        <core:Fragment
+            fragmentName="shared.view.fragments.FinancialTable"
+            type="XML"
+        />
+    </Page>
+</mvc:View>

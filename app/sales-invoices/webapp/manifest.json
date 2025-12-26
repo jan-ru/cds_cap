@@ -32,6 +32,7 @@
       "minUI5Version": "1.120.0",
       "libs": {
         "sap.fe.templates": {},
+        "sap.f": {},
         "sap.m": {},
         "sap.ui.core": {},
         "sap.ushell": {}
@@ -82,7 +83,7 @@
       "targets": {
         "VFA_SalesInvoiceList": {
           "type": "Component",
-          "id": "VFA_SalesInvoiceList",
+          "id": "VFA_SalesInvoiceListComponent",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
@@ -101,7 +102,7 @@
         },
         "VFA_SalesInvoiceObjectPage": {
           "type": "Component",
-          "id": "VFA_SalesInvoiceObjectPage",
+          "id": "VFA_SalesInvoiceObjectPageComponent",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
@@ -112,10 +113,6 @@
         }
       }
     }
-  },
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
   },
   "sap.cloud": {
     "public": true,

@@ -104,13 +104,16 @@ sap.ui.define([
              }
              
              var oSettings = {
-                workbook: { 
+                workbook: {
                     columns: aCols,
-                    hierarchyLevel: "Level" 
+                    hierarchyLevel: "Level"
                 },
                 dataSource: oRoot.root.nodes,
                 fileName: "Pivot_Analysis.xlsx",
-                worker: false
+                worker: false,
+                format: {
+                    locale: "de-DE"
+                }
             };
 
             ExportHelper.export(oSettings, oTable);

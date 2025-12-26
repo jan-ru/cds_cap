@@ -83,12 +83,11 @@
       "targets": {
         "GUA_DeliveryNoteList": {
           "type": "Component",
-          "id": "GUA_DeliveryNoteList",
+          "id": "GUA_DeliveryNoteListComponent",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
               "contextPath": "/GUA_DeliveryNote",
-              "entitySet": "GUA_DeliveryNote",
               "variantManagement": "Page",
               "initialLoad": true,
               "navigation": {
@@ -103,7 +102,7 @@
         },
         "GUA_DeliveryNoteObjectPage": {
           "type": "Component",
-          "id": "GUA_DeliveryNoteObjectPage",
+          "id": "GUA_DeliveryNoteObjectPageComponent",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
@@ -114,10 +113,6 @@
         }
       }
     }
-  },
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
   },
   "sap.cloud": {
     "public": true,

@@ -131,7 +131,10 @@ sap.ui.define([
                  },
                  dataSource: oRowBinding,
                  fileName: "Revenue_LTM_Report.xlsx",
-                 worker: false 
+                 worker: false,
+                 format: {
+                     locale: "de-DE"
+                 }
              };
 
              oTable.setBusy(true);

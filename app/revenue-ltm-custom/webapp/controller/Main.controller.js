@@ -28,6 +28,16 @@ sap.ui.define([
                 var aRows = oResult.rows;
                 var aColumns = oResult.columns;
 
+                // Calculate row totals across all period columns
+                aRows.forEach(function(row) {
+                    var fTotal = 0;
+                    aColumns.forEach(function(col) {
+                        var fValue = row[col.property] || 0;
+                        fTotal += fValue;
+                    });
+                    row.RowTotal = fTotal;
+                });
+
                 // Bind Data
                 var oJsonModel = new JSONModel({ rows: aRows });
                 oTable.setModel(oJsonModel, "revenueLTM");
@@ -62,6 +72,19 @@ sap.ui.define([
                     }));
                 });
 
+                // Total Column
+                oTable.addColumn(new sap.ui.table.Column({
+                    label: new sap.m.Label({ text: "Total" }),
+                    hAlign: "End",
+                    template: new sap.m.Text({ 
+                        text: { 
+                            path: "revenueLTM>RowTotal",
+                            formatter: formatter.formatCurrency
+                        } 
+                    }),
+                    width: "7rem"
+                }));
+
                 oTable.bindRows("revenueLTM>/rows");
 
             }).catch(function(err) {
@@ -88,10 +111,10 @@ sap.ui.define([
              aCols.push({ label: "Revenue Type", property: "RevenueType", type: "String" });
              aCols.push({ label: "Cost Center", property: "CostCenterGroup", type: "String" });
              
-             // 2. Define Dynamic Columns
+             // 2. Define Dynamic Columns (exclude last "Total" column)
              var aTableCols = oTable.getColumns();
-             // Skip first 2 static columns
-             for (var i = 2; i < aTableCols.length; i++) {
+             // Skip first 2 static columns and last 1 Total column
+             for (var i = 2; i < aTableCols.length - 1; i++) {
                  var oCol = aTableCols[i];
                  var oTemplate = oCol.getTemplate();
                  var oBindingInfo = oTemplate.getBindingInfo("text");
@@ -121,6 +144,15 @@ sap.ui.define([
                  }
              }
 
+             // 3. Add Total Column
+             aCols.push({
+                 label: "Total",
+                 property: "RowTotal",
+                 type: "Number",
+                 scale: 0,
+                 delimiter: true
+             });
+
              console.log("RevenueLTM Export Columns:", aCols);
 
              var oRowBinding = oTable.getBinding("rows");
@@ -131,7 +163,10 @@ sap.ui.define([
                  },
                  dataSource: oRowBinding,
                  fileName: "Revenue_LTM_Report.xlsx",
-                 worker: false 
+                 worker: false,
+                 format: {
+                     locale: "de-DE"
+                 }
              };
 
              oTable.setBusy(true);

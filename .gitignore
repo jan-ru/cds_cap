@@ -33,6 +33,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.iml
+.claude/
 
 # Environment files
 .env
@@ -46,6 +47,22 @@ build/
 # CAP specific
 gen/
 .cds-services.json
+default-*.json
+_out/
+@cds-models/
+
+# Fiori app build artifacts
+app/*/dist/
+app/*/webapp/dist/
+app/*/webapp/Component-preload.js
+app/*/webapp/manifest-bundle.zip
+app/*/resources/
+app/*/webapp/resources/
+
+# UI5 tooling
+.ui5/
+ui5-dist/
+ui5-local.yaml
 
 # XAF files (large binary)
 xlsx/*.xaf

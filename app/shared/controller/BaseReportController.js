@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "shared/model/ExportHelper",
-    "shared/model/FinancialService"
-], function(BaseController, JSONModel, MessageBox, ExportHelper, FinancialService) {
+    "shared/model/FinancialService",
+    "shared/model/Constants"
+], function(BaseController, JSONModel, MessageBox, ExportHelper, FinancialService, Constants) {
     "use strict";
 
     return BaseController.extend("shared.controller.BaseReportController", {
@@ -33,20 +34,7 @@ sap.ui.define([
                 // Initialize the model if it doesn't exist
                 oSettingsModel = new JSONModel({
                     years: [],
-                    months: [
-                        { key: "1", text: "1" },
-                        { key: "2", text: "2" },
-                        { key: "3", text: "3" },
-                        { key: "4", text: "4" },
-                        { key: "5", text: "5" },
-                        { key: "6", text: "6" },
-                        { key: "7", text: "7" },
-                        { key: "8", text: "8" },
-                        { key: "9", text: "9" },
-                        { key: "10", text: "10" },
-                        { key: "11", text: "11" },
-                        { key: "12", text: "12" }
-                    ],
+                    months: Constants.Months,
                     ltm: null
                 });
                 this.getView().setModel(oSettingsModel, "viewSettings");

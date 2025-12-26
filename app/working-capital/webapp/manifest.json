@@ -81,7 +81,7 @@
       "targets": {
         "SalesInvoiceList": {
           "type": "Component",
-          "id": "SalesInvoiceList",
+          "id": "SalesInvoiceListComponent",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
@@ -100,7 +100,7 @@
         },
         "SalesInvoiceObjectPage": {
           "type": "Component",
-          "id": "SalesInvoiceObjectPage",
+          "id": "SalesInvoiceObjectPageComponent",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
@@ -114,7 +114,7 @@
   },
   "sap.fiori": {
     "registrationIds": [],
-    "archeType": "transactional"
+    "archetype": "transactional"
   },
   "sap.cloud": {
     "public": true,
