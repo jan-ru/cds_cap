@@ -34,7 +34,7 @@
 		</tnt:sideContent>
 		<tnt:mainContents>
 			<NavContainer
-				id="pageContainer"
+				id="pageContainerHierarchies"
 				initialPage="pageMainHierarchy"
 				height="100%"
 				width="100%"

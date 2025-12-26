@@ -2,6 +2,11 @@ sap.ui.define([], function() {
     "use strict";
 
     return {
+        // Model Configuration
+        ModelConfig: {
+            SIZE_LIMIT: 100000 // Maximum number of items in JSON models to prevent browser performance issues
+        },
+
         // Financial Statement Types
         FSType: {
             PNL: "PNL",
@@ -13,7 +18,7 @@ sap.ui.define([], function() {
             PNL: ["8", "7", "4", "9"], // Custom order for Income Statement
             BAS: "ASC",                // Default alphanumeric for Balance Sheet
             Controls: "PeriodSortKey", // Sort by generated key
-            Pivot: ["CodeGrootboekrekening", "PeriodSortKey"] 
+            Pivot: ["CodeGrootboekrekening", "PeriodSortKey"]
         },
 
         // Header Labels
@@ -68,29 +73,29 @@ sap.ui.define([], function() {
         // GL View Configurations (Column Visibility)
         GLViewModes: {
             Details: {
-                colGLAccount: true, colGLName: true, colJournal: true, colDocNr: true, 
-                colPostingDate: true, colDesc: true, colCostCenter: true, 
-                colPeriodYear: true, colPeriodSortKey: true, colPeriod: true 
+                colGLAccount: true, colGLName: true, colJournal: true, colDocNr: true,
+                colPostingDate: true, colDesc: true, colCostCenter: true,
+                colPeriodYear: true, colPeriodSortKey: true, colPeriod: true
             },
             Account: {
-                colGLAccount: true, colGLName: true, colJournal: false, colDocNr: false, 
-                colPostingDate: false, colDesc: false, colCostCenter: false, 
-                colPeriodYear: false, colPeriodSortKey: false, colPeriod: false 
+                colGLAccount: true, colGLName: true, colJournal: false, colDocNr: false,
+                colPostingDate: false, colDesc: false, colCostCenter: false,
+                colPeriodYear: false, colPeriodSortKey: false, colPeriod: false
             },
             Journal: {
-                colGLAccount: false, colGLName: false, colJournal: true, colDocNr: true, 
-                colPostingDate: true, colDesc: false, colCostCenter: false, 
-                colPeriodYear: false, colPeriodSortKey: false, colPeriod: false 
+                colGLAccount: false, colGLName: false, colJournal: true, colDocNr: true,
+                colPostingDate: true, colDesc: false, colCostCenter: false,
+                colPeriodYear: false, colPeriodSortKey: false, colPeriod: false
             },
             CostCenter: {
-                colGLAccount: false, colGLName: false, colJournal: false, colDocNr: false, 
-                colPostingDate: false, colDesc: false, colCostCenter: true, 
-                colPeriodYear: false, colPeriodSortKey: false, colPeriod: false 
+                colGLAccount: false, colGLName: false, colJournal: false, colDocNr: false,
+                colPostingDate: false, colDesc: false, colCostCenter: true,
+                colPeriodYear: false, colPeriodSortKey: false, colPeriod: false
             },
             Period: {
-                colGLAccount: false, colGLName: false, colJournal: false, colDocNr: false, 
-                colPostingDate: false, colDesc: false, colCostCenter: false, 
-                colPeriodYear: true, colPeriodSortKey: true, colPeriod: true 
+                colGLAccount: false, colGLName: false, colJournal: false, colDocNr: false,
+                colPostingDate: false, colDesc: false, colCostCenter: false,
+                colPeriodYear: true, colPeriodSortKey: true, colPeriod: true
             }
         },
 

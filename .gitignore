@@ -49,3 +49,24 @@ gen/
 
 # XAF files (large binary)
 xlsx/*.xaf
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Editor backup files
+*~
+.*.sw[a-z]
+
+# Mac OS
+.AppleDouble
+.LSOverride
+
+# Windows
+ehthumbs.db
+Desktop.ini

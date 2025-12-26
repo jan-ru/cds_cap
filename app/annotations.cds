@@ -449,15 +449,25 @@ annotate AnalyticsService.RevenueReport with @(
     ]
   },
   Aggregation.ApplySupported: {
+    Transformations: ['aggregate', 'groupby', 'filter'],
     GroupableProperties: [
-      'RevenueType',
-      'CostCenterGroup',
-      'PeriodSortKey',
-      'PeriodYear',
-      'PeriodMonth'
+      RevenueType,
+      CostCenterGroup,
+      PeriodSortKey,
+      PeriodYear,
+      PeriodMonth
     ],
-    AggregatableProperties: [{Property: Amount}]
-  }
+    AggregatableProperties: [{
+      Property: Amount,
+      SupportedAggregationMethods: ['sum', 'min', 'max', 'average']
+    }]
+  },
+  Analytics.AggregatedProperties: [{
+    Name: 'TotalAmount',
+    AggregationMethod: 'sum',
+    AggregatableProperty: Amount,
+    ![@Common.Label]: 'Total Amount'
+  }]
 );
 
 // Analytical annotations for Sales Analytics

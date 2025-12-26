@@ -1,0 +1,124 @@
+<mvc:View controllerName="revenuecostcentercustom.controller.Main" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table" height="100%">
+    <Page title="Revenue by Cost Center" enableScrolling="true">
+        <content>
+            <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin sapUiSmallMarginEnd">
+                <Label text="Period A:" class="sapUiTinyMarginEnd"/>
+                <Select id="yearA" selectedKey="{viewSettings>/periodA/year}" change=".onPeriodChange" width="6rem">
+                    <items>
+                        <core:Item key="2023" text="2023" xmlns:core="sap.ui.core"/>
+                        <core:Item key="2024" text="2024" xmlns:core="sap.ui.core"/>
+                        <core:Item key="2025" text="2025" xmlns:core="sap.ui.core"/>
+                    </items>
+                </Select>
+                <Select selectedKey="{viewSettings>/periodA/monthFrom}" items="{viewSettings>/months}" width="5rem" class="sapUiTinyMarginBegin" change=".onPeriodChange">
+                    <core:Item key="{viewSettings>key}" text="{viewSettings>text}" xmlns:core="sap.ui.core"/>
+                </Select>
+                <Text text="-" class="sapUiTinyMarginBeginEnd"/>
+                <Select selectedKey="{viewSettings>/periodA/monthTo}" items="{viewSettings>/months}" width="5rem" change=".onPeriodChange">
+                    <core:Item key="{viewSettings>key}" text="{viewSettings>text}" xmlns:core="sap.ui.core"/>
+                </Select>
+                <ToolbarSeparator/>
+                <Label text="Period B:" class="sapUiTinyMarginEnd"/>
+                <Select id="yearB" selectedKey="{viewSettings>/periodB/year}" change=".onPeriodChange" width="6rem">
+                    <items>
+                        <core:Item key="2023" text="2023" xmlns:core="sap.ui.core"/>
+                        <core:Item key="2024" text="2024" xmlns:core="sap.ui.core"/>
+                        <core:Item key="2025" text="2025" xmlns:core="sap.ui.core"/>
+                    </items>
+                </Select>
+                <Select selectedKey="{viewSettings>/periodB/monthFrom}" items="{viewSettings>/months}" width="5rem" class="sapUiTinyMarginBegin" change=".onPeriodChange">
+                    <core:Item key="{viewSettings>key}" text="{viewSettings>text}" xmlns:core="sap.ui.core"/>
+                </Select>
+                <Text text="-" class="sapUiTinyMarginBeginEnd"/>
+                <Select selectedKey="{viewSettings>/periodB/monthTo}" items="{viewSettings>/months}" width="5rem" change=".onPeriodChange">
+                    <core:Item key="{viewSettings>key}" text="{viewSettings>text}" xmlns:core="sap.ui.core"/>
+                </Select>
+                <ToolbarSpacer/>
+                <Button icon="sap-icon://excel-attachment" text="Export" press=".onExportSales"/>
+            </HBox>
+            
+            <t:TreeTable id="salesTreeTable" rows="{sales>/root}" selectionMode="None" enableColumnReordering="false" visibleRowCountMode="Auto" enableColumnFreeze="true">
+                <t:columns>
+                    <t:Column width="20rem">
+                        <Label text="Account / Group" />
+                        <t:template>
+                            <Label text="{sales>name}" design="{= ${sales>isBold} ? 'Bold' : 'Standard' }" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="9rem" hAlign="End">
+                        <t:multiLabels>
+                            <Label text="{viewSettings>/periodA/year}" textAlign="Center" width="100%"/>
+                            <Label text="WAT" />
+                        </t:multiLabels>
+                        <t:template>
+                            <Text text="{path: 'sales>watA', formatter: '.formatter.formatCurrency'}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="9rem" hAlign="End">
+                        <t:multiLabels>
+                            <Label text="{viewSettings>/periodA/year}" textAlign="Center" width="100%"/>
+                            <Label text="NOI" />
+                        </t:multiLabels>
+                        <t:template>
+                            <Text text="{path: 'sales>noiA', formatter: '.formatter.formatCurrency'}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="9rem" hAlign="End">
+                        <t:multiLabels>
+                            <Label text="{viewSettings>/periodA/year}" textAlign="Center" width="100%"/>
+                            <Label text="Total" design="Bold"/>
+                        </t:multiLabels>
+                        <t:template>
+                            <Text text="{path: 'sales>wnA', formatter: '.formatter.formatCurrency'}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="2rem" minWidth="2rem" resizable="false">
+                        <Label text="" />
+                        <t:template>
+                            <Text text="" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="9rem" hAlign="End">
+                        <t:multiLabels>
+                            <Label text="{viewSettings>/periodB/year}" textAlign="Center" width="100%"/>
+                            <Label text="WAT" />
+                        </t:multiLabels>
+                        <t:template>
+                            <Text text="{path: 'sales>watB', formatter: '.formatter.formatCurrency'}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="9rem" hAlign="End">
+                        <t:multiLabels>
+                            <Label text="{viewSettings>/periodB/year}" textAlign="Center" width="100%"/>
+                            <Label text="NOI" />
+                        </t:multiLabels>
+                        <t:template>
+                            <Text text="{path: 'sales>noiB', formatter: '.formatter.formatCurrency'}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="9rem" hAlign="End">
+                        <t:multiLabels>
+                            <Label text="{viewSettings>/periodB/year}" textAlign="Center" width="100%"/>
+                            <Label text="Total" design="Bold"/>
+                        </t:multiLabels>
+                        <t:template>
+                            <Text text="{path: 'sales>wnB', formatter: '.formatter.formatCurrency'}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="8rem" hAlign="End">
+                        <Label text="Diff amount" />
+                        <t:template>
+                            <ObjectStatus text="{path: 'sales>diffAbs', formatter: '.formatter.formatCurrency'}" state="{= ${sales>diffAbs} >= 0 ? 'Success' : 'Error' }" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="6rem" hAlign="End">
+                        <Label text="Diff %" />
+                        <t:template>
+                            <ObjectStatus text="{path: 'sales>diffPct', formatter: '.formatter.formatPercentage'}" state="{= ${sales>diffPct} >= 0 ? 'Success' : 'Error' }" />
+                        </t:template>
+                    </t:Column>
+                </t:columns>
+            </t:TreeTable>
+        </content>
+    </Page>
+</mvc:View>

@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2025-12-26
+
+### Added
+- Financial Statements LTM standalone custom app with Fiori tile
+  - Dynamic period range selector (start/end year and month)
+  - Hierarchical TreeTable with financial account structure
+  - Dynamic column generation for LTM periods
+  - Excel export functionality with error handling
+  - Integration with getPivotTree backend service
+- JSDoc documentation for all controller functions
+- Comprehensive error handling in export functionality
+- Model size limit constant (ModelConfig.SIZE_LIMIT) in shared Constants.js
+
+### Changed
+- Removed Charts menu item from custom UI5 app vertical menu
+- Removed Revenue by Cost Center menu item from custom UI5 app vertical menu
+- Extracted Financial Statements LTM from custom UI5 app to standalone tile
+- Consolidated shared model files across custom apps (FinancialService, formatter, Constants, ExportHelper)
+- Updated Revenue Analysis tile subtitle to "Twinfield Revenue Analysis"
+- Improved code organization with shared namespace for common utilities
+
+### Fixed
+- Financial Statements data loading issue in custom UI5 app (model propagation timing)
+- Duplicate ID validation errors in custom UI5 views (pageContainer, toolPage)
+- Financial Statements LTM export button functionality (model binding and column definitions)
+- OData model initialization in FinancialService for standalone apps
+- Magic number replaced with named constant for model size limit
+
+### Technical
+- Added busy indicators during export operations
+- Implemented try-catch error handling with user-friendly messages
+- Standardized model naming conventions across views and controllers
+- Enhanced export validation (table existence, data availability, column presence)
+
 ## [0.3.1] - 2025-12-26
 
 ### Added

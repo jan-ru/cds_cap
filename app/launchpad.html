@@ -74,7 +74,7 @@
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
                                                 title: "Revenue LTM",
-                                                subtitle: "Last 12 Months Revenue",
+                                                subtitle: "Twinfield Revenue LTM",
                                                 icon: "sap-icon://line-chart",
                                                 targetURL: "#revenueltmcustom-display"
                                             }
@@ -84,7 +84,7 @@
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
                                                 title: "Revenue Analysis",
-                                                subtitle: "LTM & Period Comparison",
+                                                subtitle: "Twinfield Revenue Analysis",
                                                 icon: "sap-icon://line-chart",
                                                 targetURL: "#revenueanalysis-display"
                                             }
@@ -97,6 +97,46 @@
                                                 subtitle: "Invoices & Orders",
                                                 icon: "sap-icon://sales-order",
                                                 targetURL: "#workingcapital-display"
+                                            }
+                                        },
+                                        {
+                                            id: "controlsTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Controls",
+                                                subtitle: "Twinfield Controls",
+                                                icon: "sap-icon://shield",
+                                                targetURL: "#controlscustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "chartsTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Charts",
+                                                subtitle: "Revenue Charts",
+                                                icon: "sap-icon://bar-chart",
+                                                targetURL: "#chartscustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "revenueCostCenterTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Revenue by Cost Center",
+                                                subtitle: "Twinfield Revenue Analysis",
+                                                icon: "sap-icon://collaborate",
+                                                targetURL: "#revenuecostcentercustom-display"
+                                            }
+                                        },
+                                        {
+                                            id: "financialStatementsLtmTile",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Financial Statements LTM",
+                                                subtitle: "Twinfield LTM Pivot",
+                                                icon: "sap-icon://table-chart",
+                                                targetURL: "#financialstatementsltmcustom-display"
                                             }
                                         }
                                     ]                                },
@@ -294,6 +334,60 @@
                                         applicationType: "SAPUI5",
                                         additionalInformation: "SAPUI5.Component=glcustom",
                                         url: "/gl-custom/webapp"
+                                    }
+                                },
+                                "revenuecostcentercustom-display": {
+                                    semanticObject: "revenuecostcentercustom",
+                                    action: "display",
+                                    title: "Revenue by Cost Center",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=revenuecostcentercustom",
+                                        url: "/revenue-cost-center-custom/webapp"
+                                    }
+                                },                                "financialstatementsltmcustom-display": {
+                                    semanticObject: "financialstatementsltmcustom",
+                                    action: "display",
+                                    title: "Financial Statements LTM",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=financialstatementsltmcustom",
+                                        url: "/financial-statements-ltm-custom/webapp"
+                                    }
+                                },                                "chartscustom-display": {
+                                    semanticObject: "chartscustom",
+                                    action: "display",
+                                    title: "Charts",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=chartscustom",
+                                        url: "/charts-custom/webapp"
+                                    }
+                                },
+                                "controlscustom-display": {
+                                    semanticObject: "controlscustom",
+                                    action: "display",
+                                    title: "Controls",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "SAPUI5",
+                                        additionalInformation: "SAPUI5.Component=controlscustom",
+                                        url: "/controls-custom/webapp"
                                     }
                                 },
                                 "logcustom-display": {
@@ -544,14 +638,19 @@
         data-sap-ui-xx-componentPreload="off"
         data-sap-ui-resourceroots='{
             "demo.ui5": "/ui5",
+            "shared": "/shared",
             "revenueltmcustom": "/revenue-ltm-custom/webapp",
             "glcustom": "/gl-custom/webapp",
+            "revenuecostcentercustom": "/revenue-cost-center-custom/webapp",
+            "chartscustom": "/charts-custom/webapp",
+            "controlscustom": "/controls-custom/webapp",
             "logcustom": "/log-custom/webapp",
             "datasourcescustom": "/data-sources-custom/webapp",
             "stagingcustom": "/staging-custom/webapp",
             "tablescustom": "/tables-custom/webapp",
             "datamodelcustom": "/data-model-custom/webapp",
             "metricscustom": "/metrics-custom/webapp",
+            "financialstatementsltmcustom": "/financial-statements-ltm-custom/webapp",
             "generalledger": "/general-ledger/webapp",
             "financialstatements": "/financial-statements/webapp",
             "revenueanalysis": "/revenue-analysis/webapp",

@@ -1,9 +1,9 @@
 sap.ui.define([
-    "revenueltmcustom/controller/BaseReportController",
+    "shared/controller/BaseReportController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/export/Spreadsheet",
-    "revenueltmcustom/model/formatter",
-    "revenueltmcustom/model/ExportHelper",
+    "shared/model/formatter",
+    "shared/model/ExportHelper",
     "sap/m/MessageBox"
 ], function (BaseReportController, JSONModel, Spreadsheet, formatter, ExportHelper, MessageBox) {
     "use strict";

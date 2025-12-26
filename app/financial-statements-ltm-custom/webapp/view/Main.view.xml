@@ -1,0 +1,74 @@
+<mvc:View
+    controllerName="financialstatementsltmcustom.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:m="sap.m"
+    xmlns:t="sap.ui.table"
+    height="100%"
+>
+    <m:Page title="{i18n>appTitle}" showHeader="true">
+        <m:content>
+            <t:TreeTable
+                id="ltmTable"
+                rows="{ltm>/root/nodes}"
+                selectionMode="None"
+                visibleRowCountMode="Auto"
+                enableColumnFreeze="true"
+            >
+                <t:extension>
+                    <m:OverflowToolbar design="Transparent" class="sapUiSmallMarginBottom">
+                        <m:content>
+                            <m:Title text="Period Range:" class="sapUiTinyMarginEnd"/>
+                            <m:Select
+                                selectedKey="{viewSettings>/startYear}"
+                                items="{viewSettings>/years}"
+                                width="6rem"
+                                change=".onPeriodChange"
+                            >
+                                <core:Item key="{viewSettings>key}" text="{viewSettings>text}"/>
+                            </m:Select>
+                            <m:Select
+                                selectedKey="{viewSettings>/startMonth}"
+                                items="{viewSettings>/months}"
+                                width="5rem"
+                                class="sapUiTinyMarginBegin"
+                                change=".onPeriodChange"
+                            >
+                                <core:Item key="{viewSettings>key}" text="{viewSettings>text}"/>
+                            </m:Select>
+                            <m:Text text="-" class="sapUiTinyMarginBeginEnd"/>
+                            <m:Select
+                                selectedKey="{viewSettings>/endYear}"
+                                items="{viewSettings>/years}"
+                                width="6rem"
+                                change=".onPeriodChange"
+                            >
+                                <core:Item key="{viewSettings>key}" text="{viewSettings>text}"/>
+                            </m:Select>
+                            <m:Select
+                                selectedKey="{viewSettings>/endMonth}"
+                                items="{viewSettings>/months}"
+                                width="5rem"
+                                class="sapUiTinyMarginBegin"
+                                change=".onPeriodChange"
+                            >
+                                <core:Item key="{viewSettings>key}" text="{viewSettings>text}"/>
+                            </m:Select>
+                            <m:ToolbarSpacer/>
+                            <m:Button icon="sap-icon://excel-attachment" text="Export" press=".onExportPivot"/>
+                        </m:content>
+                    </m:OverflowToolbar>
+                </t:extension>
+                <t:columns>
+                    <t:Column width="20rem">
+                        <m:Label text="Account"/>
+                        <t:template>
+                            <m:Text text="{ltm>name}" wrapping="false"/>
+                        </t:template>
+                    </t:Column>
+                    <!-- Columns will be added dynamically by Controller -->
+                </t:columns>
+            </t:TreeTable>
+        </m:content>
+    </m:Page>
+</mvc:View>

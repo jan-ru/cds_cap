@@ -70,6 +70,7 @@ entity FinancialStatements {
   ],
   AggregatableProperties: [{Property: 'Amount'}]
 }
+
 @cds.persistence.table
 entity RevenueReport {
   key ID              : UUID;
@@ -78,6 +79,7 @@ entity RevenueReport {
       PeriodSortKey   : Integer;
       PeriodYear      : Integer;
       PeriodMonth     : Integer;
+      @Aggregation.default: #SUM
       Amount          : Double;
 }
 

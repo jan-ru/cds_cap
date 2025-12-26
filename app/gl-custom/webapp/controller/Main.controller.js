@@ -1,12 +1,12 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "glcustom/model/FinancialService",
-    "glcustom/model/Constants",
+    "shared/model/FinancialService",
+    "shared/model/Constants",
     "sap/ui/export/Spreadsheet",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "glcustom/model/formatter"
+    "shared/model/formatter"
 ], function (Controller, JSONModel, FinancialService, Constants, Spreadsheet, Filter, FilterOperator, formatter) {
     "use strict";
 

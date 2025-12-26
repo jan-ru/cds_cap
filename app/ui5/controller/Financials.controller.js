@@ -31,7 +31,10 @@ sap.ui.define([
 
         onBeforeRendering: function() {
               if (this._sFSType && !this._bInitialized) {
-                  this._loadFinancialData();
+                  // Delay to ensure model propagation
+                  setTimeout(function() {
+                      this._loadFinancialData();
+                  }.bind(this), 0);
                   this._bInitialized = true;
               }
         },

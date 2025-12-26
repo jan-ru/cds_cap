@@ -7,7 +7,7 @@
 	displayBlock="true"
 	height="100%"
 >
-	<tnt:ToolPage id="toolPage">
+	<tnt:ToolPage id="toolPageTable">
 		<tnt:sideContent>
 			<tnt:SideNavigation
 				expanded="false"
@@ -42,42 +42,11 @@
 							key="combined"
 							visible="{appView>/showCombined}"
 						/>
-						<tnt:NavigationListItem
-							text="Revenue by Cost Center"
-							key="sales"
-							visible="{appView>/showSales}"
-						/>
-						<tnt:NavigationListItem
-							text="Charts"
-							key="charts"
-							visible="{appView>/showCharts}"
-						/>
 					</tnt:NavigationListItem>
-					<tnt:NavigationListItem
-						text="LTM"
-						icon="sap-icon://history"
-						key="ltmGroup"
-					>
-						<tnt:NavigationListItem
-							text="Revenue LTM"
-							key="revenueLTM"
-							visible="{appView>/showRevenueLTM}"
-						/>
-						<tnt:NavigationListItem
-							text="Financial Statements LTM"
-							key="pivot"
-							visible="{appView>/showPivot}"
-						/>
-					</tnt:NavigationListItem>
+
 				</tnt:NavigationList>
 				<tnt:fixedItem>
 					<tnt:NavigationList>
-						<tnt:NavigationListItem
-							text="Controls"
-							key="controls"
-							icon="sap-icon://validate"
-							visible="{appView>/showControls}"
-						/>
 						<tnt:NavigationListItem
 							text="Version {versionInfo>/appVersion}"
 							icon="sap-icon://information"
@@ -89,7 +58,7 @@
 		</tnt:sideContent>
 		<tnt:mainContents>
 			<m:NavContainer
-				id="pageContainer"
+				id="pageContainerTable"
 				initialPage="pageIncome"
 				height="100%"
 				width="100%"

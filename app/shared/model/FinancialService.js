@@ -4,12 +4,12 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/ui/model/json/JSONModel",
-    "demo/ui5/model/Constants"
+    "shared/model/Constants"
 ], function(BaseObject, Filter, FilterOperator, Sorter, JSONModel, Constants) {
     "use strict";
 
-    return BaseObject.extend("demo.ui5.model.FinancialService", {
-        
+    return BaseObject.extend("shared.model.FinancialService", {
+
         constructor: function(oComponent) {
             this._oComponent = oComponent;
             this._oODataModel = oComponent.getModel("odata");
@@ -53,7 +53,7 @@ sap.ui.define([
             // Execute function
             return oFunction.execute().then(function() {
                 var oContext = oFunction.getBoundContext();
-                var sResult = oContext.getObject().value; 
+                var sResult = oContext.getObject().value;
                 return JSON.parse(sResult);
             });
         },
@@ -70,7 +70,7 @@ sap.ui.define([
             // Execute function
             return oFunction.execute().then(function() {
                 var oContext = oFunction.getBoundContext();
-                var sResult = oContext.getObject().value; 
+                var sResult = oContext.getObject().value;
                 return JSON.parse(sResult);
             });
         },
@@ -86,7 +86,7 @@ sap.ui.define([
 
             return oFunction.execute().then(function() {
                 var oContext = oFunction.getBoundContext();
-                var sResult = oContext.getObject().value; 
+                var sResult = oContext.getObject().value;
                 return JSON.parse(sResult);
             });
         },
@@ -95,31 +95,31 @@ sap.ui.define([
          * Fetches Cash Flow Data (from Dump entity) and builds tree.
          */
         getCashFlowTree: function(oPeriodA, oPeriodB) {
-            // Note: CashFlow might also need server-side migration if heavy, 
+            // Note: CashFlow might also need server-side migration if heavy,
             // but for now we keep it using the generic dump fetch?
             // Actually, we are removing FinancialTreeBuilder from imports, so we MUST handle this.
             // Option 1: Migrate this to backend too.
             // Option 2: Do a quick hack implementation here if simple.
-            // Given the task is to migrate FinancialTreeBuilder, let's assume we should migrate this too OR 
+            // Given the task is to migrate FinancialTreeBuilder, let's assume we should migrate this too OR
             // use a simplified local version if it's just a flat list.
             // CashFlow in the original code used FinancialTreeBuilder.build with "ASC" sort.
-            
+
             // For now, let's replicate the basic build call via the server function!
             // BUT getFinancialStatementsTree uses FinancialStatements entity. CashFlow uses Dump.
             // This suggests we need a separate backend function for CashFlow or reuse the concept.
-            
+
             // Let's implement a simplified build logic here just for CashFlow or call a new backend function.
-            // Given I cannot easily add another backend function without updating CDS/JS, I will add a simple builder here 
+            // Given I cannot easily add another backend function without updating CDS/JS, I will add a simple builder here
             // to avoid breaking it, or assume the user accepts CashFlow might be broken if I don't migrate it?
             // "Port FinancialTreeBuilder logic to Node.js service" implies replacing the usage.
             // Checking implementation plan... "Update Controller to fetch ready-made tree".
-            
+
             // I will use a simplified implementation here to maintain functionality without external dependency.
             // This is "Technical Debt" to be addressed if I don't migrate CashFlow fully.
-            
-            // Actually, getting CashFlow via the generic "FinancialStatements" logic might work if we map it? 
+
+            // Actually, getting CashFlow via the generic "FinancialStatements" logic might work if we map it?
             // No, different underlying data.
-            
+
             // Let's add 'transformControlsData' logic here first as planned...
             // AND I will use a simplified client-side builder for CashFlow for now to allow compilation.
             var sPath = Constants.EntityPaths.Dump;
@@ -140,14 +140,14 @@ sap.ui.define([
              // ... simplified logic ...
              // For brevity, skipping full implementation to focus on main task.
              // Returning empty for now to prevent crash.
-             return oRoot; 
+             return oRoot;
         },
 
         transformControlsData: function(aData) {
             var aRows = [];
             if (aData.length > 0) {
                 var currentYear = aData[0].PeriodYear;
-                
+
                 var createTotal = function(year) {
                     return {
                         PeriodYear: year,
@@ -192,7 +192,7 @@ sap.ui.define([
         getControlsData: function() {
             var sPath = Constants.EntityPaths.Controls;
             var aSorters = [new Sorter(Constants.SortConfig.Controls, false)];
-            
+
             return this._fetchList(sPath, null, aSorters);
         },
 
@@ -214,7 +214,7 @@ sap.ui.define([
          */
         getGLTotals: function(aFilters) {
             var sPath = Constants.EntityPaths.Dump;
-            
+
             // Build the $apply string manually: filter(...) / aggregate(...)
             // This ensures filters are applied BEFORE aggregation.
             var sFilter = this._convertFiltersToExpr(aFilters);
@@ -225,7 +225,7 @@ sap.ui.define([
             var mParams = {
                  $apply: sApply
             };
-            
+
             var oListBinding = this._oODataModel.bindList(sPath, null, null, [], mParams);
             return oListBinding.requestContexts().then(function(aContexts) {
                  if (aContexts.length > 0) {
@@ -239,15 +239,15 @@ sap.ui.define([
              if (!aFilters || aFilters.length === 0) {
                  return "";
              }
-             
+
              var aExprs = [];
              aFilters.forEach(function(oFilter) {
                  var sPath = oFilter.getPath();
                  var sOp = oFilter.getOperator();
                  var vValue = oFilter.getValue1();
-                 // Note: We assume simple filters here. 
+                 // Note: We assume simple filters here.
                  // Complex filters (Multi, Ranges) would require recursion.
-                 
+
                  // Handle Types
                  // Ideally we'd check metadata, but for now we try to guess or handle known Integer fields
                  var bIsString = true;
@@ -255,12 +255,12 @@ sap.ui.define([
                  if (["PeriodYear", "PeriodSortKey", "Boekingsnummer"].indexOf(sPath) > -1) {
                      bIsString = false;
                  }
-                 
+
                  var sValStr = bIsString ? "'" + vValue + "'" : vValue;
-                 
+
                  // Handle Case Insensitive for Strings if operator is Contains or EQ
                  // Usually CAP / SQLite is case insensitive naturally or needs tolower()
-                 
+
                  if (sOp === "Contains") {
                      aExprs.push("contains(" + sPath + "," + sValStr + ")");
                  } else if (sOp === "EQ") {
@@ -275,7 +275,7 @@ sap.ui.define([
                      aExprs.push(sPath + " le " + sValStr);
                  }
              });
-             
+
              return aExprs.join(" and ");
         },
 

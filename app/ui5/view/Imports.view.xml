@@ -9,7 +9,7 @@
 	height="100%"
 >
 	<tnt:ToolPage
-		id="toolPage"
+		id="toolPageImports"
 		sideExpanded="true"
 	>
 		<tnt:sideContent>
@@ -69,7 +69,7 @@
 		</tnt:sideContent>
 		<tnt:mainContents>
 			<NavContainer
-				id="pageContainer"
+				id="pageContainerImports"
 				initialPage="pageDataSources"
 			>
 				<pages>

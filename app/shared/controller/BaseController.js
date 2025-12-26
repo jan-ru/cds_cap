@@ -3,12 +3,12 @@ sap.ui.define([
     "sap/m/GroupHeaderListItem",
     "sap/m/DisplayListItem",
     "sap/m/MessageBox",
-    "demo/ui5/model/Constants",
+    "shared/model/Constants",
     "sap/ui/model/json/JSONModel"
 ], function (Controller, GroupHeaderListItem, DisplayListItem, MessageBox, Constants, JSONModel) {
     "use strict";
 
-    return Controller.extend("revenueltmcustom.controller.BaseController", {
+    return Controller.extend("shared.controller.BaseController", {
 
         onVersionPress: function(oEvent) {
              if (!this._pVersionDialog) {
@@ -17,33 +17,33 @@ sap.ui.define([
                      name: "demo.ui5.view.fragments.VersionDialog"
                  });
              }
-             
+
             this._pVersionDialog.then(function(oDialog) {
                 // Ensure "versionInfo" model is available to the dialog
                 // Since this is a child controller of App controller, it should have it.
                 var oModel = this.getView().getModel("versionInfo");
                 var oData = oModel ? oModel.getData() : {};
-                
+
                 // We access the list by ID. Since fragments are loaded with 'this' controller as owner,
                 // and 'loadFragment' (if used with ID) prefixes IDs.
                 // However, the standard loadFragment without ID argument usually doesn't prefix unless specified?
                 // Actually loadFragment returns a Promise resolving to the Root Control.
                 // If the dialog ID is "versionDialog" inside fragment, we can get it.
-                
+
                 // But the logic in existing controllers used this.byId("versionList").
                 // This implies the ID is registered with the view/controller.
                 var oList = this.byId("versionList");
-                
+
                 if (oList) {
                     oList.removeAllItems();
-                    
+
                     oList.addItem(new GroupHeaderListItem({ title: "App Stack" }));
                     oList.addItem(new DisplayListItem({ label: "App Version", value: oData.appVersion }));
                     oList.addItem(new DisplayListItem({ label: "SAPUI5 Version", value: oData.ui5Version }));
                     oList.addItem(new DisplayListItem({ label: "CAP/CDS Version", value: oData.cdsVersion }));
                     oList.addItem(new DisplayListItem({ label: "Node.js Version", value: oData.nodeVersion }));
                     oList.addItem(new DisplayListItem({ label: "SQLite Version", value: oData.sqliteVersion }));
-                    
+
                     oList.addItem(new GroupHeaderListItem({ title: "Data Pipeline" }));
                     oList.addItem(new DisplayListItem({ label: "dbt Version", value: oData.dbtVersion }));
                     oList.addItem(new DisplayListItem({ label: "DuckDB Version", value: oData.duckdbVersion }));
@@ -77,7 +77,7 @@ sap.ui.define([
                oTechModel.setProperty("/odataEntity", oInfo.odataEntity);
                oTechModel.setProperty("/filters", oInfo.filters);
             }
-            
+
             fnFetchPromise().then(function(oRoot) {
                 var oModel = new sap.ui.model.json.JSONModel(oRoot);
                 oModel.setSizeLimit(100000);

@@ -1,0 +1,8 @@
+{
+  "name": "financial-statements-ltm-custom",
+  "version": "1.0.0",
+  "description": "Financial Statements Last Twelve Months",
+  "scripts": {
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#financialstatementsltmcustom-display\""
+  }
+}

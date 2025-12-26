@@ -1,0 +1,8 @@
+{
+  "name": "controls-custom",
+  "version": "1.0.0",
+  "description": "Controls custom UI5 application",
+  "scripts": {
+    "start": "ui5 serve --port 8082"
+  }
+}

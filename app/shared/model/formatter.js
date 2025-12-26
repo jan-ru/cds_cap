@@ -6,7 +6,7 @@ sap.ui.define([], function () {
             if (sValue === null || sValue === undefined) {
                 return "";
             }
-            
+
             var fValue;
             if (typeof sValue === "number") {
                 fValue = sValue;
@@ -19,7 +19,7 @@ sap.ui.define([], function () {
             if (isNaN(fValue)) {
                 return sValue;
             }
-            
+
             return fValue.toLocaleString('de-DE', {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0
@@ -30,7 +30,7 @@ sap.ui.define([], function () {
              if (sValue === null || sValue === undefined) {
                 return "";
             }
-            
+
             var fValue;
             if (typeof sValue === "number") {
                  fValue = sValue;
