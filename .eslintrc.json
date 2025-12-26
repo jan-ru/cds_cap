@@ -1,0 +1,29 @@
+{
+    "env": {
+        "node": true,
+        "es2021": true,
+        "jest": true
+    },
+    "extends": ["eslint:recommended"],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "semi": ["error", "always"],
+        "quotes": ["error", "single", { "avoidEscape": true }]
+    },
+    "overrides": [
+        {
+            "files": ["app/**/*.js"],
+            "env": {
+                "browser": true
+            },
+            "globals": {
+                "sap": "readonly",
+                "jQuery": "readonly"
+            }
+        }
+    ]
+}

@@ -1,13 +1,12 @@
 sap.ui.define([
-    "demo/ui5/controller/BaseController",
+    "shared/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "demo/ui5/model/formatter",
-    "demo/ui5/model/ExportHelper",
     "shared/utils/ExportHelper",
-    "demo/ui5/model/FinancialService",
-    "demo/ui5/model/Constants",
+    "shared/model/FinancialService",
+    "shared/model/Constants",
     "sap/m/MessageBox"
-], function (BaseController, JSONModel, formatter, ExportHelper, ExportUtils, FinancialService, Constants, MessageBox) {
+], function (BaseController, JSONModel, formatter, ExportHelper, FinancialService, Constants, MessageBox) {
     "use strict";
 
     return BaseController.extend("demo.ui5.controller.Sales", {

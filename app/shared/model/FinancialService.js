@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/ui/model/json/JSONModel",
-    "shared/model/Constants"
-], function(BaseObject, Filter, FilterOperator, Sorter, JSONModel, Constants) {
+    "shared/model/Constants",
+    "shared/utils/json-helper"
+], function(BaseObject, Filter, FilterOperator, Sorter, JSONModel, Constants, JSONHelper) {
     "use strict";
 
     return BaseObject.extend("shared.model.FinancialService", {
@@ -54,7 +55,7 @@ sap.ui.define([
             return oFunction.execute().then(function() {
                 var oContext = oFunction.getBoundContext();
                 var sResult = oContext.getObject().value;
-                return JSON.parse(sResult);
+                return JSONHelper.safeParse(sResult, {});
             });
         },
 
@@ -71,7 +72,7 @@ sap.ui.define([
             return oFunction.execute().then(function() {
                 var oContext = oFunction.getBoundContext();
                 var sResult = oContext.getObject().value;
-                return JSON.parse(sResult);
+                return JSONHelper.safeParse(sResult, {});
             });
         },
 
@@ -87,60 +88,8 @@ sap.ui.define([
             return oFunction.execute().then(function() {
                 var oContext = oFunction.getBoundContext();
                 var sResult = oContext.getObject().value;
-                return JSON.parse(sResult);
+                return JSONHelper.safeParse(sResult, {});
             });
-        },
-
-        /**
-         * Fetches Cash Flow Data (from Dump entity) and builds tree.
-         */
-        getCashFlowTree: function(oPeriodA, oPeriodB) {
-            // Note: CashFlow might also need server-side migration if heavy,
-            // but for now we keep it using the generic dump fetch?
-            // Actually, we are removing FinancialTreeBuilder from imports, so we MUST handle this.
-            // Option 1: Migrate this to backend too.
-            // Option 2: Do a quick hack implementation here if simple.
-            // Given the task is to migrate FinancialTreeBuilder, let's assume we should migrate this too OR
-            // use a simplified local version if it's just a flat list.
-            // CashFlow in the original code used FinancialTreeBuilder.build with "ASC" sort.
-
-            // For now, let's replicate the basic build call via the server function!
-            // BUT getFinancialStatementsTree uses FinancialStatements entity. CashFlow uses Dump.
-            // This suggests we need a separate backend function for CashFlow or reuse the concept.
-
-            // Let's implement a simplified build logic here just for CashFlow or call a new backend function.
-            // Given I cannot easily add another backend function without updating CDS/JS, I will add a simple builder here
-            // to avoid breaking it, or assume the user accepts CashFlow might be broken if I don't migrate it?
-            // "Port FinancialTreeBuilder logic to Node.js service" implies replacing the usage.
-            // Checking implementation plan... "Update Controller to fetch ready-made tree".
-
-            // I will use a simplified implementation here to maintain functionality without external dependency.
-            // This is "Technical Debt" to be addressed if I don't migrate CashFlow fully.
-
-            // Actually, getting CashFlow via the generic "FinancialStatements" logic might work if we map it?
-            // No, different underlying data.
-
-            // Let's add 'transformControlsData' logic here first as planned...
-            // AND I will use a simplified client-side builder for CashFlow for now to allow compilation.
-            var sPath = Constants.EntityPaths.Dump;
-            var mParams = {
-                 $apply: "groupby((CodeGrootboekrekening,NaamGrootboekrekening,PeriodYear,PeriodMonth), aggregate(Saldo with sum as Saldo))"
-            };
-
-            return this._fetchList(sPath, null, null, [], mParams).then(function(aData) {
-                 // Simplified Client-Side Builder for CashFlow (Temporary until server migration)
-                 // This ensures we can remove the external file.
-                 return this._buildSimpleTree(aData, oPeriodA, oPeriodB);
-            }.bind(this));
-        },
-
-        _buildSimpleTree: function(aData, oPeriodA, oPeriodB) {
-             // Minimal implementation of the tree builder for CashFlow use case
-             var oRoot = { root: { nodes: [] } };
-             // ... simplified logic ...
-             // For brevity, skipping full implementation to focus on main task.
-             // Returning empty for now to prevent crash.
-             return oRoot;
         },
 
         transformControlsData: function(aData) {
@@ -293,7 +242,7 @@ sap.ui.define([
             return oFunction.execute().then(function() {
                 var oContext = oFunction.getBoundContext();
                 var sResult = oContext.getObject().value;
-                return JSON.parse(sResult);
+                return JSONHelper.safeParse(sResult, {});
             });
         },
 
@@ -310,7 +259,7 @@ sap.ui.define([
             return oFunction.execute().then(function() {
                 var oContext = oFunction.getBoundContext();
                 var sResult = oContext.getObject().value;
-                return JSON.parse(sResult);
+                return JSONHelper.safeParse(sResult, {});
             });
         },
 

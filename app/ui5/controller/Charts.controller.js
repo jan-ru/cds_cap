@@ -1,9 +1,9 @@
 sap.ui.define([
-    "demo/ui5/controller/BaseController",
+    "shared/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "demo/ui5/model/formatter",
-    "demo/ui5/model/Constants",
-    "demo/ui5/model/FinancialService",
+    "shared/model/Constants",
+    "shared/model/FinancialService",
     "sap/m/MessageBox"
 ], function (BaseController, JSONModel, formatter, Constants, FinancialService, MessageBox) {
     "use strict";

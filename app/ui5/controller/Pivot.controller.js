@@ -1,10 +1,10 @@
 sap.ui.define([
-    "demo/ui5/controller/BaseReportController",
+    "shared/controller/BaseReportController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/export/Spreadsheet",
     "demo/ui5/model/formatter",
-    "demo/ui5/model/ExportHelper",
-    "demo/ui5/model/Constants",
+    "shared/utils/ExportHelper",
+    "shared/model/Constants",
     "sap/m/MessageBox"
 ], function (BaseReportController, JSONModel, Spreadsheet, formatter, ExportHelper, Constants, MessageBox) {
     "use strict";
