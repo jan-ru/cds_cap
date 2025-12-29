@@ -9,6 +9,11 @@ sap.ui.define([
         onInit: function() {
             BaseFinancialController.prototype.onInit.apply(this, arguments);
             this._sFSType = Constants.FSType.PNL; // "PNL"
+
+            // Explicitly initialize settings and load data
+            this._initViewSettings();
+            this._loadAvailableYears();
+            this.loadData();
         },
 
         _getDataPromise: function(oPeriodA, oPeriodB) {
