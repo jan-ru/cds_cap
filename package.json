@@ -1,6 +1,6 @@
 {
     "name": "my-analytics-cap",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "description": "A CAP project with OData V4 analytical service",
     "repository": "<repository>",
     "license": "UNLICENSED",
@@ -36,11 +36,11 @@
             "db": {
                 "kind": "sqlite",
                 "credentials": {
-                    "url": "db.sqlite"
+                    "url": "../database/db.sqlite"
                 },
                 "[production]": {
                     "credentials": {
-                        "url": "db.sqlite"
+                        "url": "../database/db.sqlite"
                     }
                 }
             },

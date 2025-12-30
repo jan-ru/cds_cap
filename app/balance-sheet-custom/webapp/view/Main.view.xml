@@ -4,15 +4,18 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m"
     height="100%"
+    displayBlock="true"
 >
-    <Page
-        id="page"
-        title="Balance Sheet"
-        enableScrolling="false"
-    >
-        <core:Fragment
-            fragmentName="shared.view.fragments.FinancialTable"
-            type="XML"
-        />
-    </Page>
+    <App id="app">
+        <Page
+            id="page"
+            title="Balance Sheet"
+            enableScrolling="false"
+        >
+            <core:Fragment
+                fragmentName="shared.view.fragments.FinancialTable"
+                type="XML"
+            />
+        </Page>
+    </App>
 </mvc:View>

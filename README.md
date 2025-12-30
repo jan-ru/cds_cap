@@ -1,4 +1,4 @@
-# my-analytics-cap (Version 0.3.4)
+# my-analytics-cap (Version 0.3.5)
 
 A SAP Cloud Application Programming Model (CAP) project featuring **SAP Fiori Elements** applications with OData V4 analytical services for comprehensive financial reporting and analysis.
 
@@ -103,33 +103,41 @@ npm run watch
 ## Project Structure
 
 ```
-cds_cap/
-├── app/                              # Frontend applications
-│   ├── launchpad.html               # Fiori Launchpad sandbox
-│   ├── annotations.cds              # UI annotations for Fiori Elements
-│   ├── financial-statements/        # Analytical List Page (Income/Balance)
-│   ├── revenue-analysis/            # Analytical List Page (Revenue/LTM)
-│   ├── working-capital/             # List Report (Invoices/Orders)
-│   ├── service-agreements/          # List Report (Service Agreements)
-│   ├── sales-orders/                # List Report (Sales Orders)
-│   ├── sales-invoices/              # List Report (Sales Invoices)
-│   └── ui5/                         # Legacy custom UI (deprecated)
-├── db/                              # Database layer
-│   ├── schema.cds                   # Domain models and entity definitions
-│   └── data/                        # Demo data (CSV)
-├── srv/                             # Service layer
-│   ├── analytics-service.cds        # OData service definitions
-│   ├── analytics-service.js         # Custom service implementation
-│   └── utils/                       # Business logic utilities
-├── db_utils/                        # Database utilities
-│   ├── db_clean.sh                  # CSV cleaning script
-│   ├── db_rebuild.sh                # Database rebuild script
-│   ├── db_schema.sql                # SQL schema definitions
-│   └── db_import.sql                # Data import script
-├── input/                           # Raw CSV input files
-├── input_clean/                     # Cleaned CSV files
-└── package.json                     # Project dependencies
+/root/projects/
+├── cds_cap/                         # SAP CAP Application
+│   ├── app/                         # Frontend applications
+│   │   ├── launchpad.html          # Fiori Launchpad sandbox
+│   │   ├── annotations.cds         # UI annotations for Fiori Elements
+│   │   ├── financial-statements/   # Analytical List Page (Income/Balance)
+│   │   ├── revenue-analysis/       # Analytical List Page (Revenue/LTM)
+│   │   ├── working-capital/        # List Report (Invoices/Orders)
+│   │   ├── service-agreements/     # List Report (Service Agreements)
+│   │   ├── sales-orders/           # List Report (Sales Orders)
+│   │   ├── sales-invoices/         # List Report (Sales Invoices)
+│   │   └── ui5/                    # Legacy custom UI (deprecated)
+│   ├── db/                         # Database layer
+│   │   ├── schema.cds              # Domain models and entity definitions
+│   │   └── data/                   # Demo data (CSV)
+│   ├── srv/                        # Service layer
+│   │   ├── analytics-service.cds   # OData service definitions
+│   │   ├── analytics-service.js    # Custom service implementation
+│   │   └── utils/                  # Business logic utilities
+│   ├── xlsx/                       # Excel source files
+│   └── package.json                # Project dependencies
+│
+├── database/                        # Shared database integration layer
+│   ├── db.sqlite                   # SQLite database (shared between dbt and cds_cap)
+│   └── utils/                      # Database management scripts
+│       ├── db_schema.sql           # SQL schema definitions (reference)
+│       └── process_balance_excel.sh # Excel processing utility
+│
+└── dbt/                            # dbt transformations (handles all data pipeline)
+    ├── models/                     # dbt transformation models
+    └── seeds/
+        └── raw/                    # Source CSV files (single source of truth)
 ```
+
+**Architecture Flow:** `dbt` → `database/db.sqlite` ← `cds_cap`
 
 ### Key Technologies
 - **@sap/cds** (^9.5.2) - SAP Cloud Application Programming Model
@@ -195,30 +203,25 @@ For detailed cloud deployment guide, see: [deploy_to_hetzner.md](deploy_to_hetzn
 
 ## Database Management
 
-### Rebuild Database from CSV Files
+### Data Pipeline
+
+All data transformation is handled by **dbt**:
+
+1. **Source Data**: CSV files in `../dbt/seeds/raw/`
+2. **Transform**: dbt models process and transform data
+3. **Load**: dbt writes transformed data to `../database/db.sqlite`
+4. **Serve**: CAP application reads from SQLite and serves via OData
+
+### Running dbt
 
 ```bash
-cd db_utils
-./db_rebuild.sh
+cd ../dbt
+dbt seed          # Load raw CSV files
+dbt run           # Run transformations
+dbt test          # Run data quality tests
 ```
 
-This script:
-1. Cleans CSV files (removes double quotes)
-2. Drops existing database
-3. Creates schema from SQL
-4. Imports all CSV data
-5. Displays summary with row counts
-
-### CSV Input Files
-
-Place raw CSV files in `input/` directory:
-- `VFA_SalesInvoice.csv`
-- `VOA_SalesOrder.csv`
-- `SCA_ServiceAgreement.csv`
-- `ESL_Product.csv`
-- And 5 more...
-
-Cleaned files are automatically generated in `input_clean/`.
+See the dbt project README for detailed data pipeline documentation.
 
 ## Development
 

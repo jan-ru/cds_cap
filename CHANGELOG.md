@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.5] - 2025-12-30
+
+### Changed
+- Restructured project to separate database integration layer into dedicated directory
+- Moved SQLite database from `cds_cap/db.sqlite` to `database/db.sqlite`
+- Moved database utilities from `cds_cap/db_utils/` to `database/utils/`
+- Updated dbt profiles configuration to use new database location
+- Updated CAP package.json database configuration to reference `../database/db.sqlite`
+- Updated all database utility scripts with correct relative paths
+- Updated dbt export_marts.sql to use new database path
+
+### Removed
+- Deleted redundant `cds_cap/input/` and `cds_cap/input_clean/` directories
+- Removed obsolete CSV import utilities (db_clean.sh, db_import.sql, db_rebuild.sh)
+- Source CSV files now managed exclusively in `dbt/seeds/raw/`
+
+### Technical
+- Improved separation of concerns with dedicated database integration layer
+- Clearer architecture: dbt (transforms) → database (integration) ← cds_cap (serves)
+- Centralized database management utilities in single location
+- All path references updated to work with new structure
+- Eliminated data duplication by using dbt as single source of truth for input data
+
 ## [0.3.4] - 2025-12-26
 
 ### Added

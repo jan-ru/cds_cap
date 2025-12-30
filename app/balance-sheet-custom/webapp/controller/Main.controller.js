@@ -10,10 +10,12 @@ sap.ui.define([
             BaseFinancialController.prototype.onInit.apply(this, arguments);
             this._sFSType = Constants.FSType.BAS; // "BAS"
 
-            // Explicitly initialize settings and load data
-            this._initViewSettings();
-            this._loadAvailableYears();
-            this.loadData();
+            // Delay initialization to ensure fragment is loaded
+            setTimeout(function() {
+                this._initViewSettings();
+                this._loadAvailableYears();
+                this.loadData();
+            }.bind(this), 100);
         },
 
         _getDataPromise: function(oPeriodA, oPeriodB) {
