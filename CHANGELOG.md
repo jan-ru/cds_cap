@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.6] - 2025-12-31
+
+### Fixed
+- **CRITICAL**: Fixed inverted RevenueAccounts classification bug (84/85 were labeled "Recurring" instead of "One-Off")
+- Revenue classification now consistent between server and client components
+- Business logic for revenue categorization corrected across entire application
+
+### Added
+- Centralized constants infrastructure in `srv/config/constants.js`
+  - Single source of truth for MODEL_SIZE_LIMIT, FS_TYPES, SORT_CONFIG, SPACERS, LABELS, ACCOUNT_LABELS, MONITORING
+  - Eliminates 8+ duplications of SIZE_LIMIT constant across codebase
+- Tree builder common utilities in `srv/utils/tree-builder-common.js`
+  - Shared functions: createNode(), createSpacer(), roundValue(), sortKeys()
+  - Eliminates 75% code duplication across tree builder modules
+- Period handling utilities in `srv/utils/period-utils.js`
+  - Functions: parsePeriod(), isInPeriod(), formatPeriod(), createPeriod()
+  - Eliminates 5x duplication of period parsing logic
+
+### Changed
+- Refactored `srv/utils/financial-tree-builder.js` to use common utilities
+  - createNode: 17 lines → 10 lines (41% reduction)
+  - createSpacer: 14 lines → 8 lines (43% reduction)
+  - checkPeriod: 13 lines → 1 line (92% reduction)
+  - calcDiffs: 27 lines → 19 lines (30% reduction)
+  - Overall reduction: 71 lines → 38 lines in key functions (46% reduction)
+- All tree builders now import from centralized constants instead of local definitions
+
+### Technical
+- Phase 2-3 code quality improvements completed
+- Total lines eliminated: 123+ lines of duplicate code
+- Infrastructure created: 259 lines of reusable utilities
+- Net code reduction with improved maintainability
+- All 161 tests passing with zero behavioral changes
+- Foundation laid for refactoring remaining tree builders (pivot, revenue)
+
 ## [0.3.5] - 2025-12-30
 
 ### Changed

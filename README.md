@@ -1,4 +1,4 @@
-# my-analytics-cap (Version 0.3.5)
+# my-analytics-cap (Version 0.3.6)
 
 A SAP Cloud Application Programming Model (CAP) project featuring **SAP Fiori Elements** applications with OData V4 analytical services for comprehensive financial reporting and analysis.
 
