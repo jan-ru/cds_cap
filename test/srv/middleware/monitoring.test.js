@@ -2,6 +2,7 @@
  * Unit tests for Performance Monitoring middleware
  */
 
+const EventEmitter = require('events');
 const {
     trackPerformance,
     getMetrics,
@@ -9,6 +10,18 @@ const {
     configure,
     config
 } = require('../../../srv/middleware/monitoring');
+
+// Helper function to create mock request with EventEmitter
+function createMockRequest(overrides = {}) {
+    const req = new EventEmitter();
+    Object.assign(req, {
+        event: 'READ',
+        target: { name: 'TestEntity' },
+        headers: {},
+        ...overrides
+    });
+    return req;
+}
 
 describe('Performance Monitoring', () => {
 
@@ -19,11 +32,7 @@ describe('Performance Monitoring', () => {
 
     describe('trackPerformance', () => {
         test('should track successful request', async () => {
-            const mockReq = {
-                event: 'READ',
-                target: { name: 'TestEntity' },
-                headers: {}
-            };
+            const mockReq = createMockRequest();
 
             const mockNext = jest.fn().mockResolvedValue({ data: 'test' });
 
@@ -39,11 +48,7 @@ describe('Performance Monitoring', () => {
         });
 
         test('should track failed request', async () => {
-            const mockReq = {
-                event: 'CREATE',
-                target: { name: 'TestEntity' },
-                headers: {}
-            };
+            const mockReq = createMockRequest({ event: 'CREATE' });
 
             const mockNext = jest.fn().mockRejectedValue(new Error('Test error'));
 
@@ -56,11 +61,7 @@ describe('Performance Monitoring', () => {
         });
 
         test('should track response times', async () => {
-            const mockReq = {
-                event: 'READ',
-                target: { name: 'TestEntity' },
-                headers: {}
-            };
+            const mockReq = createMockRequest();
 
             const mockNext = jest.fn().mockImplementation(() => {
                 return new Promise(resolve => setTimeout(() => resolve({}), 10));
@@ -75,11 +76,9 @@ describe('Performance Monitoring', () => {
         });
 
         test('should use correlation ID from headers', async () => {
-            const mockReq = {
-                event: 'READ',
-                target: { name: 'TestEntity' },
+            const mockReq = createMockRequest({
                 headers: { 'x-correlation-id': 'test-123' }
-            };
+            });
 
             const mockNext = jest.fn().mockResolvedValue({});
 
@@ -107,16 +106,13 @@ describe('Performance Monitoring', () => {
         });
 
         test('should return updated metrics after requests', async () => {
-            const mockReq = {
-                event: 'READ',
-                target: { name: 'TestEntity' },
-                headers: {}
-            };
+            const mockReq1 = createMockRequest();
+            const mockReq2 = createMockRequest();
 
             const mockNext = jest.fn().mockResolvedValue({});
 
-            await trackPerformance(mockReq, mockNext);
-            await trackPerformance(mockReq, mockNext);
+            await trackPerformance(mockReq1, mockNext);
+            await trackPerformance(mockReq2, mockNext);
 
             const metrics = getMetrics();
             expect(metrics.requests.total).toBe(2);
@@ -126,17 +122,11 @@ describe('Performance Monitoring', () => {
         });
 
         test('should track different endpoints separately', async () => {
-            const req1 = {
-                event: 'READ',
-                target: { name: 'Entity1' },
-                headers: {}
-            };
-
-            const req2 = {
+            const req1 = createMockRequest({ target: { name: 'Entity1' } });
+            const req2 = createMockRequest({
                 event: 'CREATE',
-                target: { name: 'Entity2' },
-                headers: {}
-            };
+                target: { name: 'Entity2' }
+            });
 
             const mockNext = jest.fn().mockResolvedValue({});
 
@@ -150,11 +140,7 @@ describe('Performance Monitoring', () => {
 
     describe('resetMetrics', () => {
         test('should reset all metrics to initial state', async () => {
-            const mockReq = {
-                event: 'READ',
-                target: { name: 'TestEntity' },
-                headers: {}
-            };
+            const mockReq = createMockRequest();
 
             const mockNext = jest.fn().mockResolvedValue({});
 
@@ -198,11 +184,9 @@ describe('Performance Monitoring', () => {
             // Configure lower threshold for testing
             configure({ slowRequestThreshold: 5 });
 
-            const mockReq = {
-                event: 'READ',
-                target: { name: 'SlowEntity' },
-                headers: {}
-            };
+            const mockReq = createMockRequest({
+                target: { name: 'SlowEntity' }
+            });
 
             const mockNext = jest.fn().mockImplementation(() => {
                 return new Promise(resolve => setTimeout(() => resolve({}), 10));

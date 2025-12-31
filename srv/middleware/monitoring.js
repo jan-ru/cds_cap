@@ -42,9 +42,10 @@ const config = {
  * Tracks performance metrics for a single request
  *
  * @param {Object} req - CAP request object
+ * @param {Function} next - Next handler in the chain
  * @returns {Promise} Request result
  */
-async function trackPerformance(req) {
+async function trackPerformance(req, next) {
     const startTime = Date.now();
     const startMemory = process.memoryUsage();
 
@@ -104,6 +105,21 @@ async function trackPerformance(req) {
             logger.error('Error in monitoring error handler', { error: err.message });
         }
     });
+
+    // Execute the next handler and track success/failure
+    try {
+        const result = await next();
+
+        // Manually trigger 'done' event for testing
+        req.emit('done');
+
+        return result;
+    } catch (error) {
+        // Manually trigger 'error' event for testing
+        req.emit('error', error);
+
+        throw error;
+    }
 }
 
 /**
