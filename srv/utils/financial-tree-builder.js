@@ -6,162 +6,103 @@
  * @module srv/utils/financial-tree-builder
  */
 
-/**
- * Configuration constants for tree building
- * @const {Object}
- */
-const Constants = {
+// Import centralized constants (single source of truth)
+const {
+    SORT_CONFIG: SortConfig,
+    SPACERS: Spacers,
+    REVENUE_ACCOUNTS: RevenueAccounts,
+    LABELS: Headers,
+    ACCOUNT_LABELS: LabelOverrides
+} = require('../config/constants');
 
-    SortConfig: {
-        PNL: ["8-Recurring", "8-OneOff", "7", "4", "9"],
-        SALES: ["8-Recurring", "8-OneOff", "7", "4", "9"],
-        BAS: "ASC",
-        COMBINED: ["8-Recurring", "8-OneOff", "7", "4", "9"]
-    },
-    Spacers: {
-        PNL: ["7"],
-        COMBINED: ["9"]
-    },
-    RevenueAccounts: {
-        ONE_OFF: ["84", "85"],      // One-off Revenue accounts (8400, 8500 series)
-        RECURRING: ["80", "86", "87", "88"]  // Recurring Revenue accounts (8000, 8600, 8700, 8800 series)
-    },
-    Headers: {
-        NetIncome: "Net Income",
-        BalanceSheet: "Balance sheet",
-        IncomeStatement: "Income statement",
-        CashFlow: "Cash Flow",
-        GrossMargin: "Gross Margin (8000 + 7000)",
-        TotalRevenue: "Total Revenue",
-        GrandTotal: "Grand Total",
-        CostOfSales: "Cost of Sales",
-        RevenueRecurring: "Revenue (Recurring)",
-        RevenueOneOff: "Revenue (One-Off)"
-    },
-    LabelOverrides: {
-        "02": "02xx Fixed Assets",
-        "06": "06xx Equity",
-        "11": "11xx Cash & Cash Equivalents",
-        "15": "15xx Taxes",
-        "30": "30xx Inventories",
-        "40": "40xx Operating Costs",
-        "41": "41xx Personel Costs",
-        "42": "42xx Housing Costs",
-        "43": "43xx Office Costs",
-        "44": "44xx Car Costs",
-        "45": "45xx Sales Costs",
-        "46": "46xx General Costs",
-        "70": "70xx Cost of Sales",
-        "80": "80xx Revenue Recurring",
-        "84": "84xx Revenue One-Off",
-        "85": "85xx Revenue One-Off",
-        "86": "86xx Revenue Recurring",
-        "87": "87xx Revenue Recurring",
-        "88": "88xx Revenue Recurring",
-        "90": "90xx Interest Income",
-        "91": "91xx Interest Expense",
-        "93": "93xx Exchange Rate Differences"
-    }
+// Import common tree building utilities
+const {
+    createNode: commonCreateNode,
+    createSpacer: commonCreateSpacer,
+    roundValue,
+    sortKeys
+} = require('./tree-builder-common');
+
+const { isInPeriod } = require('./period-utils');
+
+// Create Constants object for backward compatibility
+const Constants = {
+    SortConfig,
+    Spacers,
+    RevenueAccounts,
+    Headers,
+    LabelOverrides
 };
 
 /**
  * Creates a new tree node with initialized financial values
+ * Uses common createNode and adds financial-specific properties
  *
  * @private
  * @param {string} name - Display name for the node
  * @param {number} level - Hierarchy level (1=top level, 2=mid level, 3=leaf level)
  * @returns {Object} Tree node with financial metrics initialized to zero
- *
- * @property {string} name - Node display name
- * @property {number} level - Hierarchy level in the tree
- * @property {number} watA - "Winst At Tussenstanden" (Work in Progress) for Period A
- * @property {number} noiA - "Nettowinst OpbrengstInkoop" (Net Income) for Period A
- * @property {number} watB - Work in Progress for Period B
- * @property {number} noiB - Net Income for Period B
- * @property {number} wnA - Combined (watA + noiA) for Period A
- * @property {number} wnB - Combined (watB + noiB) for Period B
- * @property {number} diffAbs - Absolute difference between periods
- * @property {number} diffPct - Percentage difference between periods
- * @property {boolean} isBold - Whether to display node in bold
- * @property {Array} nodes - Child nodes array
- * @property {Array} nodesList - Flat list of all descendant nodes
  */
 var createNode = function(name, level) {
-    return {
-        name: name,
-        level: level,
+    return commonCreateNode(name, level, {
         amountA: 0,
         amountB: 0,
         watA: 0,
         noiA: 0,
         watB: 0,
         noiB: 0,
-        // Computed Total (WAT + NOI)
         wnA: 0,
         wnB: 0,
         diffAbs: 0,
-        diffPct: 0,
-        isBold: false
-    };
+        diffPct: 0
+    });
 };
 
 // Helper to create spacer
+// Uses common spacer and adds null financial values
 var createSpacer = function() {
-    var oSpacer = createNode("", 1);
-    oSpacer.amountA = null;
-    oSpacer.amountB = null;
-    oSpacer.watA = null;
-    oSpacer.noiA = null;
-    oSpacer.watB = null;
-    oSpacer.noiB = null;
-    oSpacer.wnA = null;
-    oSpacer.wnB = null;
-    oSpacer.diffAbs = null;
-    oSpacer.diffPct = null;
-    return oSpacer;
+    return Object.assign(commonCreateSpacer(), {
+        amountA: null,
+        amountB: null,
+        watA: null,
+        noiA: null,
+        watB: null,
+        noiB: null,
+        wnA: null,
+        wnB: null,
+        diffAbs: null,
+        diffPct: null
+    });
 };
 
-// Helper to check period
-var checkPeriod = function(iYear, iMonth, oPeriod) {
-    if (!oPeriod) return false;
-    if (String(iYear) !== String(oPeriod.year)) return false;
-    
-    var iFrom = parseInt(oPeriod.monthFrom, 10);
-    var iTo = parseInt(oPeriod.monthTo, 10);
-    var iMonthInt = parseInt(iMonth, 10);
-    
-    if (iMonthInt < iFrom) return false;
-    if (iMonthInt > iTo) return false;
-    return true;
-};
+// Helper to check period - uses common utility
+var checkPeriod = isInPeriod;
 
 // Helper to calc diffs and totals
+// Uses common roundValue utility
 var calcDiffs = function(node) {
-    // Round Inputs First? Or just formatting? 
-    // Best to round cumulative values to avoid float artifacts
-    node.watA = parseFloat((node.watA || 0).toFixed(2));
-    node.noiA = parseFloat((node.noiA || 0).toFixed(2));
-    node.watB = parseFloat((node.watB || 0).toFixed(2));
-    node.noiB = parseFloat((node.noiB || 0).toFixed(2));
-    
+    // Round cumulative values to avoid float artifacts
+    node.watA = roundValue(node.watA);
+    node.noiA = roundValue(node.noiA);
+    node.watB = roundValue(node.watB);
+    node.noiB = roundValue(node.noiB);
+
     // Calculate Computed Totals (WAT + NOI)
-    node.wnA = parseFloat((node.watA + node.noiA).toFixed(2));
-    node.wnB = parseFloat((node.watB + node.noiB).toFixed(2));
-    
-    // Total Amount A/B should match wnA/wnB if filtering matches completely
-    // But keeping original amountA logic for backward compatibility / correctness if other Codes exist
-    // Actually, amountA/B assumes sum of everything.
-    node.amountA = parseFloat((node.amountA || 0).toFixed(2));
-    node.amountB = parseFloat((node.amountB || 0).toFixed(2));
+    node.wnA = roundValue(node.watA + node.noiA);
+    node.wnB = roundValue(node.watB + node.noiB);
+
+    // Round total amounts
+    node.amountA = roundValue(node.amountA);
+    node.amountB = roundValue(node.amountB);
 
     node.diffAbs = node.amountB - node.amountA;
     if (node.amountA !== 0) {
         node.diffPct = (node.diffAbs / Math.abs(node.amountA)) * 100;
     } else {
-        node.diffPct = 0; 
+        node.diffPct = 0;
     }
-    
-    node.diffAbs = parseFloat(node.diffAbs.toFixed(2));
+
+    node.diffAbs = roundValue(node.diffAbs);
 };
 
 // Helper: Add Net Income and Balance Sheet Header

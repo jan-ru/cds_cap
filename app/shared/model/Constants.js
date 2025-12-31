@@ -4,6 +4,7 @@ sap.ui.define([], function() {
     return {
         // Model Configuration
         ModelConfig: {
+            // NOTE: This value must match srv/config/constants.js MODEL_SIZE_LIMIT
             SIZE_LIMIT: 100000 // Maximum number of items in JSON models to prevent browser performance issues
         },
 
@@ -24,13 +25,14 @@ sap.ui.define([], function() {
         ],
 
         // Revenue Classification Account Codes
+        // FIXED: Comments were inverted - corrected to match server-side logic
         RevenueAccounts: {
-            RECURRING_8400: "84", // Recurring Revenue (8400 series)
-            RECURRING_8500: "85", // Recurring Revenue (8500 series)
-            ONE_OFF_8000: "80",   // One-off Revenue (8000 series)
-            ONE_OFF_8600: "86",   // One-off Revenue (8600 series)
-            ONE_OFF_8700: "87",   // One-off Revenue (8700 series)
-            ONE_OFF_8800: "88"    // One-off Revenue (8800 series)
+            ONE_OFF_8400: "84",      // One-Off Revenue (8400 series)
+            ONE_OFF_8500: "85",      // One-Off Revenue (8500 series)
+            RECURRING_8000: "80",    // Recurring Revenue (8000 series)
+            RECURRING_8600: "86",    // Recurring Revenue (8600 series)
+            RECURRING_8700: "87",    // Recurring Revenue (8700 series)
+            RECURRING_8800: "88"     // Recurring Revenue (8800 series)
         },
 
         // Financial Statement Types
