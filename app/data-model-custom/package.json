@@ -1,5 +1,9 @@
 {
   "name": "data-model-custom",
   "version": "0.1.0",
-  "description": "Data Model - Custom UI5 App"
+  "description": "Data Model - Custom UI5 App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

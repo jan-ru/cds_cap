@@ -4,24 +4,8 @@
   "description": "Working Capital Management - Invoices, Orders, Service Agreements",
   "scripts": {
     "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#workingcapital-display\"",
-    "test:unit": "karma start --single-run",
-    "test:unit:watch": "karma start",
     "test:integration": "wdio wdio.conf.js",
     "test:opa": "open webapp/test/integration/opaTests.qunit.html",
-    "test": "npm run test:unit && npm run test:integration"
-  },
-  "devDependencies": {
-    "@sap/ux-specification": "^1.108.28",
-    "@ui5/cli": "^3.0.0",
-    "karma": "^6.4.0",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-coverage": "^2.2.0",
-    "karma-ui5": "^3.0.0",
-    "@wdio/cli": "^8.0.0",
-    "@wdio/local-runner": "^8.0.0",
-    "@wdio/mocha-framework": "^8.0.0",
-    "@wdio/spec-reporter": "^8.0.0",
-    "chromedriver": "^119.0.0",
-    "wdio-chromedriver-service": "^8.0.0"
+    "test": "npm run test:integration"
   }
 }

@@ -1,6 +1,9 @@
 {
   "name": "service-agreements",
-  "_version": "1.0.0",
-  "sapux": true,
-  "description": "Service Agreements Fiori App"
+  "version": "1.0.0",
+  "description": "Service Agreements Fiori App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

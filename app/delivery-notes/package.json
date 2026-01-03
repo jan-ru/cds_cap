@@ -1,6 +1,9 @@
 {
   "name": "delivery-notes",
-  "_version": "1.0.0",
-  "sapux": true,
-  "description": "Delivery Notes Fiori App"
+  "version": "1.0.0",
+  "description": "Delivery Notes Fiori App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

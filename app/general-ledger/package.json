@@ -4,8 +4,5 @@
   "description": "General Ledger - Twinfield GL Entries",
   "scripts": {
     "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#generalledger-display\""
-  },
-  "devDependencies": {
-    "@sap/ux-specification": "^1.108.28"
   }
 }

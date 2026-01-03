@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.7] - 2026-01-03
+
+### Changed
+- **Testing Infrastructure**: Completed migration from Karma to wdi5 for UI5 application testing
+  - Replaced karma-ui5 with wdio-ui5-service for native UI5 control access
+  - Updated 3 Fiori apps (financial-statements, revenue-analysis, working-capital) to use wdi5
+  - All app wdio configs now extend shared base configuration for consistency
+  - Test scripts updated: removed karma commands, standardized on wdio integration tests
+
+### Removed
+- Karma testing framework and all related dependencies
+  - karma, karma-ui5, karma-chrome-launcher, karma-coverage packages
+  - karma.conf.base.js and individual app karma.conf.js files
+  - "test": "karma start" scripts from 12 app package.json files
+- Migration documentation and scripts (migrations complete)
+  - MIGRATION-GUIDE.md (monorepo migration completed)
+  - migrate-to-monorepo.js and migrate-to-monorepo-dryrun.js scripts
+  - QUICK-START-WDIO.md (wdi5 migration completed)
+
+### Added
+- wdi5 (wdio-ui5-service ^3.1.0) for UI5-native browser testing
+  - Direct access to UI5 controls via browser.asControl()
+  - Automatic UI5 waiting and better error messages
+  - Cleaner test code compared to plain WebdriverIO
+- WDI5-VS-WDIO.md reference documentation for developers
+- Shared wdio.conf.base.js with UI5 service configuration
+
+### Technical
+- npm workspaces monorepo structure maintained and optimized
+- Shared dependencies centralized at root level
+- All 27+ UI5 apps benefit from consistent test infrastructure
+- Test commands: npm test --workspace=app/{app-name} or npm run test:ui
+
 ## [0.3.6] - 2025-12-31
 
 ### Fixed

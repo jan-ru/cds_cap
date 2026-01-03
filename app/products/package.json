@@ -1,6 +1,9 @@
 {
   "name": "products",
-  "_version": "1.0.0",
-  "sapux": true,
-  "description": "Products Fiori App"
+  "version": "1.0.0",
+  "description": "Products Fiori App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

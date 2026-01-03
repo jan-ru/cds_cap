@@ -1,6 +1,9 @@
 {
   "name": "sales-orders",
-  "_version": "1.0.0",
-  "sapux": true,
-  "description": "Sales Orders Fiori App"
+  "version": "1.0.0",
+  "description": "Sales Orders Fiori App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

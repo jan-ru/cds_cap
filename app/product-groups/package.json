@@ -1,6 +1,9 @@
 {
   "name": "product-groups",
-  "_version": "1.0.0",
-  "sapux": true,
-  "description": "Product Groups Fiori App"
+  "version": "1.0.0",
+  "description": "Product Groups Fiori App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

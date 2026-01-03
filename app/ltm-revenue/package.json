@@ -1,6 +1,9 @@
 {
   "name": "ltm-revenue",
-  "_version": "1.0.0",
-  "sapux": true,
-  "description": "Revenue LTM Fiori App"
+  "version": "1.0.0",
+  "description": "Revenue LTM Fiori App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

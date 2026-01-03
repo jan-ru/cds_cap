@@ -1,6 +1,9 @@
 {
   "name": "sales-invoices",
-  "_version": "1.0.0",
-  "sapux": true,
-  "description": "Sales Invoices Fiori App"
+  "version": "1.0.0",
+  "description": "Sales Invoices Fiori App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

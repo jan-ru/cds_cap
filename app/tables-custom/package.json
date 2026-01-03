@@ -1,5 +1,9 @@
 {
   "name": "tables-custom",
   "version": "0.1.0",
-  "description": "Tables - Custom UI5 App"
+  "description": "Tables - Custom UI5 App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }

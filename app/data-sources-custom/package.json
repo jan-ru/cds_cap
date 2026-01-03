@@ -1,5 +1,9 @@
 {
   "name": "data-sources-custom",
   "version": "0.1.0",
-  "description": "Data Sources - Custom UI5 App"
+  "description": "Data Sources - Custom UI5 App",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build"
+  }
 }
