@@ -83,3 +83,9 @@ coverage/
 # Windows
 ehthumbs.db
 Desktop.ini
+
+# Migration artifacts
+migration-preview/
+backup-package-json/
+cds_cap_backup_*.tar.gz
+*.migration.log
