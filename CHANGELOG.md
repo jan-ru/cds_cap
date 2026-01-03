@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.8] - 2026-01-03
+
+### Removed
+- **Dead Code Elimination**: Comprehensive quality investigation identified and removed unused code
+  - **srv/utils/error-handler.js** (80 lines removed)
+    - Deleted `ErrorFactory` object with 6 unused error creation functions
+    - Deleted `wrapHandler()` function (19 lines)
+    - File reduced from 218 lines → 111 lines (49% reduction)
+  - **srv/utils/period-utils.js** (53 lines removed)
+    - Deleted 3 unused functions: `parsePeriod()`, `formatPeriod()`, `createPeriod()`
+    - Kept `isInPeriod()` which is actively used by financial-tree-builder
+    - File reduced from 80 lines → 27 lines (66% reduction)
+  - **test/srv/utils/error-handler.test.js** (entire file deleted)
+    - Removed 186 lines of tests for deleted dead code
+    - Eliminated artificial usage of functions never used in production
+
+### Changed
+- **Test Suite**: Test count reduced from 161 to 146 tests (removed 15 dead code tests)
+- **.gitignore**: Added patterns for test configuration files
+  - wdio.conf.js files
+  - TEST-README.md files
+  - test/analytics-service/ directory
+
+### Technical
+- Total lines removed: 152+ lines of unused code
+- Zero behavioral changes - only dead code removed
+- All 146 tests passing
+- Improved codebase maintainability and clarity
+- Quality investigation revealed code written but never integrated into production
+
 ## [0.3.7] - 2026-01-03
 
 ### Changed

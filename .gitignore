@@ -72,6 +72,11 @@ xlsx/*.xaf
 coverage/
 .nyc_output/
 
+# Test configuration files
+wdio.conf.js
+**/TEST-README.md
+test/analytics-service/
+
 # Editor backup files
 *~
 .*.sw[a-z]
