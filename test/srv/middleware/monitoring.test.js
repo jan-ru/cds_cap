@@ -34,12 +34,14 @@ describe('Performance Monitoring', () => {
         test('should track successful request', async () => {
             const mockReq = createMockRequest();
 
-            const mockNext = jest.fn().mockResolvedValue({ data: 'test' });
+            // Call trackPerformance (sets up event listeners)
+            await trackPerformance(mockReq);
 
-            const result = await trackPerformance(mockReq, mockNext);
+            // Simulate CAP completing the request
+            mockReq.emit('done');
 
-            expect(result).toEqual({ data: 'test' });
-            expect(mockNext).toHaveBeenCalled();
+            // Wait for event handlers to execute
+            await new Promise(resolve => setImmediate(resolve));
 
             const metrics = getMetrics();
             expect(metrics.requests.total).toBe(1);
@@ -50,9 +52,14 @@ describe('Performance Monitoring', () => {
         test('should track failed request', async () => {
             const mockReq = createMockRequest({ event: 'CREATE' });
 
-            const mockNext = jest.fn().mockRejectedValue(new Error('Test error'));
+            // Call trackPerformance (sets up event listeners)
+            await trackPerformance(mockReq);
 
-            await expect(trackPerformance(mockReq, mockNext)).rejects.toThrow('Test error');
+            // Simulate CAP error
+            mockReq.emit('error', new Error('Test error'));
+
+            // Wait for event handlers to execute
+            await new Promise(resolve => setImmediate(resolve));
 
             const metrics = getMetrics();
             expect(metrics.requests.total).toBe(1);
@@ -63,11 +70,15 @@ describe('Performance Monitoring', () => {
         test('should track response times', async () => {
             const mockReq = createMockRequest();
 
-            const mockNext = jest.fn().mockImplementation(() => {
-                return new Promise(resolve => setTimeout(() => resolve({}), 10));
-            });
+            // Call trackPerformance
+            await trackPerformance(mockReq);
 
-            await trackPerformance(mockReq, mockNext);
+            // Simulate delay then completion
+            await new Promise(resolve => setTimeout(resolve, 10));
+            mockReq.emit('done');
+
+            // Wait for event handlers
+            await new Promise(resolve => setImmediate(resolve));
 
             const metrics = getMetrics();
             expect(metrics.responseTime.min).toBeGreaterThan(0);
@@ -80,12 +91,17 @@ describe('Performance Monitoring', () => {
                 headers: { 'x-correlation-id': 'test-123' }
             });
 
-            const mockNext = jest.fn().mockResolvedValue({});
+            // Call trackPerformance
+            await trackPerformance(mockReq);
 
-            await trackPerformance(mockReq, mockNext);
+            // Verify correlation ID is stored in request context
+            expect(mockReq._monitoringContext.correlationId).toBe('test-123');
 
-            // Correlation ID is used internally but not returned
-            expect(mockNext).toHaveBeenCalled();
+            // Simulate completion
+            mockReq.emit('done');
+
+            // Wait for event handlers
+            await new Promise(resolve => setImmediate(resolve));
         });
     });
 
@@ -109,10 +125,16 @@ describe('Performance Monitoring', () => {
             const mockReq1 = createMockRequest();
             const mockReq2 = createMockRequest();
 
-            const mockNext = jest.fn().mockResolvedValue({});
+            // Call trackPerformance for both requests
+            await trackPerformance(mockReq1);
+            await trackPerformance(mockReq2);
 
-            await trackPerformance(mockReq1, mockNext);
-            await trackPerformance(mockReq2, mockNext);
+            // Simulate both completing
+            mockReq1.emit('done');
+            mockReq2.emit('done');
+
+            // Wait for event handlers
+            await new Promise(resolve => setImmediate(resolve));
 
             const metrics = getMetrics();
             expect(metrics.requests.total).toBe(2);
@@ -128,10 +150,16 @@ describe('Performance Monitoring', () => {
                 target: { name: 'Entity2' }
             });
 
-            const mockNext = jest.fn().mockResolvedValue({});
+            // Call trackPerformance for both requests
+            await trackPerformance(req1);
+            await trackPerformance(req2);
 
-            await trackPerformance(req1, mockNext);
-            await trackPerformance(req2, mockNext);
+            // Simulate both completing
+            req1.emit('done');
+            req2.emit('done');
+
+            // Wait for event handlers
+            await new Promise(resolve => setImmediate(resolve));
 
             const metrics = getMetrics();
             expect(metrics.endpoints.length).toBe(2);
@@ -142,9 +170,14 @@ describe('Performance Monitoring', () => {
         test('should reset all metrics to initial state', async () => {
             const mockReq = createMockRequest();
 
-            const mockNext = jest.fn().mockResolvedValue({});
+            // Call trackPerformance
+            await trackPerformance(mockReq);
 
-            await trackPerformance(mockReq, mockNext);
+            // Simulate completion
+            mockReq.emit('done');
+
+            // Wait for event handlers
+            await new Promise(resolve => setImmediate(resolve));
 
             let metrics = getMetrics();
             expect(metrics.requests.total).toBe(1);
@@ -188,11 +221,15 @@ describe('Performance Monitoring', () => {
                 target: { name: 'SlowEntity' }
             });
 
-            const mockNext = jest.fn().mockImplementation(() => {
-                return new Promise(resolve => setTimeout(() => resolve({}), 10));
-            });
+            // Call trackPerformance
+            await trackPerformance(mockReq);
 
-            await trackPerformance(mockReq, mockNext);
+            // Simulate delay then completion
+            await new Promise(resolve => setTimeout(resolve, 10));
+            mockReq.emit('done');
+
+            // Wait for event handlers
+            await new Promise(resolve => setImmediate(resolve));
 
             const metrics = getMetrics();
             expect(metrics.slowRequests.length).toBeGreaterThan(0);

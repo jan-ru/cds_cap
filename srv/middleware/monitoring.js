@@ -40,12 +40,12 @@ const config = {
 
 /**
  * Tracks performance metrics for a single request
+ * Registered as a CAP before() handler - receives only req parameter
  *
  * @param {Object} req - CAP request object
- * @param {Function} next - Next handler in the chain
- * @returns {Promise} Request result
+ * @returns {Promise<void>}
  */
-async function trackPerformance(req, next) {
+async function trackPerformance(req) {
     const startTime = Date.now();
     const startMemory = process.memoryUsage();
 
@@ -106,20 +106,8 @@ async function trackPerformance(req, next) {
         }
     });
 
-    // Execute the next handler and track success/failure
-    try {
-        const result = await next();
-
-        // Manually trigger 'done' event for testing
-        req.emit('done');
-
-        return result;
-    } catch (error) {
-        // Manually trigger 'error' event for testing
-        req.emit('error', error);
-
-        throw error;
-    }
+    // Event listeners registered - CAP will automatically emit 'done' or 'error' events
+    // No need to call next() or manually emit events
 }
 
 /**
