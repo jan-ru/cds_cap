@@ -79,6 +79,23 @@ function analyzeSharedDependencies(apps) {
     });
   });
 
+  // Helper function to parse and compare semver versions
+  function compareVersions(v1, v2) {
+    // Remove prefix characters (^, ~, >, <, =) and get version numbers
+    const clean = (v) => v.replace(/^[\^~>=<]+/, '');
+    const parse = (v) => {
+      const parts = clean(v).split('.').map(p => parseInt(p.replace(/\D/g, '')) || 0);
+      return { major: parts[0] || 0, minor: parts[1] || 0, patch: parts[2] || 0 };
+    };
+
+    const ver1 = parse(v1);
+    const ver2 = parse(v2);
+
+    if (ver1.major !== ver2.major) return ver2.major - ver1.major;
+    if (ver1.minor !== ver2.minor) return ver2.minor - ver1.minor;
+    return ver2.patch - ver1.patch;
+  }
+
   // Identify shared dependencies (used by 2+ apps or in COMMON_SHARED_DEPS)
   const sharedDeps = {};
   const conflicts = [];
@@ -87,17 +104,21 @@ function analyzeSharedDependencies(apps) {
     if (depCounts[dep] >= 2 || COMMON_SHARED_DEPS.includes(dep)) {
       const versions = Array.from(allDeps[dep].versions);
 
+      // Sort versions to get the highest one
+      const sortedVersions = versions.sort(compareVersions);
+
       // Check for version conflicts
       if (versions.length > 1) {
         conflicts.push({
           dep,
-          versions,
+          versions: sortedVersions, // Show sorted versions
           apps: allDeps[dep].apps,
-          count: depCounts[dep]
+          count: depCounts[dep],
+          selectedVersion: sortedVersions[0] // Highest version
         });
       }
 
-      sharedDeps[dep] = versions[0]; // Take first version
+      sharedDeps[dep] = sortedVersions[0]; // Use highest version
     }
   });
 
@@ -280,12 +301,12 @@ function generateDetailedReport(apps, analysis, rootPreview, appPreviews) {
   // Version conflicts
   if (conflicts.length > 0) {
     report += `## ⚠️  Version Conflicts\n\n`;
-    report += `The following dependencies have multiple versions across apps. The migration will use the first version found:\n\n`;
+    report += `The following dependencies have multiple versions across apps. **The migration will use the HIGHEST version** (newest):\n\n`;
     conflicts.forEach(conflict => {
       report += `### ${conflict.dep}\n`;
-      report += `- **Versions found**: ${conflict.versions.join(', ')}\n`;
-      report += `- **Used by**: ${conflict.apps.join(', ')}\n`;
-      report += `- **Will use**: ${conflict.versions[0]}\n\n`;
+      report += `- **Versions found**: ${conflict.versions.join(', ')} (sorted highest to lowest)\n`;
+      report += `- **Used by**: ${conflict.count} apps - ${conflict.apps.slice(0, 3).join(', ')}${conflict.apps.length > 3 ? `, ... +${conflict.apps.length - 3} more` : ''}\n`;
+      report += `- **Will use**: ${conflict.selectedVersion} ✅ (highest version)\n\n`;
     });
   }
 

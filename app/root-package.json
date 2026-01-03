@@ -1,0 +1,39 @@
+{
+  "name": "cds-cap-financial-apps",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Financial Analytics UI5 Applications Monorepo",
+  "workspaces": [
+    "app/*"
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "test:balance-sheet": "npm run test --workspace=app/balance-sheet-custom",
+    "test:charts": "npm run test --workspace=app/charts-custom",
+    "test:financial-statements": "npm run test --workspace=app/financial-statements",
+    "build": "npm run build --workspaces --if-present",
+    "start": "npm run start --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "upgrade-wdio": "npm install --save-dev @wdio/cli@latest @wdio/local-runner@latest @wdio/mocha-framework@latest @wdio/spec-reporter@latest @wdio/utils@latest"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^3.0.0",
+    "@sap/ux-ui5-tooling": "^1.0.0",
+    "karma": "^6.4.0",
+    "karma-ui5": "^3.0.0",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.0",
+    "karma-junit-reporter": "^2.0.1",
+    "@wdio/cli": "^9.22.0",
+    "@wdio/local-runner": "^9.22.0",
+    "@wdio/mocha-framework": "^9.22.0",
+    "@wdio/spec-reporter": "^9.22.0",
+    "@wdio/utils": "^9.22.0",
+    "eslint": "^8.0.0",
+    "ui5-task-flatten-library": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

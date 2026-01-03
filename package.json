@@ -26,6 +26,8 @@
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
         "test:verbose": "jest --verbose",
+        "test:ui": "npm run test:ui --prefix app/financial-statements && npm run test:ui --prefix app/revenue-analysis && npm run test:ui --prefix app/working-capital",
+        "test:all": "npm test && npm run test:ui",
         "lint": "eslint srv app --ext .js",
         "lint:fix": "eslint srv app --ext .js --fix",
         "format": "prettier --write \"**/*.{js,json,md}\"",

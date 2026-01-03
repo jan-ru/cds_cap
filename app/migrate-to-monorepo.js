@@ -88,18 +88,58 @@ function analyzeSharedDependencies(apps) {
     });
   });
 
+  // Helper function to parse and compare semver versions
+  function compareVersions(v1, v2) {
+    // Remove prefix characters (^, ~, >, <, =) and get version numbers
+    const clean = (v) => v.replace(/^[\^~>=<]+/, '');
+    const parse = (v) => {
+      const parts = clean(v).split('.').map(p => parseInt(p.replace(/\D/g, '')) || 0);
+      return { major: parts[0] || 0, minor: parts[1] || 0, patch: parts[2] || 0 };
+    };
+
+    const ver1 = parse(v1);
+    const ver2 = parse(v2);
+
+    if (ver1.major !== ver2.major) return ver2.major - ver1.major;
+    if (ver1.minor !== ver2.minor) return ver2.minor - ver1.minor;
+    return ver2.patch - ver1.patch;
+  }
+
   // Identify shared dependencies (used by 2+ apps or in COMMON_SHARED_DEPS)
   const sharedDeps = {};
+  const versionConflicts = [];
+
   Object.keys(depCounts).forEach(dep => {
     if (depCounts[dep] >= 2 || COMMON_SHARED_DEPS.includes(dep)) {
-      // Use the most common version or latest
+      // Use the highest version (prefer newer versions)
       const versions = Array.from(allDeps[dep].versions);
-      sharedDeps[dep] = versions[0]; // Take first for now, can be refined
+
+      // Sort versions to get the highest one
+      const sortedVersions = versions.sort(compareVersions);
+
+      // Track version conflicts
+      if (versions.length > 1) {
+        versionConflicts.push({
+          dep,
+          versions: sortedVersions,
+          selected: sortedVersions[0]
+        });
+      }
+
+      sharedDeps[dep] = sortedVersions[0]; // Use highest version
     }
   });
 
   console.log(`\n  Found ${Object.keys(sharedDeps).length} shared dependencies`);
   console.log(`  Commonly shared: ${COMMON_SHARED_DEPS.filter(d => sharedDeps[d]).length}/${COMMON_SHARED_DEPS.length}`);
+
+  if (versionConflicts.length > 0) {
+    console.log(`\n  ⚠️  Version conflicts detected: ${versionConflicts.length}`);
+    console.log(`  (Using highest version for each - see details below)\n`);
+    versionConflicts.forEach(conflict => {
+      console.log(`     ${conflict.dep}: ${conflict.versions.join(' vs ')} → using ${conflict.selected}`);
+    });
+  }
 
   return sharedDeps;
 }
