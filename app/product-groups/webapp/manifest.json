@@ -34,8 +34,7 @@
         "sap.fe.templates": {},
         "sap.f": {},
         "sap.m": {},
-        "sap.ui.core": {},
-        "sap.ushell": {}
+        "sap.ui.core": {}
       }
     },
     "contentDensities": {
@@ -113,6 +112,10 @@
         }
       }
     }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archetype": "transactional"
   },
   "sap.cloud": {
     "public": true,

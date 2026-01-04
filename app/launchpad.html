@@ -40,16 +40,6 @@
                                     isGroupLocked: false,
                                     tiles: [
                                         {
-                                            id: "analyticsDashboard",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Analytics Dashboard",
-                                                subtitle: "Comprehensive Financial Analysis",
-                                                icon: "sap-icon://dashboard",
-                                                targetURL: "#analytics-display"
-                                            }
-                                        },
-                                        {
                                             id: "generalLedgerCustom",
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
@@ -324,20 +314,6 @@
                     adapter: {
                         config: {
                             inbounds: {
-                                "analytics-display": {
-                                    semanticObject: "analytics",
-                                    action: "display",
-                                    title: "Analytics Dashboard",
-                                    signature: {
-                                        parameters: {},
-                                        additionalParameters: "allowed"
-                                    },
-                                    resolutionResult: {
-                                        applicationType: "SAPUI5",
-                                        additionalInformation: "SAPUI5.Component=demo.ui5",
-                                        url: "/ui5"
-                                    }
-                                },
                                 "revenueltmcustom-display": {
                                     semanticObject: "revenueltmcustom",
                                     action: "display",
@@ -709,7 +685,6 @@
         data-sap-ui-language="en"
         data-sap-ui-xx-componentPreload="off"
         data-sap-ui-resourceroots='{
-            "demo.ui5": "/ui5",
             "shared": "/shared",
             "revenueltmcustom": "/revenue-ltm-custom/webapp",
             "glcustom": "/gl-custom/webapp",

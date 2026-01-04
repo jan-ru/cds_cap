@@ -9,7 +9,13 @@ sap.ui.define(
             },
 
             exit: function() {
-                // Clean up component properly on exit
+                // Destroy router to prevent memory leaks
+                const oRouter = this.getRouter();
+                if (oRouter) {
+                    oRouter.destroy();
+                }
+
+                // Call parent exit handler
                 if (Component.prototype.exit) {
                     Component.prototype.exit.apply(this, arguments);
                 }

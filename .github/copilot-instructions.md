@@ -6,38 +6,46 @@ This is a **dual-repository financial analytics system**:
 - **This repo (cds_cap)**: SAP CAP backend + SAP Fiori Elements UI
 - **Sibling repo (../dbt)**: dbt data transformation pipeline
 
-**Data Flow**: Raw CSV/Excel → dbt (DuckDB) → SQLite (`../database/db.sqlite`) → CAP Services → Fiori UI
+**Data Flow**: Raw CSV/Excel → dbt (DuckDB) → SQLite (`/root/projects/database/db.sqlite`) → CAP Services → Fiori UI
 
 ### Key Components
 - **Backend**: SAP Cloud Application Programming Model (CAP/CDS) with OData V4 analytical services
-- **Database**: SQLite shared between dbt and CAP (production-ready for embedded scenarios)
+- **Database**: SQLite shared between dbt and CAP at `/root/projects/database/db.sqlite` (configured in package.json)
 - **Frontend**: SAP Fiori Elements apps (Analytical List Page, List Report patterns)
 - **Auth**: Mock authentication with user preferences (alice/bob/charlie)
+- **Testing**: Jest (backend 80% coverage), Karma/OPA5/WDIO (frontend)
+- **Containerization**: Docker with docker-compose for deployment
 
 ## Critical Development Patterns
 
 ### 1. Data Model Architecture
 
-**CDS Entity Types** ([db/schema.cds](../db/schema.cds)):
+**CDS Entity Types** ([db/schema.cds](db/schema.cds)):
 - `@cds.persistence.table` entities read directly from dbt-generated SQLite tables
 - Naming convention: `demo.EntityName` in CDS → `demo_EntityName` table in SQLite
 - **Never modify** `db/schema.cds` entities directly - they reflect dbt output
 - Update dbt models in `../dbt/models/marts/` instead, then run `../dbt/build.sh`
 
-**Service Layer** ([srv/analytics-service.cds](../srv/analytics-service.cds)):
+**Service Layer** ([srv/analytics-service.cds](srv/analytics-service.cds)):
 - Functions return `String` (JSON serialized) for complex hierarchical trees
 - Actions for state mutations (e.g., `saveSettings`)
 - Standard entities for CRUD and Fiori Elements bindings
+
+**Database Location**:
+- Shared SQLite database: `/root/projects/database/db.sqlite`
+- Configured in `package.json` → `cds.requires.db.credentials.url`
+- Both dbt and CAP read/write to this single database
+- Docker mounts `./db.sqlite:/app/db.sqlite` (adjust path in docker-compose.yml)
 
 ### 2. Tree Builder Pattern (Critical!)
 
 Financial statements use **custom hierarchical tree structures** built server-side:
 
 **Key Files**:
-- [srv/utils/financial-tree-builder.js](../srv/utils/financial-tree-builder.js) - P&L, Balance Sheet, Sales
-- [srv/utils/revenue-tree-builder.js](../srv/utils/revenue-tree-builder.js) - Revenue LTM analysis
-- [srv/utils/pivot-tree-builder.js](../srv/utils/pivot-tree-builder.js) - Pivot tables
-- [srv/utils/tree-builder-common.js](../srv/utils/tree-builder-common.js) - Shared utilities
+- [srv/utils/financial-tree-builder.js](srv/utils/financial-tree-builder.js) - P&L, Balance Sheet, Sales
+- [srv/utils/revenue-tree-builder.js](srv/utils/revenue-tree-builder.js) - Revenue LTM analysis
+- [srv/utils/pivot-tree-builder.js](srv/utils/pivot-tree-builder.js) - Pivot tables
+- [srv/utils/tree-builder-common.js](srv/utils/tree-builder-common.js) - Shared utilities
 
 **Revenue Classification Logic** (must stay in sync with dbt):
 ```javascript
@@ -57,13 +65,13 @@ REVENUE_ACCOUNTS: {
 
 **When modifying trees**:
 1. Update both tree builder AND corresponding dbt mart model
-2. Test with `npm test` - [test/srv/utils/financial-tree-builder.test.js](../test/srv/utils/financial-tree-builder.test.js)
+2. Test with `npm test` - [test/srv/utils/financial-tree-builder.test.js](test/srv/utils/financial-tree-builder.test.js)
 3. Verify data consistency: compare `srv/config/constants.js` with `dbt/macros/categorize_revenue.sql`
 
 ### 3. Testing Strategy
 
 **Backend Testing** (`npm test` - Jest with 80% coverage threshold):
-- Unit tests in [test/srv/utils/](../test/srv/utils/) mirror [srv/utils/](../srv/utils/) structure
+- Unit tests in [test/srv/utils/](test/srv/utils/) mirror [srv/utils/](srv/utils/) structure
 - Mock CDS service in tests: `cds.service.impl.mockImplementation(...)`
 - Focus on business logic (tree builders, calculations), not framework code
 - Coverage thresholds: 80% (branches/functions/lines/statements)
@@ -75,10 +83,10 @@ REVENUE_ACCOUNTS: {
 - Test structure: `webapp/test/unit/` and `webapp/test/integration/`
 
 **Test Organization**:
-- [test/srv/](../test/srv/) - Backend Jest tests
-- [app/*/webapp/test/unit/](../app/financial-statements/webapp/test/unit/) - UI5 unit tests per app
-- [app/*/webapp/test/integration/](../app/financial-statements/webapp/test/integration/) - OPA5 integration tests per app
-- Legacy custom UI: [app/ui5/test/](../app/ui5/test/) - OPA5 tests for deprecated custom dashboard
+- [test/srv/](test/srv/) - Backend Jest tests
+- [app/*/webapp/test/unit/](app/financial-statements/webapp/test/unit/) - UI5 unit tests per app
+- [app/*/webapp/test/integration/](app/financial-statements/webapp/test/integration/) - OPA5 integration tests per app
+- Legacy custom UI: [app/ui5/test/](app/ui5/test/) - OPA5 tests for deprecated custom dashboard
 
 **Coverage Thresholds**:
 - Backend (Jest): 80% global
@@ -102,9 +110,9 @@ python3 export_to_sqlite.py  # Export to ../database/db.sqlite
 ```
 
 **Schema Changes**:
-- Update `../../dbt/models/marts/core/*.sql` or `../../dbt/models/marts/finance/*.sql`
+- Update `../dbt/models/marts/core/*.sql` or `../dbt/models/marts/finance/*.sql`
 - Sync `db/schema.cds` entity definitions with new columns
-- Update annotations in [app/annotations.cds](../app/annotations.cds) for UI bindings
+- Update annotations in [app/annotations.cds](app/annotations.cds) for UI bindings
 
 ### 5. Fiori Elements Conventions
 
@@ -116,7 +124,7 @@ python3 export_to_sqlite.py  # Export to ../database/db.sqlite
 - `karma.conf.js` - Unit test runner configuration
 - `wdio.conf.js` - E2E test configuration
 - No custom controllers - pure Fiori Elements (declarative)
-- Annotations in shared [app/annotations.cds](../app/annotations.cds)
+- Annotations in shared [app/annotations.cds](app/annotations.cds)
 
 **Testing Patterns**:
 - Unit tests: Test component initialization and basic functionality
@@ -130,13 +138,13 @@ python3 export_to_sqlite.py  # Export to ../database/db.sqlite
 - Object Page: `@UI.Facets` for detail sections
 - Selection Fields: `@UI.SelectionFields` for filter bar
 
-**Launchpad** ([app/launchpad.html](../app/launchpad.html)):
+**Launchpad** ([app/launchpad.html](app/launchpad.html)):
 - Central entry point with tile navigation
 - Semantic object-action pattern: `#financialstatements-display`
 
 ### 6. Error Handling & Logging
 
-**Centralized Logger** ([srv/utils/logger.js](../srv/utils/logger.js)):
+**Centralized Logger** ([srv/utils/logger.js](srv/utils/logger.js)):
 ```javascript
 const { createLogger } = require('./utils/logger');
 const logger = createLogger('module-name');
@@ -144,13 +152,13 @@ logger.info('message', { context });
 logger.error('error', error);
 ```
 
-**Monitoring** ([srv/middleware/monitoring.js](../srv/middleware/monitoring.js)):
+**Monitoring** ([srv/middleware/monitoring.js](srv/middleware/monitoring.js)):
 - Automatic performance tracking on all requests
 - Slow request threshold: 1000ms
 - Metrics logged every 60 seconds
 - Use `trackPerformance` middleware in service implementation
 
-**Error Handler** ([srv/utils/error-handler.js](../srv/utils/error-handler.js)):
+**Error Handler** ([srv/utils/error-handler.js](srv/utils/error-handler.js)):
 - Centralized error formatting
 - HTTP status code mapping
 - Never expose internal paths in production
@@ -188,13 +196,13 @@ docker-compose up      # Run containerized app
 
 ## Project-Specific Quirks
 
-1. **Database Location**: SQLite at `../database/db.sqlite` (parent of both repos)
-2. **Mock Users**: Hardcoded in [package.json](../package.json) `cds.requires.auth.users` - not env vars
+1. **Database Location**: SQLite at `/root/projects/database/db.sqlite` (parent of both repos)
+2. **Mock Users**: Hardcoded in [package.json](package.json) `cds.requires.auth.users` - not env vars
 3. **User Preferences**: Stored in `UserSettings` entity (database-backed, not localStorage)
 4. **No OData Annotations on Functions**: Custom functions return JSON strings, not typed entities
 5. **European Number Formats**: Handled by dbt macro `clean_european_numbers()` (comma → decimal)
-6. **Period Utilities**: Use [srv/utils/period-utils.js](../srv/utils/period-utils.js) `isInPeriod()` for date filtering
-7. **Constants**: Always import from [srv/config/constants.js](../srv/config/constants.js) - single source of truth
+6. **Period Utilities**: Use [srv/utils/period-utils.js](srv/utils/period-utils.js) `isInPeriod()` for date filtering
+7. **Constants**: Always import from [srv/config/constants.js](srv/config/constants.js) - single source of truth
 8. **No TypeScript**: Pure JavaScript project with JSDoc annotations
 
 ## When Things Break
@@ -209,7 +217,7 @@ docker-compose up      # Run containerized app
 
 ## Related Documentation
 
-- [AUTHENTICATION.md](../AUTHENTICATION.md) - Auth setup and user management
-- [README.md](../README.md) - Getting started and app overview
-- [../dbt/README.md](../../dbt/README.md) - Data pipeline architecture
-- [../dbt/HANDOFF.md](../../dbt/HANDOFF.md) - dbt implementation history
+- [AUTHENTICATION.md](AUTHENTICATION.md) - Auth setup and user management
+- [README.md](README.md) - Getting started and app overview
+- [../dbt/README.md](../dbt/README.md) - Data pipeline architecture
+- [../dbt/HANDOFF.md](../dbt/HANDOFF.md) - dbt implementation history

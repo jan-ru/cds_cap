@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "description": "General Ledger - Twinfield GL Entries",
   "scripts": {
-    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#generalledger-display\""
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#generalledger-display\"",
+    "test:integration": "wdio wdio.conf.js",
+    "test": "npm run test:integration"
   }
 }

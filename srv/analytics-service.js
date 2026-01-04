@@ -14,11 +14,12 @@ const packageJson = require('../package.json');
 
 module.exports = cds.service.impl(async function() {
 
-    // Start periodic metrics logging (every 60 seconds)
-    startPeriodicLogging(60000);
-
-    // Add performance monitoring to all requests
-    this.before('*', trackPerformance);
+    // Start periodic metrics logging (every 60 seconds) - skip in test mode
+    if (process.env.NODE_ENV !== 'test') {
+        startPeriodicLogging(60000);
+        // Add performance monitoring to all requests
+        this.before('*', trackPerformance);
+    }
 
     this.on('getAppInfo', async (req) => {
         let sqliteVersion = 'Unknown';

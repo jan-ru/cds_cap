@@ -33,8 +33,7 @@
       "libs": {
         "sap.fe.templates": {},
         "sap.m": {},
-        "sap.ui.core": {},
-        "sap.ushell": {}
+        "sap.ui.core": {}
       }
     },
     "contentDensities": {

@@ -34,8 +34,7 @@
         "sap.fe.templates": {},
         "sap.f": {},
         "sap.m": {},
-        "sap.ui.core": {},
-        "sap.ushell": {}
+        "sap.ui.core": {}
       }
     },
     "contentDensities": {
@@ -88,7 +87,7 @@
           "options": {
             "settings": {
               "contextPath": "/VOA_SalesOrder",
-              "variantManagement": "Page",
+              "variantManagement": "None",
               "initialLoad": true,
               "navigation": {
                 "VOA_SalesOrder": {
@@ -113,6 +112,10 @@
         }
       }
     }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archetype": "transactional"
   },
   "sap.cloud": {
     "public": true,
