@@ -33,6 +33,25 @@
                         config: {
                             groups: [
                                 {
+                                    id: "indicators",
+                                    title: "Indicators",
+                                    isPreset: true,
+                                    isVisible: true,
+                                    isGroupLocked: false,
+                                    tiles: [
+                                        {
+                                            id: "processPerformanceIndicators",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Process Performance Indicators",
+                                                subtitle: "to be completed",
+                                                icon: "sap-icon://performance",
+                                                targetURL: "#processperformanceindicators-display"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
                                     id: "twinfield",
                                     title: "Twinfield",
                                     isPreset: true,
@@ -753,6 +772,19 @@
                                     resolutionResult: {
                                         applicationType: "URL",
                                         url: "/placeholder/webapp/index.html#inventreereturnorder"
+                                    }
+                                },
+                                "processperformanceindicators-display": {
+                                    semanticObject: "processperformanceindicators",
+                                    action: "display",
+                                    title: "Process Performance Indicators",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        applicationType: "URL",
+                                        url: "/placeholder/webapp/index.html#processperformanceindicators"
                                     }
                                 }
                             }

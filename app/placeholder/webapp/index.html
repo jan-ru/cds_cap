@@ -16,7 +16,9 @@
             const hash = window.location.hash;
             let featureName = "This feature";
 
-            if (hash.includes("salesorder")) {
+            if (hash.includes("processperformanceindicators")) {
+                featureName = "Process Performance Indicators";
+            } else if (hash.includes("salesorder")) {
                 featureName = "Sales Order";
             } else if (hash.includes("purchaseorder")) {
                 featureName = "Purchase Order";
