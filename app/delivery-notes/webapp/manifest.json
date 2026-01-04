@@ -95,6 +95,19 @@
                     "route": "GUA_DeliveryNoteObjectPage"
                   }
                 }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "initialSorters": [
+                      {
+                        "name": "volg_nr",
+                        "descending": true
+                      }
+                    ]
+                  }
+                }
               }
             }
           }
