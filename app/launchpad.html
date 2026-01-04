@@ -230,6 +230,55 @@
                                     ]
                                 },
                                 {
+                                    id: "inventree",
+                                    title: "Inventree",
+                                    isPreset: true,
+                                    isVisible: true,
+                                    isGroupLocked: false,
+                                    tiles: [
+                                        {
+                                            id: "salesOrderInventree",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Sales Order",
+                                                subtitle: "to be completed",
+                                                icon: "sap-icon://sales-order",
+                                                targetURL: "#inventreesalesorder-display"
+                                            }
+                                        },
+                                        {
+                                            id: "purchaseOrderInventree",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Purchase Order",
+                                                subtitle: "to be completed",
+                                                icon: "sap-icon://purchase-order",
+                                                targetURL: "#inventreepurchaseorder-display"
+                                            }
+                                        },
+                                        {
+                                            id: "buildOrderInventree",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Build Order",
+                                                subtitle: "to be completed",
+                                                icon: "sap-icon://factory",
+                                                targetURL: "#inventreebuildorder-display"
+                                            }
+                                        },
+                                        {
+                                            id: "returnOrderInventree",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Return Order",
+                                                subtitle: "to be completed",
+                                                icon: "sap-icon://return",
+                                                targetURL: "#inventreereturnorder-display"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
                                     id: "data",
                                     title: "Data",
                                     isPreset: true,
@@ -294,55 +343,6 @@
                                                 subtitle: "dbt Log File",
                                                 icon: "sap-icon://log",
                                                 targetURL: "#logcustom-display"
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    id: "inventree",
-                                    title: "Inventree",
-                                    isPreset: true,
-                                    isVisible: true,
-                                    isGroupLocked: false,
-                                    tiles: [
-                                        {
-                                            id: "salesOrderInventree",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Sales Order",
-                                                subtitle: "to be completed",
-                                                icon: "sap-icon://sales-order",
-                                                targetURL: "#inventreesalesorder-display"
-                                            }
-                                        },
-                                        {
-                                            id: "purchaseOrderInventree",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Purchase Order",
-                                                subtitle: "to be completed",
-                                                icon: "sap-icon://purchase-order",
-                                                targetURL: "#inventreepurchaseorder-display"
-                                            }
-                                        },
-                                        {
-                                            id: "buildOrderInventree",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Build Order",
-                                                subtitle: "to be completed",
-                                                icon: "sap-icon://factory",
-                                                targetURL: "#inventreebuildorder-display"
-                                            }
-                                        },
-                                        {
-                                            id: "returnOrderInventree",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Return Order",
-                                                subtitle: "to be completed",
-                                                icon: "sap-icon://return",
-                                                targetURL: "#inventreereturnorder-display"
                                             }
                                         }
                                     ]
