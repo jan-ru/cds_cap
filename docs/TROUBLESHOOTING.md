@@ -410,6 +410,66 @@ onAfterRendering: function() {
 }
 ```
 
+### UI Flexibility / LREP Errors
+
+**Symptoms**:
+- Console errors: `TypeError: s.slice is not a function`
+- 404 errors for `/sap/bc/lrep/flex/` endpoints
+- 404 errors for `flexibility-bundle.json`
+- Apps fail to load with flexibility-related errors
+
+**Cause**: UI5 Flexibility framework trying to access LREP (Layered Repository) backend services that don't exist in standalone CAP applications.
+
+**Solution**: The launchpad is configured to disable LREP and use empty local flexibility bundles.
+
+**Configuration in `app/launchpad.html`**:
+```javascript
+// Disable UI Flexibility features
+window["sap-ui-fl-max-layer"] = [];
+window["sap-ui-fl-control-variant-id-support"] = false;
+```
+
+```html
+<!-- Empty flexibility services array -->
+<script src="..."
+  data-sap-ui-flexibilityServices='[]'
+  ...>
+</script>
+```
+
+**Empty flexibility bundles** in each app:
+- Location: `app/*/webapp/changes/flexibility-bundle.json`
+- Content: Empty arrays for all flexibility properties
+```json
+{
+  "changes": [],
+  "compVariants": [],
+  "variants": [],
+  "variantChanges": [],
+  "variantDependentControlChanges": [],
+  "variantManagementChanges": []
+}
+```
+
+**If errors persist**:
+```javascript
+// Clear browser localStorage in console
+localStorage.clear();
+location.reload();
+```
+
+### Missing Sandbox Config File
+
+**Symptom**: `GET /appconfig/fioriSandboxConfig.json 404 (Not Found)`
+
+**Fix**: Empty config file already exists at `app/appconfig/fioriSandboxConfig.json`.
+
+If missing, create it:
+```bash
+mkdir -p app/appconfig
+echo '{}' > app/appconfig/fioriSandboxConfig.json
+```
+
 ## Data Pipeline Issues
 
 ### dbt Build Fails

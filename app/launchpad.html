@@ -9,14 +9,6 @@
     <script>
         window["sap-ushell-config"] = {
             defaultRenderer: "fiori2",
-            bootstrapPlugins: {
-                "RuntimeAuthoringPlugin": {
-                    component: "sap.ushell.plugins.rta",
-                    config: {
-                        validateAppVersion: false
-                    }
-                }
-            },
             renderers: {
                 fiori2: {
                     componentData: {
@@ -24,6 +16,14 @@
                             enableSearch: false,
                             rootIntent: "Shell-home"
                         }
+                    }
+                }
+            },
+            bootstrapPlugins: {
+                "KeyUserPlugin": {
+                    component: "sap.ushell.plugins.rta-personalize",
+                    config: {
+                        enabled: false
                     }
                 }
             },
@@ -673,6 +673,10 @@
                 }
             }
         };
+
+        // Disable UI Flexibility completely
+        window["sap-ui-fl-max-layer"] = [];
+        window["sap-ui-fl-control-variant-id-support"] = false;
     </script>
 
     <script src="https://ui5.sap.com/1.120.0/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
@@ -684,6 +688,7 @@
         data-sap-ui-compatVersion="edge"
         data-sap-ui-language="en"
         data-sap-ui-xx-componentPreload="off"
+        data-sap-ui-flexibilityServices='[]'
         data-sap-ui-resourceroots='{
             "shared": "/shared",
             "revenueltmcustom": "/revenue-ltm-custom/webapp",
@@ -722,7 +727,7 @@
     <script>
         sap.ui.getCore().attachInit(function () {
             sap.ushell.Container.createRenderer().placeAt("content");
-            
+
             // Add About menu item to user actions menu
             var oRenderer = sap.ushell.Container.getRenderer("fiori2");
             oRenderer.addUserAction({
