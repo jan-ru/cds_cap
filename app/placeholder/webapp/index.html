@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Not Implemented</title>
+    <script src="https://ui5.sap.com/1.120.0/resources/sap-ui-core.js"
+        data-sap-ui-libs="sap.m"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-async="true">
+    </script>
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            // Get feature name from URL hash
+            const hash = window.location.hash;
+            let featureName = "This feature";
+
+            if (hash.includes("salesorder")) {
+                featureName = "Sales Order";
+            } else if (hash.includes("purchaseorder")) {
+                featureName = "Purchase Order";
+            } else if (hash.includes("buildorder")) {
+                featureName = "Build Order";
+            } else if (hash.includes("returnorder")) {
+                featureName = "Return Order";
+            }
+
+            // Create message page
+            const messagePage = new sap.m.MessagePage({
+                title: "Feature Not Yet Implemented",
+                text: featureName + " is still to be completed.",
+                description: "This feature is planned for future development. Please check back later.",
+                icon: "sap-icon://message-information",
+                showNavButton: true,
+                navButtonPress: function() {
+                    window.history.back();
+                }
+            });
+
+            // Create app and add message page
+            const app = new sap.m.App({
+                pages: [messagePage]
+            });
+
+            app.placeAt("content");
+        });
+    </script>
+</head>
+<body class="sapUiBody" id="content">
+</body>
+</html>
