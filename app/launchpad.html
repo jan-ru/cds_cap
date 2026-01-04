@@ -168,13 +168,13 @@
                                     isGroupLocked: false,
                                     tiles: [
                                         {
-                                            id: "deliveryNotes",
+                                            id: "productGroups",
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
-                                                title: "Delivery Notes",
-                                                subtitle: "Newbase GUA",
-                                                icon: "sap-icon://shipping-status",
-                                                targetURL: "#deliverynotes-display"
+                                                title: "Product Groups",
+                                                subtitle: "Newbase PGA",
+                                                icon: "sap-icon://group",
+                                                targetURL: "#productgroups-display"
                                             }
                                         },
                                         {
@@ -188,13 +188,23 @@
                                             }
                                         },
                                         {
-                                            id: "productGroups",
+                                            id: "salesOrders",
                                             tileType: "sap.ushell.ui.tile.StaticTile",
                                             properties: {
-                                                title: "Product Groups",
-                                                subtitle: "Newbase PGA",
-                                                icon: "sap-icon://group",
-                                                targetURL: "#productgroups-display"
+                                                title: "Sales Orders",
+                                                subtitle: "Newbase VOA",
+                                                icon: "sap-icon://cart",
+                                                targetURL: "#salesorders-display"
+                                            }
+                                        },
+                                        {
+                                            id: "deliveryNotes",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Delivery Notes",
+                                                subtitle: "Newbase GUA",
+                                                icon: "sap-icon://shipping-status",
+                                                targetURL: "#deliverynotes-display"
                                             }
                                         },
                                         {
@@ -205,16 +215,6 @@
                                                 subtitle: "Newbase SCA",
                                                 icon: "sap-icon://sales-quote",
                                                 targetURL: "#serviceagreements-display"
-                                            }
-                                        },
-                                        {
-                                            id: "salesOrders",
-                                            tileType: "sap.ushell.ui.tile.StaticTile",
-                                            properties: {
-                                                title: "Sales Orders",
-                                                subtitle: "Newbase VOA",
-                                                icon: "sap-icon://cart",
-                                                targetURL: "#salesorders-display"
                                             }
                                         },
                                         {
