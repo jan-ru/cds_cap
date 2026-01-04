@@ -11,6 +11,19 @@ sap.ui.define([
         init: function () {
             UIComponent.prototype.init.apply(this, arguments);
             this.getRouter().initialize();
+        },
+
+        exit: function () {
+            // Destroy router to prevent memory leaks
+            const oRouter = this.getRouter();
+            if (oRouter) {
+                oRouter.destroy();
+            }
+
+            // Call parent exit handler
+            if (UIComponent.prototype.exit) {
+                UIComponent.prototype.exit.apply(this, arguments);
+            }
         }
     });
 });

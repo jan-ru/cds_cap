@@ -48,11 +48,6 @@
         }
       }
     },
-    "rootView": {
-      "viewName": "revenuecostcentercustom.view.Main",
-      "type": "XML",
-      "id": "main"
-    },
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",
